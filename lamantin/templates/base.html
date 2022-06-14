@@ -1,0 +1,48 @@
+{% extends "djbootmin/base.html" %}
+{% load static %}
+{% block title %}
+  General Education Course Approval Workflow &mdash;
+  Office of the Provost &mdash;
+  Carthage College
+{% endblock title %}
+{% block extra_style %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  rel="stylesheet" type="text/css">
+<link href="https://www.carthage.edu/themes/shared/css/tables.css"
+  rel="stylesheet" type="text/css">
+<link href="//www.carthage.edu/themes/shared/css/forms.css"
+  rel="stylesheet" type="text/css">
+<link href="{% static 'css/main.css' %}?0420" rel="stylesheet" type="text/css">
+<link href="{% static 'css/print.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="manifest" href="{% static 'manifest.json' %}">
+{% endblock %}
+{% block body_tag %}{% endblock %}
+{% block navbar-header %}{% endblock %}
+{% block navbar-top-links %}{% endblock %}
+{% block navbar-sidenav %}{% endblock %}
+{% block content-wrapper %} id="wrapper" class="content-wrapper"{% endblock %}
+{% block content %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block logout %}{% endblock %}
+{% block modal %}{% endblock modal %}
+{% block footer %}
+<footer class="sticky-footer">
+  <div class="container">
+    <div class="text-center">
+      <small>
+        Carthage College
+        {% if user.is_superuser %}
+        <a href="{% url 'admin:index' %}">&copy;</a>
+        {% else %}{% if user.is_staff %}
+        <a href="{# url 'dashboard' #}">&copy;</a>
+        {% else %}
+        &copy;
+        {% endif %}{% endif %}
+        |
+        <a href="https://www.carthage.edu/privacy/" target="_blank">Privacy Policy</a>
+      </small>
+    </div>
+  </div>
+</footer>
+{% endblock footer %}
