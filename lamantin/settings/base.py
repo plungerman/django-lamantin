@@ -19,9 +19,9 @@ from djimix.settings.local import (
     LD_RUN_PATH,
 )
 
+
 # Debug
-DEBUG = True
-INFORMIX_DEBUG = 'debug'
+DEBUG = False
 REQUIRED_ATTRIBUTE = True
 ADMINS = ()
 MANAGERS = ADMINS
@@ -39,16 +39,17 @@ FILE_CHARSET = 'utf-8'
 SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
-ROOT_URL = '/lamantin/'
 ROOT_URLCONF = 'lamantin.core.urls'
 WSGI_APPLICATION = 'lamantin.wsgi.application'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = BASE_DIR
+PROJECT_APP = os.path.basename(BASE_DIR)
+ROOT_URL = '/{0}/'.format(PROJECT_APP)
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
 STATIC_ROOT = '{0}/static/'.format(ROOT_DIR)
-STATIC_URL = '/static/lamantin/'
-MEDIA_URL = '/media/lamantin/'
+STATIC_URL = '/static/{0}/'.format(PROJECT_APP)
+MEDIA_URL = '/media/{0}/'.format(PROJECT_APP)
 UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
 FILE_UPLOAD_PERMISSIONS=0o644
@@ -63,12 +64,11 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'django_lamantin',
         'ENGINE': 'django.db.backends.mysql',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'django_lamantin',
+        'PASSWORD': 'RE@46mLOGnri%bFp258NxsS8jC7mVfUe',
     },
 }
 INSTALLED_APPS = (
-    # 'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,7 +87,6 @@ INSTALLED_APPS = (
     # tagging package
     'taggit',
 )
-GRAPPELLI_ADMIN_TITLE = ''
 MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,6 +120,15 @@ TEMPLATES = [
         },
     },
 ]
+# caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 604800,
+        'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
+    }
+}
 # LDAP Constants
 LDAP_SERVER = ''
 LDAP_PORT = ''

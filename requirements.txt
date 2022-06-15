@@ -1,10 +1,10 @@
 django==3.2.12
 django-admin-honeypot==1.1.0
-django-localflavor==3.0
-django-loginas==0.3.8
-django-taggit==1.3.0
-mysqlclient==2.0.1
-pyodbc==4.0.30
+django-localflavor==3.1
+django-loginas==0.3.10
+django-taggit==3.3.0
+mysqlclient==2.1.0
+pyodbc==4.0.32
 python-ldap==3.4.0
 python-memcached==1.59
 pysftp==0.2.9

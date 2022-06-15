@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% load static %}
+{% load ifusergroup %}
+{% block extra_javascript %}
+{{ block.super }}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"
+  type="text/javascript"></script>
+<script src="/static/djmaidez/js/validate.js" type="text/javascript"></script>
+<script src="/static/djchekhov/js/djmaidez.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript">
+<!-- ens -->
+function GetUserID() {
+    return parseInt("{{request.user.id}}",10);
+}
+$(function(){
+  // build emergency contact modal
+  $("a.ens-link").click(function() {
+    makeDialog();
+  });
+  /* datatables initialization for managers */
+  $('#chekhovManagers').DataTable({
+    'lengthMenu': [
+      [250, 500, 1000],
+      [250, 500, 1000]
+    ],
+    'language': {
+      'search': 'Filter records:',
+      'lengthMenu': 'Display _MENU_'
+    },
+    order: [[0, 'asc']],
+    dom: 'lfrBtip',
+    responsive: true,
+    buttons: [
+      {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }
+    ]
+  });
+  /* clear django cache object by cache key and refresh content */
+  $('.clear-cache').on('click', function(e){
+    e.preventDefault();
+    var $dis = $(this);
+    var $cid = $dis.attr('data-cid');
+    var $target = '#' + $dis.attr('data-target');
+    var $html = $dis.html();
+    $dis.html('<i class="fa fa-refresh fa-spin"></i>');
+    $.ajax({
+      type: 'POST',
+      url: '{% url "clear_cache" "blurbs" %}',
+      data: {'cid':$cid},
+      success: function(data) {
+        $.growlUI("Cache", "Clear");
+        $($target).html(data);
+        $dis.html('<i class="fa fa-refresh"></i>');
+      },
+      error: function(data) {
+        $.growlUI("Error", data);
+      }
+    });
+    return false;
+  });
+  // override the submit event to handle some things
+  $('form#health-check').submit(function(){
+    // disable submit button after users clicks it
+    $(this).children('button[type=submit]').attr('disabled', 'disabled');
+  });
+});
+</script>
+{% endblock %}
+{% block navbar-header %}
+<a href="{% url 'home' %}" class="mr-sm-3 mr-lg-3">
+  <img src="{% static 'img/clogo.png' %}" height="30" class="mr-2"></a>
+  Graduate Studies
+{% endblock %}
+{% block navbar-top-links %}
+<ul class="navbar-nav ml-auto">
+  <li class="dropdown user-dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-user"></i> {{user.username|default:"Greetings"}}
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="divider"></li>
+      <li>
+        {% if user.is_anonymous %}
+        <a href="{% url 'auth_login' %}">
+          <i class="fa fa-sign-in"></i> Sign In
+        </a>
+        {% else %}
+        <a href="{% url 'auth_logout' %}">
+          <i class="fa fa-sign-out"></i> Sign Out
+        </a>
+        {% endif %}
+      </li>
+      {% ifusergroup 'Managers' %}
+      <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      {% endifusergroup %}
+      {% if user.is_superuser %}
+      <li class="divider"></li>
+      <li><a href="{% url 'admin:index' %}">Admin</a></li>
+      {% endif %}
+    </ul>
+  </li>
+</ul>
+{% endblock %}
+{% block breadcrumb %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ml-2">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block content %}
+<div class="forms-container col-lg-8 col-md-12 col-sm-12 col-xs-12 mb-4" style="padding-right:0px !important;">
+  <h3 class="red">My Graduate Checklist</h3>
+  {% get_lw_content as intro blurbs 3096 %}
+  <div class="card card-body">
+    <div id="lw_success_3096">{{intro.body|safe}}</div>
+    {% if user.is_superuser %}
+    <p>
+    <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=285&id=3096"
+      target="_blank">
+      <i class="fa fa-pencil green" aria-hidden="true"
+      title="Manage the content above in LiveWhale"></i></a>
+    <a href="#" data-cid="3096" data-target="lw_success_3096" class="clear-cache">
+      <i class="fa fa-refresh green" aria-hidden="true"
+      title="Clear the cache for this content"></i></a>
+    </p>
+    {% endif %}
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
+      <a href="{% url 'forms' 'accounts' %}" class="btn btn-block{% if user.accounts.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Student Accounts and Financial Aid</a>
+      <a href="{% url 'forms' 'housing' %}" class="btn btn-block{% if user.housing.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Campus Housing and Meal Plans</a>
+      <a href="{% url 'forms' 'emergency' %}" class="btn btn-block{% if user.emergency.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Emergency Contact and Health Insurance</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
+      <a href="{% url 'forms' 'registrar' %}" class="btn btn-block{% if user.registrar.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Schoology, OneLogin, My Carthage</a>
+      <a href="{% url 'forms' 'compliance' %}" class="btn btn-block{% if user.compliance.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Compliance Documents</a>
+      <a href="{% url 'forms' 'services' %}" class="btn btn-block{% if user.services.all.count == 1 %} btn-success{% else %} btn-info{% endif %}" role="button">Student ID and Parking Permit</a>
+    </div>
+  </div>
+  <!-- /.row -->
+  {% get_lw_content as intro blurbs 3097 %}
+  <div class="card card-body mt-4">
+    <div id="lw_success_3097">{{intro.body|safe}}</div>
+    {% if user.is_superuser %}
+    <p>
+    <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=285&id=3097"
+      target="_blank">
+      <i class="fa fa-pencil green" aria-hidden="true"
+      title="Manage the content above in LiveWhale"></i></a>
+    <a href="#" data-cid="3097" data-target="lw_success_3097" class="clear-cache">
+      <i class="fa fa-refresh green" aria-hidden="true"
+      title="Clear the cache for this content"></i></a>
+    </p>
+    {% endif %}
+  </div>
+</div>
+<!-- /.forms-container /.col-* -->
+{% endblock content %}
+{% block modal %}
+<div id="emergencyContactFiller">
+  {% include "emergency/modal.html" %}
+</div>
+{% endblock %}
