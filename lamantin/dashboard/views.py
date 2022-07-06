@@ -9,7 +9,7 @@ from django.shortcuts import render
 def home(request):
     """Dashboard home."""
     return render(
-        request, 'dashboard/home.html', {'foobar': settings.FOO_BAR},
+        request, 'dashboard/home.html', {},
     )
 
 

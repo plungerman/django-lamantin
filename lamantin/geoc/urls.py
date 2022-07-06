@@ -7,5 +7,5 @@ from lamantin.geoc import views
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.home, name='geoc_home'),
 ]

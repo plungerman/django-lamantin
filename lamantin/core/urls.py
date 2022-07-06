@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from djauth.views import loggedout
+from lamantin.core import views
 
 
 admin.autodiscover()
@@ -52,8 +53,10 @@ urlpatterns = [
     path('rocinante/', admin.site.urls),
     # admin honeypot
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    # clear cache via ajax post
+    path('cache/<str:ctype>/clear/', views.clear_cache, name='clear_cache'),
     # dashboard
     path('dashboard/', include('lamantin.dashboard.urls')),
     # redirect
-    path('', RedirectView.as_view(url=reverse_lazy('dashboard_home'))),
+    path('', RedirectView.as_view(url=reverse_lazy('home'))),
 ]

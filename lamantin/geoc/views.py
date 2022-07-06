@@ -8,9 +8,9 @@ from lamantin.geoc.forms import CourseForm
 
 
 def home(request):
-    """Dashboard home."""
+    """GEOC dashboard."""
     return render(
-        request, 'geoc/home.html', {'foobar': settings.FOO_BAR},
+        request, 'geoc/home.html', {},
     )
 
 
