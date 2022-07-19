@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
 from lamantin.geoc.forms import CourseForm
+from lamantin.geoc.models import Outcome
 
 
 @portal_auth_required(

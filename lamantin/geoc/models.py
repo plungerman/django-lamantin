@@ -8,12 +8,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
 from djtools.fields.helpers import upload_to_path
-from djtools.fields.validators import MimetypeValidator
 from taggit.managers import TaggableManager
-
-
-FILE_VALIDATORS = [MimetypeValidator('application/pdf')]
-FILE_VALIDATORS = []
 
 
 class Outcome(models.Model):
@@ -107,13 +102,12 @@ class Course(models.Model):
     phile = models.FileField(
         "Syllabus",
         upload_to=upload_to_path,
-        validators=FILE_VALIDATORS,
+        validators=settings.FILE_VALIDATORS,
         max_length=767,
         null=True,
         blank=True,
         help_text="PDF format",
     )
-    outcomes = models.ManyToManyField(Outcome)
 
     class Meta:
         """Attributes about the data model and admin options."""
@@ -123,6 +117,28 @@ class Course(models.Model):
     def __str__(self):
         """Default data for display."""
         return self.title
+
+    def get_slug(self):
+        """Slug for file uploads."""
+        return 'files/course/'
+
+
+class CourseOutcome(models.Model):
+    """Choices for model and form fields that accept for multiple values."""
+
+    course = models.ForeignKey(
+        Course,
+        related_name='course',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+    )
+    outcome = models.ForeignKey(
+        Outcome,
+        related_name='outcome',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+    )
+    description = models.TextField()
 
 
 @receiver(models.signals.post_save, sender=Course)

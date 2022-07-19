@@ -53,6 +53,7 @@ MEDIA_URL = '/media/{0}/'.format(PROJECT_APP)
 UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
 FILE_UPLOAD_PERMISSIONS=0o644
+FILE_VALIDATORS = []
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -84,6 +85,8 @@ INSTALLED_APPS = (
     'djtools',
     # honeypot for admin attacks
     'admin_honeypot',
+    # fontawesome 6
+    'fontawesomefree',
     # sign in as a user
     'loginas',
     # tagging package
