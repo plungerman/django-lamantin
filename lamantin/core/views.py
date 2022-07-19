@@ -9,13 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
 
 
-def home(request):
-    """Application home."""
-    return render(
-        request, 'index.html', {},
-    )
-
-
 @csrf_exempt
 @portal_auth_required(
     session_var='DJCHEKHOV_AUTH',

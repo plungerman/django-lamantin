@@ -57,6 +57,8 @@ urlpatterns = [
     path('cache/<str:ctype>/clear/', views.clear_cache, name='clear_cache'),
     # dashboard
     path('dashboard/', include('lamantin.dashboard.urls')),
-    # redirect
-    path('', RedirectView.as_view(url=reverse_lazy('home'))),
+    # geoc
+    path('geoc/', include('lamantin.geoc.urls')),
+    # home: redirect to dashboard
+    path('', RedirectView.as_view(url=reverse_lazy('dashboard_home'))),
 ]

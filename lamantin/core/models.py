@@ -36,6 +36,9 @@ class GenericChoice(models.Model):
 
         ordering = ['rank']
 
+    def tag_list(self):
+        return ', '.join(o.name for o in self.tags.all())
+
     def __str__(self):
         """Default data for display."""
         return self.name

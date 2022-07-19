@@ -9,4 +9,4 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        exclude = ('title', 'course_number', 'phile')
+        fields = ('title', 'number', 'phile')

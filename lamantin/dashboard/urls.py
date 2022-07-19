@@ -3,7 +3,6 @@
 """URLs for all views."""
 
 from django.urls import path
-
 from lamantin.dashboard import views
 
 
@@ -12,5 +11,5 @@ urlpatterns = [
         'search/',
         views.search, name='dashboard_search'
     ),
-    path('', views.home, name='home'),
+    path('', views.home, name='dashboard_home'),
 ]

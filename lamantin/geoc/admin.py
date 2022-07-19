@@ -4,38 +4,32 @@
 
 from django.contrib import admin
 from django.db import models
-from django.forms import CheckboxSelectMultiple
-from django.utils.safestring import mark_safe
-
-from lamantin.core.models import GenericChoice
+from lamantin.geoc.models import Course
+from lamantin.geoc.models import Outcome
 
 
-class GenericChoiceAdmin(admin.ModelAdmin):
-    """GenericChoice admin class."""
+class CourseAdmin(admin.ModelAdmin):
+    """Course admin class."""
 
-    list_display = ('name', 'value', 'rank', 'active', 'admin')
-    list_editable = ('active', 'admin')
+    list_display = (
+        'title',
+        'number',
+        'user',
+        'created_at',
+        'updated_at',
+        'approved_date',
+        'approved',
+    )
+    list_editable = ['approved']
     list_per_page = 500
-    formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
-    }
-    ordering = ('-created_at',)
-    date_hierarchy = 'created_at'
-    readonly_fields = ('',)
-    search_fields = ('',)
-    raw_id_fields = ('',)
-
-    def summary_strip(self, instance):
-        """Mark html content for summary field as safe."""
-        return mark_safe(instance.summary)
-    summary_strip.short_description = 'Summary'
-
-    class Media:
-        """Static files like javascript and style sheets."""
-
-        js = [
-            '/static/lamantin/js/foobar.js',
-        ]
 
 
-admin.site.register(GenericChoice, GenericChoiceAdmin)
+class OutcomeAdmin(admin.ModelAdmin):
+    """Outcome admin class."""
+
+    list_display = ('name', 'tag_list')
+    list_per_page = 500
+
+
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Outcome, OutcomeAdmin)
