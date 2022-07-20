@@ -19,6 +19,7 @@ class Outcome(models.Model):
     rationale = models.TextField(null=True, blank=True)
     group = models.ManyToManyField(Group, blank=True)
     tags = TaggableManager(blank=True)
+    active = models.BooleanField(default=True)
     slo1 = models.CharField(
         "Student Learning Outcome 1",
         max_length=255,
