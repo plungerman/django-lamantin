@@ -18,7 +18,7 @@ from lamantin.geoc.models import Outcome
 def course(request):
     """ """
     form = CourseForm()
-    outcomes = Outcome.objects.filter(status=True)
+    outcomes = Outcome.objects.filter(active=True)
     return render(
         request,
         'geoc/form.html',

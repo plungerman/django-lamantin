@@ -109,6 +109,12 @@ class Course(models.Model):
         blank=True,
         help_text="PDF format",
     )
+    outcome = models.ManyToManyField(
+        Outcome,
+        verbose_name="Outcomes",
+        #related_name="outcomes",
+        help_text="Check all that apply",
+    )
 
     class Meta:
         """Attributes about the data model and admin options."""
