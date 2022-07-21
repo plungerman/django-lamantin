@@ -85,6 +85,7 @@ INSTALLED_APPS = (
     'djtools',
     # honeypot for admin attacks
     'admin_honeypot',
+    'bootstrap4',
     # fontawesome 6
     'fontawesomefree',
     # sign in as a user

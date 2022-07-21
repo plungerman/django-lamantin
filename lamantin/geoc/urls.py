@@ -9,7 +9,12 @@ from lamantin.geoc import views
 
 
 urlpatterns = [
-    path('form/', views.course, name='course'),
+    path(
+        'form/<str:step>/<int:cid>/update/',
+        views.course_form,
+        name='course_update',
+    ),
+    path('form/', views.course_form, name='course'),
     # home: redirect to dashboard
     path('', RedirectView.as_view(url=reverse_lazy('course'))),
 ]

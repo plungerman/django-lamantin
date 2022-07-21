@@ -5,7 +5,9 @@
 from django.contrib import admin
 from django.db import models
 from lamantin.geoc.models import Course
+from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Outcome
+from lamantin.geoc.models import OutcomeElement
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -32,5 +34,15 @@ class OutcomeAdmin(admin.ModelAdmin):
     list_editable = ['active']
 
 
+class OutcomeElementAdmin(admin.ModelAdmin):
+    """Outcome element admin class."""
+
+    list_display = ('outcome', 'description', 'active')
+    list_per_page = 500
+    list_editable = ['active']
+
+
 admin.site.register(Course, CourseAdmin)
+admin.site.register(CourseOutcome)
 admin.site.register(Outcome, OutcomeAdmin)
+admin.site.register(OutcomeElement, OutcomeElementAdmin)

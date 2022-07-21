@@ -1,22 +1,27 @@
 {% extends "home.html" %}
-{% block extra_style %}
-{{block.super}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-{% endblock %}
 {% block extra_javascript %}
 {{block.super}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 <script>
 $(function() {
-  $("#id_outcome").selectpicker();
 });
 </script>
+{% endblock %}
+{% block breadcrumb %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-12 col-sm-12 col-xs-12 mb-4" style="padding-right:0px !important;">
   <div class="row">
     <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
-      <h3 class="red">{{form_title}}</h3>
+      <h3 class="red">GEOC: {{step|title}}</h3>
     </div>
   </div>
   <form method="post" action="." autocomplete="false" class="form" role="form">
@@ -27,19 +32,24 @@ $(function() {
     {% endif %}
     {% csrf_token %}
     <ul class="nobull">
-    {% for field in form.visible_fields %}
-      {% include "form_field.inc.html" %}
+    {% for outcome in course.outcome.all %}
+    <li>
+      <h4>{{outcome.name}}</h4>
+      <p>{{outcome.description}}</p>
+      <p>{{outcome.rationale}}</p>
+      <ol>
+        {% for element in outcome.elements.all %}
+        <li>
+            {{element.description}}
+            <p>{% if element.slo %}slowmo: {{element.slo.id}}{% endif %}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </li>
     {% endfor %}
     </ul>
     <button class="btn btn-primary btn-block" type="submit" value="Submit" id="submit-button">Submit</button>
   </form>
-  <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4 ml-2">
-    <div class="row list-group">
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.col-* -->
-  <p>&nbsp;</p>
 </div>
 <!-- /.forms-container /.col-* -->
 {% endblock content %}

@@ -20,42 +20,6 @@ class Outcome(models.Model):
     group = models.ManyToManyField(Group, blank=True)
     tags = TaggableManager(blank=True)
     active = models.BooleanField(default=True)
-    slo1 = models.CharField(
-        "Student Learning Outcome 1",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    slo2 = models.CharField(
-        "Student Learning Outcome 2",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    slo3 = models.CharField(
-        "Student Learning Outcome 3",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    slo4 = models.CharField(
-        "Student Learning Outcome 4",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    slo5 = models.CharField(
-        "Student Learning Outcome 5",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    slo6 = models.CharField(
-        "Student Learning Outcome 6",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         """Attributes about the data model and admin options."""
@@ -112,7 +76,6 @@ class Course(models.Model):
     outcome = models.ManyToManyField(
         Outcome,
         verbose_name="Outcomes",
-        #related_name="outcomes",
         help_text="Check all that apply",
     )
 
@@ -130,22 +93,36 @@ class Course(models.Model):
         return 'files/course/'
 
 
+class OutcomeElement(models.Model):
+    """Description for each element of an Outcome."""
+
+    outcome = models.ForeignKey(
+        Outcome,
+        related_name='elements',
+        on_delete=models.CASCADE,
+        editable=settings.DEBUG,
+    )
+    active = models.BooleanField(default=True)
+    description = models.TextField()
+
+
 class CourseOutcome(models.Model):
-    """Choices for model and form fields that accept for multiple values."""
+    """Specific SLO content provided by user for a course."""
 
     course = models.ForeignKey(
         Course,
-        related_name='course',
+        #related_name='course',
+        on_delete=models.CASCADE,
+        related_name='outcomes',
+        editable=settings.DEBUG,
+    )
+    slo = models.OneToOneField(
+        OutcomeElement,
+        related_name='slo',
         on_delete=models.CASCADE,
         editable=settings.DEBUG,
     )
-    outcome = models.ForeignKey(
-        Outcome,
-        related_name='outcome',
-        on_delete=models.CASCADE,
-        editable=settings.DEBUG,
-    )
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
 
 @receiver(models.signals.post_save, sender=Course)
@@ -158,3 +135,13 @@ def approved_date(sender, instance, created, **kwargs):
     elif not instance.approved and instance.approved_date:
         instance.approved_date = None
         instance.save()
+
+'''
+@receiver(models.signals.post_save, sender=Course)
+def slo_create(sender, instance, created, **kwargs):
+    """Post-save signal function to set approved_date."""
+    if instance.id:
+        for outcome in instance.outcome.all():
+            for element in outcome.element.all():
+                 pass
+'''
