@@ -2,6 +2,8 @@
 
 """Data models."""
 
+import logging
+
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
@@ -33,6 +35,10 @@ class Outcome(models.Model):
     def tag_list(self):
         return ', '.join(o.name for o in self.tags.all())
 
+    def get_form(self):
+        """Form name."""
+        return name.replace(' ', '')
+
 
 class Course(models.Model):
     """Choices for model and form fields that accept for multiple values."""
@@ -61,6 +67,7 @@ class Course(models.Model):
         default=False,
     )
     approved_date = models.DateField(null=True, blank=True)
+    save_submit = models.BooleanField(default=False)
     # core
     title = models.CharField(max_length=255)
     number = models.CharField(max_length=32)
@@ -105,13 +112,16 @@ class OutcomeElement(models.Model):
     active = models.BooleanField(default=True)
     description = models.TextField()
 
+    def __str__(self):
+        """Default data for display."""
+        return '{0}: {1}'.format(self.outcome, self.description)
+
 
 class CourseOutcome(models.Model):
     """Specific SLO content provided by user for a course."""
 
     course = models.ForeignKey(
         Course,
-        #related_name='course',
         on_delete=models.CASCADE,
         related_name='outcomes',
         editable=settings.DEBUG,
@@ -123,6 +133,10 @@ class CourseOutcome(models.Model):
         editable=settings.DEBUG,
     )
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        """Default data for display."""
+        return '[{0}] {1}: {2}'.format(self.course, self.slo, self.slo.description)
 
 
 @receiver(models.signals.post_save, sender=Course)
@@ -136,12 +150,26 @@ def approved_date(sender, instance, created, **kwargs):
         instance.approved_date = None
         instance.save()
 
-'''
+
 @receiver(models.signals.post_save, sender=Course)
 def slo_create(sender, instance, created, **kwargs):
     """Post-save signal function to set approved_date."""
     if instance.id:
         for outcome in instance.outcome.all():
-            for element in outcome.element.all():
-                 pass
-'''
+            for element in outcome.elements.all():
+                if not getattr(element, 'slo'):
+                    slo = CourseOutcome(course=course, slo=element)
+                    slo.save()
+                    element.slo=slo
+                    element.save()
+
+
+@receiver(models.signals.m2m_changed, sender=Course.outcome.through)
+def signal_function(sender, instance, action, **kwargs):
+    logger = logging.getLogger('debug_logfile')
+    if action == 'pre_remove':
+        logger.debug('pk_set')
+        logger.debug(kwargs.get('pk_set'))
+        for outcome in instance.outcomes.all():
+            if outcome.slo.outcome.id in kwargs.get('pk_set'):
+                outcome.slo.delete()

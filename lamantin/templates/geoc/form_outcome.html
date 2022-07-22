@@ -22,6 +22,11 @@ $(function() {
   <div class="row">
     <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
       <h3 class="red">GEOC: {{step|title}}</h3>
+      <p>
+        Click on the
+        <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="View information about each student learning outcome group."><i class="fa fa-question-circle green" aria-hidden="true"></i></a>
+        icon to view information about each student learning outcome group.
+      </p>
     </div>
   </div>
   <form method="post" action="." autocomplete="false" class="form" role="form">
@@ -31,23 +36,29 @@ $(function() {
       </div>
     {% endif %}
     {% csrf_token %}
-    <ul class="nobull">
     {% for outcome in course.outcome.all %}
-    <li>
-      <h4>{{outcome.name}}</h4>
+    <div>
+      <h4>
+        {{outcome.name}}
+        <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{outcome.rationale}}">
+          <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
+      </h4>
       <p>{{outcome.description}}</p>
-      <p>{{outcome.rationale}}</p>
       <ol>
         {% for element in outcome.elements.all %}
         <li>
             {{element.description}}
-            <p>{% if element.slo %}slowmo: {{element.slo.id}}{% endif %}</p>
+            {% if element.slo %}
+            <div class="form-group required">
+              <textarea name="slo" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO."></textarea>
+              <small class="form-text text-muted">Please indicate how this course meets this SLO.</small>
+            </div>
+            {% endif %}
         </li>
         {% endfor %}
       </ol>
-    </li>
+    </div>
     {% endfor %}
-    </ul>
     <button class="btn btn-primary btn-block" type="submit" value="Submit" id="submit-button">Submit</button>
   </form>
 </div>

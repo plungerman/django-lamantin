@@ -21,9 +21,9 @@ def main():
         print(outcome)
         for element in outcome.elements.all():
             print(element)
-            try:
-                print(element.slo)
-            except Exception:
+            if getattr(element, 'slo'):
+                print(element.slo.id)
+            else:
                 slo = CourseOutcome(course=course, slo=element)
                 slo.save()
                 element.slo=slo

@@ -178,7 +178,9 @@ SERVER_EMAIL = ''
 SERVER_MAIL = ''
 # app specific settings
 # logging
-LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
+LOG_FILEPATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',
+)
 LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'debug.log')
 DEBUG_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'debug.log')
 INFO_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'info.log')
@@ -186,7 +188,7 @@ ERROR_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'error.log')
 CUSTOM_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'custom.log')
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
         'standard': {
             'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s',
@@ -211,10 +213,8 @@ LOGGING = {
     'handlers': {
         'logfile': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.FileHandler',
             'filename': LOG_FILENAME,
-            'maxBytes': 50000,
-            'backupCount': 2,
             'formatter': 'standard',
         },
         'console': {
@@ -231,38 +231,31 @@ LOGGING = {
     },
     'loggers': {
         'custom_logfile': {
-            'level':'ERROR',
-            'filters': ['require_debug_true'], # do not run error logger in production
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': CUSTOM_LOG_FILENAME,
             'formatter': 'custom',
         },
         'info_logfile': {
-            'level':'INFO',
-            'class':'logging.handlers.RotatingFileHandler',
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
             'backupCount': 10,
             'maxBytes': 50000,
-            'filters': ['require_debug_false'], # run logger in production
             'filename': INFO_LOG_FILENAME,
             'formatter': 'simple',
         },
         'debug_logfile': {
             'level': 'DEBUG',
+            'handlers': ['logfile'],
             'class': 'logging.FileHandler',
             'filename': DEBUG_LOG_FILENAME,
-            'formatter': 'verbose'
+            'formatter': 'verbose',
         },
         'error_logfile': {
             'level': 'ERROR',
-            'filters': ['require_debug_true'], # do not run error logger in production
             'class': 'logging.FileHandler',
             'filename': ERROR_LOG_FILENAME,
-            'formatter': 'verbose'
-        },
-        'djauth': {
-            'handlers': ['logfile'],
-            'propagate': True,
-            'level': 'DEBUG',
+            'formatter': 'verbose',
         },
         'django': {
             'handlers': ['console'],
@@ -281,6 +274,7 @@ LOGGING = {
         },
     },
 }
+
 
 ##################
 # LOCAL SETTINGS #
