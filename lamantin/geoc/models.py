@@ -13,6 +13,9 @@ from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
 
 
+logger = logging.getLogger('debug_logfile')
+
+
 class Outcome(models.Model):
     """Choices for model and form fields that accept for multiple values."""
 
@@ -155,21 +158,27 @@ def approved_date(sender, instance, created, **kwargs):
 def slo_create(sender, instance, created, **kwargs):
     """Post-save signal function to set approved_date."""
     if instance.id:
+        #logger.debug('outcomes')
         for outcome in instance.outcome.all():
             for element in outcome.elements.all():
+                #logger.debug(element.slo)
                 if not getattr(element, 'slo'):
-                    slo = CourseOutcome(course=course, slo=element)
+                    slo = CourseOutcome(course=instance, slo=element)
+                    #logger.debug(slo)
                     slo.save()
                     element.slo=slo
                     element.save()
+                else:
+                    pass
+                    #logger.debug(element.slo.id)
 
 
 @receiver(models.signals.m2m_changed, sender=Course.outcome.through)
 def signal_function(sender, instance, action, **kwargs):
-    logger = logging.getLogger('debug_logfile')
     if action == 'pre_remove':
-        logger.debug('pk_set')
-        logger.debug(kwargs.get('pk_set'))
+        #logger.debug(kwargs.get('pk_set'))
         for outcome in instance.outcomes.all():
+            #logger.debug(outcome.slo.outcome.id)
             if outcome.slo.outcome.id in kwargs.get('pk_set'):
-                outcome.slo.delete()
+                #logger.debug(outcome)
+                outcome.delete()

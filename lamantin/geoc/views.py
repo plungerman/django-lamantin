@@ -35,6 +35,7 @@ def course_form(request, step='course', cid=None):
             course.user = user
             course.updated_by = user
             course.save()
+            form.save_m2m()
             messages.add_message(
                 request,
                 messages.SUCCESS,
