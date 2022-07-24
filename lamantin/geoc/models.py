@@ -154,31 +154,22 @@ def approved_date(sender, instance, created, **kwargs):
         instance.save()
 
 
-@receiver(models.signals.post_save, sender=Course)
-def slo_create(sender, instance, created, **kwargs):
-    """Post-save signal function to set approved_date."""
-    if instance.id:
-        #logger.debug('outcomes')
-        for outcome in instance.outcome.all():
-            for element in outcome.elements.all():
-                #logger.debug(element.slo)
-                if not getattr(element, 'slo'):
-                    slo = CourseOutcome(course=instance, slo=element)
-                    #logger.debug(slo)
-                    slo.save()
-                    element.slo=slo
-                    element.save()
-                else:
-                    pass
-                    #logger.debug(element.slo.id)
-
-
 @receiver(models.signals.m2m_changed, sender=Course.outcome.through)
 def signal_function(sender, instance, action, **kwargs):
-    if action == 'pre_remove':
-        #logger.debug(kwargs.get('pk_set'))
-        for outcome in instance.outcomes.all():
-            #logger.debug(outcome.slo.outcome.id)
-            if outcome.slo.outcome.id in kwargs.get('pk_set'):
-                #logger.debug(outcome)
-                outcome.delete()
+    ids = kwargs.get('pk_set')
+    for sid in ids:
+        outcome = Outcome.objects.get(pk=sid)
+        if action == 'post_add':
+            for element in outcome.elements.all():
+                slo = CourseOutcome(course=instance, slo=element)
+                slo.save()
+                element.slo=slo
+                element.save()
+                logger.debug('slo created: {0}'.format(element.slo))
+        if action == 'pre_remove':
+            for element in outcome.elements.all():
+                try:
+                    logger.debug('slo deleted: {0}'.format(element.slo))
+                    element.slo.delete()
+                except Exception as xcept:
+                    logger.debug(xcept)
