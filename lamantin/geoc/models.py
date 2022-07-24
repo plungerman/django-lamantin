@@ -40,7 +40,7 @@ class Outcome(models.Model):
 
     def get_form(self):
         """Form name."""
-        return name.replace(' ', '')
+        return self.name.replace(' ', '')
 
 
 class Course(models.Model):

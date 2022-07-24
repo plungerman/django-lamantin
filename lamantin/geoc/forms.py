@@ -25,9 +25,22 @@ class CourseForm(forms.ModelForm):
         cd = self.cleaned_data
         return cd
 
+
 class CourseOutcomeForm(forms.ModelForm):
-    """GEOC outcome form."""
+    """GEOC specific outcome form."""
 
     class Meta:
         model = CourseOutcome
         fields = ['description']
+
+'''
+class CourseOutcomeForm(forms.Form):
+    """GEOC outcome form."""
+
+    slo1 = forms.TextField(required=False)
+    slo2 = forms.TextField(required=False)
+    slo3 = forms.TextField(required=False)
+    slo4 = forms.TextField(required=False)
+    slo5 = forms.TextField(required=False)
+    slo6 = forms.TextField(required=False)
+'''
