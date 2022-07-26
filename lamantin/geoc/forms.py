@@ -2,6 +2,9 @@
 
 from django import forms
 
+#from django_summernote.widgets import SummernoteInplaceWidget
+#from django_summernote.widgets import SummernoteWidget
+#from django_summernote.fields import SummernoteTextField
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Outcome
@@ -29,10 +32,18 @@ class CourseForm(forms.ModelForm):
 class CourseOutcomeForm(forms.ModelForm):
     """GEOC specific outcome form."""
 
+    #description = SummernoteTextField(
+    #    help_text="Please indicate how this course meets this SLO.",
+    #)
+
+
     class Meta:
         model = CourseOutcome
-        fields = ['description']
-
+        fields = ('description',)
+        #widgets = {
+            #'description': SummernoteWidget(),
+            #'description': SummernoteInplaceWidget(),
+        #}
 '''
 class CourseOutcomeForm(forms.Form):
     """GEOC outcome form."""

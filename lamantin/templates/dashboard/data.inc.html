@@ -8,6 +8,7 @@
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>
+        <th style="text-align: center;">Submitted</th>
         <th style="text-align: center;">Approved</th>
       </tr>
     </thead>
@@ -34,6 +35,14 @@
         {% endif %}
         </td>
         <td nowrap style="text-align: center;">
+          {% if course.save_submit  %}
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="Submitted for approval"><i class="fa fa-check green" title="Submitted for approval"><span style="display:none;">✓</span> </i>
+            </a>
+          {% else %}
+            <i class="fa fa-times red" aria-hidden="true"></i>
+          {% endif %}
+        </td>
+        <td nowrap style="text-align: center;">
           {% if course.approved  %}
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{course.approved_date}}"><i class="fa fa-check green" title="Approved"><span style="display:none;">✓</span> </i>
             </a>
@@ -51,6 +60,7 @@
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>
+        <th style="text-align: center;">Submitted</th>
         <th style="text-align: center;">Approved</th>
       </tr>
     </tfoot>

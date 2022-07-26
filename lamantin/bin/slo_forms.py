@@ -17,12 +17,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lamantin.settings.shell')
 
 def main():
     """Main function that does something."""
-    course = Course.objects.get(pk=1)
+    course = Course.objects.get(pk=2)
     forms_dict = {}
     for outcome in course.outcome.all():
         forms = []
         for element in outcome.elements.all():
-            form = CourseOutcomeForm(prefix='slo{0}'.format(element.id), instance=element)
+            form = CourseOutcomeForm(prefix='slo{0}'.format(element.slo.id), instance=element.slo)
             forms.append(form)
         forms_dict[outcome.get_form()] = forms
 

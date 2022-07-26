@@ -85,7 +85,10 @@ INSTALLED_APPS = (
     'djtools',
     # honeypot for admin attacks
     'admin_honeypot',
+    # form forge
     'bootstrap4',
+    # wysiwyg editor
+    'django_summernote',
     # fontawesome 6
     'fontawesomefree',
     # sign in as a user
@@ -177,6 +180,7 @@ DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
 SERVER_MAIL = ''
 # app specific settings
+SUMMERNOTE_THEME = 'bs4'
 # logging
 LOG_FILEPATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',

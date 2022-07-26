@@ -1,0 +1,151 @@
+[{
+    "model": "geoc.outcome",
+    "pk": 1,
+    "fields": {
+        "name": "Intellectual Foundations",
+        "description": "These courses serve as the foundation of the general education curriculum and the basis for our students’ ongoing intellectual development.",
+        "rationale": "By providing a shared educational experience for all first year students, these foundational courses begin the process of building a learning community at Carthage to which all students and faculty belong. As such, they contribute to an ongoing conversation about the nature and pursuit of knowledge which will continue through the college years and beyond. They also introduce students to college-level coursework and develop the experience and abilities they need to be successful.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 2,
+    "fields": {
+        "name": "Artistic Inquiries",
+        "description": "These courses provide students with the opportunity to perform or create by participating directly in the literary, performing, or visual arts.",
+        "rationale": "Carthage is committed to providing students with the opportunity to cultivate and share their capacities for artistic inquiry. Creativity is vital to effective leadership and problem-solving. It is the engine of invention and innovation, entrepreneurship and design. Acting creatively allows us to express our individuality; when directed against humanity’s problems, creativity can be a profoundly valuable force for good. Artistic inquiries are also the lifeblood of the arts. Through the literary, performing, and visual arts, artists enable us to view the world from new and surprising perspectives. The study of the arts therefore broadens our horizons, cultivating empathy and fostering reflection on our common human experience. Engaging directly in the creative arts as an artist provides a unique opportunity for personal expression and self- discovery.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 3,
+    "fields": {
+        "name": "Cultural Legacies",
+        "description": "These courses focus on interpreting and analyzing cultural products in context.",
+        "rationale": "We cultivate a deeper understanding of our world and our place in it by examining and asking questions about the legacies of human cultures - their histories and the products they leave behind. This sort of inquiry, broadly understood as humanities scholarship, teaches us about the values and perspectives of other cultures while also deepening our understanding of our own. The skills such scholarship requires enable us to gain insight from texts broadly defined - from poems and novels to paintings and plays to histories and myths. Ultimately, these insights allow us to turn our gaze from the past to the present, and to imagine a better future.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 4,
+    "fields": {
+        "name": "Social Interactions",
+        "description": "These courses focus on understanding how humans behave and interact and the modes of inquiry we use to study these topics.",
+        "rationale": "Humans are social creatures, and an educated citizen should have an understanding of the social context of the world in which we live. This includes patterns of human behavior and social interactions as well as the structures we create that shape these interactions, and can be extended to the study of societies as a whole.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 5,
+    "fields": {
+        "name": "Scientific Exploration",
+        "description": "These courses focus on exploring the structure and processes of the natural world and the modes of inquiry we use to study it.",
+        "rationale": "Science underlies issues that affect all of our lives. As a result, educated citizens need to be able to understand and interpret scientific information in order to make good decisions for themselves and their communities. Beyond this, curiosity about the workings of the natural world is an essential part of what makes us human, and engaging with the process of scientific discovery is a core part of the acquisition of knowledge.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 6,
+    "fields": {
+        "name": "Global Language",
+        "description": "These courses build linguistic and cultural competency as well as basic communication skills in a foreign language.",
+        "rationale": "A large portion of the world’s population is multilingual, and understanding and interacting in a global society increasingly requires language skills. As a result, even limited language study improves our ability to communicate and connect with others. Exposure to language also builds an understanding and appreciation of other cultures, and improves our ability to understand our own culture in context. As such, it is a basic part of a broad education.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 7,
+    "fields": {
+        "name": "Written Communication",
+        "description": "In these courses, students will practice and improve the articulation of ideas and arguments in clear, precise, and expressive writing.",
+        "rationale": "Writing is a pivotal form of communication across all disciplines, professions, and walks of life. The ability to articulate ideas through writing is essential, since full communication allows for full development of our potential as humans. As a result, writing must be taught and practiced at every level of the educational process, to equip students to share with clarity and distinction in a complex world. The act of writing helps students build skills of analytical and interpretive argument, become careful and critical readers, practice writing in a variety of genres, and engage in a process of intellectual inquiry and creative expression. This ultimately helps them to become more effective thinkers and communicators who are well equipped for a variety of careers in our information intensive society.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 8,
+    "fields": {
+        "name": "Oral Communication",
+        "description": "In these courses, students will practice and improve the articulation of ideas and arguments in clear, precise, and expressive speech.",
+        "rationale": "Clear and effective verbal expression is a skill demanded of us in every area of life. We need to communicate cogently whether we are engaging in a small group discussion or presenting to a large audience. Although some oral communication is inherently woven into the experience of a college education, intentional and consistent development of these skills will provide our students a foundation for success.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 9,
+    "fields": {
+        "name": "Quantitative Reasoning",
+        "description": "These courses focus on the interpretation and application of quantitative information.",
+        "rationale": "As educated citizens, our understanding of the world around us and our ability to make reasoned decisions is based in part on quantitative information. In order to manage our finances, maintain our health, and follow the news, we need to be able to work with numerical data. In addition, students need more opportunities to develop the quantitative skills that are relevant to many majors and professions.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 10,
+    "fields": {
+        "name": "Religious Perspectives",
+        "description": "These courses focus on religion and the role it plays in the lives of individuals, communities, and cultures.",
+        "rationale": "For most of the world’s population, religion is foundational to culture, ethics, and social practice. The field of religious study is therefore inherently multidisciplinary, intercultural, comparative, and integrative, and as such is essential to a liberal arts education. The study of religion prepares students to analyze, articulate, and defend religious views - their own and others’ - as they encounter a world of ethical complexity in which religion is all too often employed to polarize and divide.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 11,
+    "fields": {
+        "name": "Diverse Perspectives",
+        "description": "These courses focus on the origins and contexts of diverse voices and our role in engaging with the ideals of freedom and equality in a diverse society.",
+        "rationale": "We live in a diverse society, and such diversity comes in a variety of forms including race, ethnicity, religion, social class, sexual orientation, and gender identity. Awareness of the ways in which diverse individuals and groups interact, and the personal and institutional inequities that often result, is crucial for an educated citizen to be able to interact and thrive in today’s society. Further, an awareness of the diverse intellectual and cultural contexts that surround us allows us to recognize our own context and gain broader perspectives that can be useful in helping overcome the limitations inherent in any single context.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 12,
+    "fields": {
+        "name": "International Perspectives",
+        "description": "These courses focus on the origins and context of international voices and on our engagement with global society.",
+        "rationale": "We live in a global society, in which international communication, culture, politics, migration, and trade are becoming ever more relevant. This ongoing globalization emerges from interactions among individuals representing a vast array of countries and cultural identities, each having its own context, ideals, and goals. Understanding these global issues therefore requires not only awareness of the issues, but also an ability to see them from a perspective beyond that of the United States. This international perspective is necessary for an educated person to interpret and interact with the world around them in an appropriate and effective manner.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 13,
+    "fields": {
+        "name": "Interdisciplinary Perspectives",
+        "description": "These courses study topics from multiple distinct disciplinary perspectives.",
+        "rationale": "While higher education is traditionally divided into disciplines, the world itself is not. Interdisciplinary studies are at the core of the liberal arts experience; they encourage students to consider important questions from multiple perspectives and to value the outcomes of this approach. This fosters cognitive development including diverse approaches to knowledge acquisition and the integration of alternate perspectives. As a result, these experiences prepare students for success in the modern world.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 14,
+    "fields": {
+        "name": "Wellness",
+        "description": "Wellness is a holistic approach to optimize one’s life through a dynamic process of growth and change.",
+        "rationale": "Carthage is committed to providing its students with the knowledge and skills necessary to live healthier lives, thereby enhancing their general well-being at Carthage and beyond.",
+        "active": true,
+        "group": []
+    }
+}, {
+    "model": "geoc.outcome",
+    "pk": 15,
+    "fields": {
+        "name": "Reflection Framework",
+        "description": "This framework helps students learn to process their experiences, be intentional about their choices, and develop an appropriate educational plan.",
+        "rationale": "Many students begin their college years uncertain about who they are and who they want to be, and how their education can support them in developing and refining their goals. To aid students in finding their own answers to these questions, reflection is woven throughout Carthage's curriculum. These curricular components use teaching, mentoring, peer discussion, and individual self-examination to help students personalize their education and articulate the role it plays in their ongoing individual development.",
+        "active": true,
+        "group": []
+    }
+}]

@@ -53,6 +53,8 @@ urlpatterns = [
     path('rocinante/', admin.site.urls),
     # admin honeypot
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    # wysiwyg editor
+    path('summernote/', include('django_summernote.urls')),
     # clear cache via ajax post
     path('cache/<str:ctype>/clear/', views.clear_cache, name='clear_cache'),
     # dashboard

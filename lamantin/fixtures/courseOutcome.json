@@ -1,0 +1,121 @@
+[{
+    "model": "geoc.courseoutcome",
+    "pk": 1,
+    "fields": {
+        "course": 1,
+        "slo": 17,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 2,
+    "fields": {
+        "course": 1,
+        "slo": 18,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 3,
+    "fields": {
+        "course": 1,
+        "slo": 19,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 4,
+    "fields": {
+        "course": 1,
+        "slo": 20,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 5,
+    "fields": {
+        "course": 1,
+        "slo": 21,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 6,
+    "fields": {
+        "course": 1,
+        "slo": 22,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 7,
+    "fields": {
+        "course": 1,
+        "slo": 23,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 8,
+    "fields": {
+        "course": 1,
+        "slo": 24,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 9,
+    "fields": {
+        "course": 1,
+        "slo": 25,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 10,
+    "fields": {
+        "course": 1,
+        "slo": 26,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 11,
+    "fields": {
+        "course": 1,
+        "slo": 27,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 12,
+    "fields": {
+        "course": 1,
+        "slo": 28,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 13,
+    "fields": {
+        "course": 1,
+        "slo": 29,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 14,
+    "fields": {
+        "course": 1,
+        "slo": 30,
+        "description": ""
+    }
+}, {
+    "model": "geoc.courseoutcome",
+    "pk": 15,
+    "fields": {
+        "course": 1,
+        "slo": 31,
+        "description": ""
+    }
+}]

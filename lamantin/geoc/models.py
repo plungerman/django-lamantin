@@ -135,7 +135,11 @@ class CourseOutcome(models.Model):
         on_delete=models.CASCADE,
         editable=settings.DEBUG,
     )
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(
+        help_text="Please indicate how this course meets this SLO.",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         """Default data for display."""

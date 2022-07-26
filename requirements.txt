@@ -2,6 +2,7 @@ django==3.2.14
 django-admin-honeypot>=1.1.0
 django-localflavor>=3.1
 django-loginas>=0.3.10
+django-summernote>=0.8.20.0
 django-taggit>=3.3.0
 fontawesomefree>=6.1.1
 mysqlclient>=2.1.0

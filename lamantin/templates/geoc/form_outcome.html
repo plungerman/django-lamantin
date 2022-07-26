@@ -1,9 +1,30 @@
 {% extends "home.html" %}
-{% block extra_javascript %}
+{% block extra_style %}
 {{block.super}}
-<script>
-$(function() {
-});
+<link href="//app.carthage.edu/static/vendor/jquery/plugins/trumbowyg_2.25.1/dist/ui/trumbowyg.min.css"
+  rel="stylesheet" type="text/css">
+{% endblock %}
+{% block javascript %}
+{{block.super}}
+<script src="//app.carthage.edu/static/vendor/jquery/plugins/trumbowyg_2.25.1/dist/trumbowyg.min.js"
+  type="text/javascript" language="javascript"></script>
+<script type="text/javascript">
+  $(function() {
+    /* End course outcomes */
+    $('[type="submit"]').on('click', function () {
+        if ($(this).attr('id') == 'id_submit') {
+            $('#id_save_submit').val('true');
+            alert('save submit');
+        }
+    });
+    // disable submit button after users clicks it
+    $('form#courseOutcomes').on('submit', function (e) {
+        $('#id_submit').prop('disabled', true);
+        $('#id_save').prop('disabled', true);
+        //return false;
+        return true;
+    });
+  });
 </script>
 {% endblock %}
 {% block breadcrumb %}
@@ -29,7 +50,7 @@ $(function() {
       </p>
     </div>
   </div>
-  <form method="post" action="." autocomplete="false" class="form" role="form">
+  <form method="post" action="." autocomplete="false" class="form" role="form" id="courseOutcomes">
     {% if form.errors %}
       <div class="alert alert-danger mt-4">
         Please correct the errors below.
@@ -50,7 +71,7 @@ $(function() {
             {{element.description}}
             {% if element.slo %}
             <div class="form-group required">
-              <textarea name="slo" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO."></textarea>
+                <textarea name="slo{{element.slo.id}}-description" id="id_slo{{element.slo.id}}-description" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO.">{{element.slo.description|default:""}}</textarea>
               <small class="form-text text-muted">Please indicate how this course meets this SLO.</small>
             </div>
             {% endif %}
@@ -59,7 +80,23 @@ $(function() {
       </ol>
     </div>
     {% endfor %}
-    <button class="btn btn-primary btn-block" type="submit" value="Submit" id="submit-button">Submit</button>
+    <div class="d-flex justify-content-center">
+      <input type="hidden" id="id_save_submit" name="save_submit" value="">
+      <label for="id_save" style="display:none;">
+        Save
+      </label>
+      <input value="Save my work" type="submit"
+        class="btn btn-primary mr-2" id="id_save"
+        data-toggle="tooltip" data-placement="top"
+        title="Save your work but DO NOT SUBMIT for approval">
+      <label for="id_submit" style="display:none;">
+        Save and Submit
+      </label>
+      <input value="Save &amp; Submit" type="submit"
+        class="btn btn-success ml-2" id="id_submit"
+        data-toggle="tooltip" data-placement="top"
+        title="Save your work and SUBMIT the course for approval">
+    </div>
   </form>
 </div>
 <!-- /.forms-container /.col-* -->

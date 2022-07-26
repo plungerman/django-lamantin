@@ -1,0 +1,497 @@
+[{
+    "model": "geoc.outcomeelement",
+    "pk": 1,
+    "fields": {
+        "outcome": 2,
+        "active": true,
+        "description": "Engage in the process of making art from conceptualization through final product."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 2,
+    "fields": {
+        "outcome": 2,
+        "active": true,
+        "description": "Describe the fundamental theories and practices surrounding a specific art form."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 3,
+    "fields": {
+        "outcome": 2,
+        "active": true,
+        "description": "Recognize and describe how the arts both reflect and reshape culture."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 4,
+    "fields": {
+        "outcome": 3,
+        "active": true,
+        "description": "Identify and describe texts using discipline-specific research tools and practice."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 5,
+    "fields": {
+        "outcome": 3,
+        "active": true,
+        "description": "Examine and analyze the language and form of texts and cultural artifacts including rhetorical and stylistic features and genres."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 6,
+    "fields": {
+        "outcome": 3,
+        "active": true,
+        "description": "Interpret and evaluate texts using discipline-specific literacy."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 7,
+    "fields": {
+        "outcome": 3,
+        "active": true,
+        "description": "Respond to texts by critically reading and integrating existing scholarship, and develop new interpretations of texts and cultural artifacts."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 8,
+    "fields": {
+        "outcome": 11,
+        "active": true,
+        "description": "Recognize the diverse backgrounds represented in United States society and describe how these diverse contexts lead to differing perspectives on various topics."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 9,
+    "fields": {
+        "outcome": 11,
+        "active": true,
+        "description": "Reflect on our own backgrounds in relation to those of others to identify commonalities and differences."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 10,
+    "fields": {
+        "outcome": 11,
+        "active": true,
+        "description": "Recognize how awareness of these differences can enhance our understanding of the world around us."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 11,
+    "fields": {
+        "outcome": 11,
+        "active": true,
+        "description": "Identify and clearly and constructively discuss various issues related to diversity, inequality, and associated topics."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 12,
+    "fields": {
+        "outcome": 11,
+        "active": true,
+        "description": "Analyze ways in which individual interactions, social structures, and power dynamics have shaped and challenged the ideals of freedom and equality in a diverse society."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 13,
+    "fields": {
+        "outcome": 6,
+        "active": true,
+        "description": "Demonstrate elementary communicative proficiency in a foreign language."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 14,
+    "fields": {
+        "outcome": 6,
+        "active": true,
+        "description": "Compare the structures of a foreign and native language to gain new insights into the ways that languages work."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 15,
+    "fields": {
+        "outcome": 6,
+        "active": true,
+        "description": "Identify distinctive features of culture(s) associated with the language being studied in comparison to one’s native culture(s)."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 16,
+    "fields": {
+        "outcome": 6,
+        "active": true,
+        "description": "Recognize and analyze the ways that culture and language are related in cultural perspectives, practices, and products."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 17,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Acquire and critically evaluate ideas and information from a range of intellectual traditions."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 18,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Identify, explain, and engage in personal reflection on the ways in which knowledge is informed by our influences and shapes our worldviews."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 19,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Contribute to the ongoing search for truth that forms the core of our academic mission."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 20,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Develop the ability to interpret and analyze diverse texts, and to recognize the ways in which they connect to each other and to individual experiences."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 21,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Develop effective written communication skills, including the ability to articulate complex ideas and to build and support arguments."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 22,
+    "fields": {
+        "outcome": 1,
+        "active": true,
+        "description": "Develop effective dialogue skills, including the ability to articulate complex ideas, respond constructively to the ideas of others, and address difficult topics respectfully."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 23,
+    "fields": {
+        "outcome": 13,
+        "active": true,
+        "description": "Consider individual questions or topics from multiple perspectives."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 24,
+    "fields": {
+        "outcome": 13,
+        "active": true,
+        "description": "Explain some of the variety of ways in which we acquire and communicate knowledge."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 25,
+    "fields": {
+        "outcome": 13,
+        "active": true,
+        "description": "Recognize the similarities and differences in language, skills, and approach taken by different disciplines to the same topic."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 26,
+    "fields": {
+        "outcome": 13,
+        "active": true,
+        "description": "Observe the types of conversations that take place between experts from different fields and the benefits and challenges of communicating across disciplines."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 27,
+    "fields": {
+        "outcome": 13,
+        "active": true,
+        "description": "Recognize the ways in which an interdisciplinary approach can strengthen our understanding of the world around us."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 28,
+    "fields": {
+        "outcome": 12,
+        "active": true,
+        "description": "Identify patterns of assumptions, values and/or practices in one or more countries, regions, or cultural areas outside of the United States."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 29,
+    "fields": {
+        "outcome": 12,
+        "active": true,
+        "description": "Interpret and evaluate these patterns and their implications for individuals and/or communities."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 30,
+    "fields": {
+        "outcome": 12,
+        "active": true,
+        "description": "Recognize historical, cultural, artistic, economic, social, political, or other perspectives of these countries or cultural areas."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 31,
+    "fields": {
+        "outcome": 12,
+        "active": true,
+        "description": "Consider how these perspectives shape responses to issues of local and/or international importance."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 32,
+    "fields": {
+        "outcome": 8,
+        "active": true,
+        "description": "Demonstrate effective oral communication skills in a variety of contexts, including both discussions and formal presentations."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 33,
+    "fields": {
+        "outcome": 8,
+        "active": true,
+        "description": "Speak with confidence in both spontaneous and rehearsed formats."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 34,
+    "fields": {
+        "outcome": 8,
+        "active": true,
+        "description": "Express ideas with precision and clarity, but also style and creativity."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 35,
+    "fields": {
+        "outcome": 8,
+        "active": true,
+        "description": "Identify and apply techniques for effective verbal expression, including understanding the audience and building engagement."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 36,
+    "fields": {
+        "outcome": 9,
+        "active": true,
+        "description": "Reason with data, read graphs or maps, draw inferences from data, and recognize sources of error."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 37,
+    "fields": {
+        "outcome": 9,
+        "active": true,
+        "description": "Recognize the context in which quantitative information is provided and apply appropriate quantitative tools."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 38,
+    "fields": {
+        "outcome": 9,
+        "active": true,
+        "description": "Apply quantitative tools to make decisions and solve problems in everyday life."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 39,
+    "fields": {
+        "outcome": 9,
+        "active": true,
+        "description": "Have accurate intuition about the meaning of numbers, including estimating and comparing scale."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 40,
+    "fields": {
+        "outcome": 9,
+        "active": true,
+        "description": "Be comfortable with quantitative ideas and confident in their ability to apply quantitative methods."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 41,
+    "fields": {
+        "outcome": 15,
+        "active": true,
+        "description": "Explore and explain the role of individual courses as part of a liberal arts education."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 42,
+    "fields": {
+        "outcome": 15,
+        "active": true,
+        "description": "Explore and explain connections between different general education courses, individual majors, past experiences, and future goals."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 43,
+    "fields": {
+        "outcome": 15,
+        "active": true,
+        "description": "Articulate and develop a sense of purpose and goals for meaningful life and work."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 44,
+    "fields": {
+        "outcome": 10,
+        "active": true,
+        "description": "Identify the underlying structural components of religious worldviews, and articulate how these are expressed in various world religions."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 45,
+    "fields": {
+        "outcome": 10,
+        "active": true,
+        "description": "Examine the role of religion in shaping individual and community identities worldwide, and how these identities have influenced historical and/or contemporary societies."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 46,
+    "fields": {
+        "outcome": 10,
+        "active": true,
+        "description": "Evaluate critically the interaction between religious values and daily life, and how such interaction can potentially both promote and resolve conflict."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 47,
+    "fields": {
+        "outcome": 5,
+        "active": true,
+        "description": "Explore the structures and components of the natural world and our connection to it."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 48,
+    "fields": {
+        "outcome": 5,
+        "active": true,
+        "description": "Engage in the process of science and explain its use as a tool for acquiring knowledge about the world."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 49,
+    "fields": {
+        "outcome": 5,
+        "active": true,
+        "description": "Recognize the approaches scientists take to ask."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 50,
+    "fields": {
+        "outcome": 5,
+        "active": true,
+        "description": "Develop the scientific literacy needed to interpret, evaluate and communicate scientific information from a range of sources to a range of audiences."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 51,
+    "fields": {
+        "outcome": 4,
+        "active": true,
+        "description": "Recognize and understand patterns of human behavior, individually or in groups."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 52,
+    "fields": {
+        "outcome": 4,
+        "active": true,
+        "description": "Understand social, economic, and/or political structures and the ways in which they affect and are affected by individuals and/or societies."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 53,
+    "fields": {
+        "outcome": 4,
+        "active": true,
+        "description": "Develop a basic understanding of how theory, method, data, and/or the evaluation of evidence work together, from the unique perspective of the discipline involved."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 54,
+    "fields": {
+        "outcome": 14,
+        "active": true,
+        "description": "Explain the holistic nature of wellness and describe how different areas of wellness are interrelated."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 55,
+    "fields": {
+        "outcome": 14,
+        "active": true,
+        "description": "Demonstrate and put into practice the knowledge and skills necessary to live healthier lives in college and beyond."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 56,
+    "fields": {
+        "outcome": 14,
+        "active": true,
+        "description": "Articulate the relationship between wellness and one’s ability to meet personal, academic, and life goals."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 57,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Practice writing as a process of motivated inquiry and an exploration of external ideas and information."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 58,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Structure arguments effectively and provide evidence to support them."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 59,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Write with clarity and precision, structuring thoughts in a coherent manner."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 60,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Effectively revise the content, grammar, and style of written work."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 61,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Develop an awareness of and confidence in one’s voice as a writer and be able to express ideas in a manner that is both engaging and appropriate for the audience."
+    }
+}, {
+    "model": "geoc.outcomeelement",
+    "pk": 62,
+    "fields": {
+        "outcome": 7,
+        "active": true,
+        "description": "Write effectively in discipline-appropriate style and in response to discipline-specific forms of inquiry."
+    }
+}]

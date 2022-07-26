@@ -1,0 +1,33 @@
+[{
+    "model": "geoc.course",
+    "pk": 1,
+    "fields": {
+        "user": 1217657,
+        "updated_by": 1217657,
+        "created_at": "2022-07-19T09:37:30.442",
+        "updated_at": "2022-07-25T14:32:37.468",
+        "approved": true,
+        "approved_date": "2022-07-19",
+        "save_submit": false,
+        "title": "Marxism Leninism",
+        "number": "POL 666",
+        "phile": "files/course/b641acd1dd644bfea869190828b94183.pdf",
+        "outcome": [1, 13, 12]
+    }
+}, {
+    "model": "geoc.course",
+    "pk": 2,
+    "fields": {
+        "user": 1217657,
+        "updated_by": 1217657,
+        "created_at": "2022-07-21T14:21:40.808",
+        "updated_at": "2022-07-21T14:21:40.808",
+        "approved": false,
+        "approved_date": null,
+        "save_submit": false,
+        "title": "test",
+        "number": "666",
+        "phile": "",
+        "outcome": []
+    }
+}]
