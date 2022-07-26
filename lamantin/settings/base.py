@@ -180,6 +180,7 @@ DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
 SERVER_MAIL = ''
 # app specific settings
+MANAGER_GROUP = ''
 SUMMERNOTE_THEME = 'bs4'
 # logging
 LOG_FILEPATH = os.path.join(

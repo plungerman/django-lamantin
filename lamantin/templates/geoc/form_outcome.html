@@ -14,7 +14,6 @@
     $('[type="submit"]').on('click', function () {
         if ($(this).attr('id') == 'id_submit') {
             $('#id_save_submit').val('true');
-            alert('save submit');
         }
     });
     // disable submit button after users clicks it
@@ -64,6 +63,18 @@
         <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{outcome.rationale}}">
           <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
       </h4>
+      {% if outcome.name == "Written Communication" %}
+      <p>
+        Written Communication applications are currently being run through WAC committee.
+        To apply for Writing Intensive / WC designation, please use the
+        <a href="https://app.carthage.edu/forms/writingcurriculum/">WAC proposal form</a>.
+      </p>
+      {% else %}
+      {% if outcome.name == "Oral Communication" %}
+      <p>
+         Oral Communication SLO are not available at this time.
+      </p>
+      {% else %}
       <p>{{outcome.description}}</p>
       <ol>
         {% for element in outcome.elements.all %}
@@ -78,6 +89,7 @@
         </li>
         {% endfor %}
       </ol>
+      {% endif %}{% endif %}
     </div>
     {% endfor %}
     <div class="d-flex justify-content-center">

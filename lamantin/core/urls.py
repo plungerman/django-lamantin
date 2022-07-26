@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include
 from django.urls import path
+from django.urls import re_path
 from django.urls import reverse_lazy
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
@@ -62,5 +63,5 @@ urlpatterns = [
     # geoc
     path('geoc/', include('lamantin.geoc.urls')),
     # home: redirect to dashboard
-    path('', RedirectView.as_view(url=reverse_lazy('dashboard_home'))),
+    path('', views.home, name='home'),
 ]

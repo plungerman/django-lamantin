@@ -3,8 +3,18 @@
   <table class="table table-striped table-bordered table-hover display" id="courses">
     <thead>
       <tr>
-        <th>Title</th>
-        <th style="text-align: center;">Number</th>
+        <th>
+          Title
+          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update Course"></i>
+        </th>
+        <th style="text-align: center;">
+          Number
+          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Course"></i>
+        </th>
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>
@@ -19,10 +29,10 @@
           <a href="{% url 'course_update' 'course' course.id %}">{{course.title}}</a>
         </td>
         <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
-          {{course.number}}
+          <a href="{% url 'course_detail' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap>
-          <a href="mailto:{{user.email}}">{{user.last_name}}, {{user.first_name}}</a>
+          <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
         </td>
         <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
           {{course.created_at|date:'Y-m-d'}}
@@ -55,8 +65,18 @@
     </tbody>
     <tfoot>
       <tr>
-        <th>Title</th>
-        <th style="text-align: center;">Number</th>
+        <th>
+          Title
+          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update Course"></i>
+        </th>
+        <th style="text-align: center;">
+          Number
+          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Course"></i>
+        </th>
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>

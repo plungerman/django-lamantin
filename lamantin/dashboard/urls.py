@@ -8,8 +8,9 @@ from lamantin.dashboard import views
 
 urlpatterns = [
     path(
-        'search/',
-        views.search, name='dashboard_search'
+        'course/<int:cid>/detail/',
+        views.course_detail,
+        name='course_detail',
     ),
     path('', views.home, name='dashboard_home'),
 ]

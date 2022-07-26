@@ -2,8 +2,6 @@
 
 """URLs for all views."""
 
-import logging
-
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -15,13 +13,9 @@ from lamantin.geoc.forms import CourseOutcomeForm
 from lamantin.geoc.models import Course
 
 
-logger = logging.getLogger('debug_logfile')
-
-
 @portal_auth_required(
-    session_var='DJCHEKHOV_AUTH',
+    session_var='LAMANTIN_AUTH',
     redirect_url=reverse_lazy('access_denied'),
-    group='carthageStaffStatus',
 )
 def course_form(request, step='course', cid=None):
     """GEOC workflow form. """
@@ -31,15 +25,23 @@ def course_form(request, step='course', cid=None):
     user = request.user
     if cid:
         course = Course.objects.get(pk=cid)
-        if (course.save_submit and user == course.user):
+        if course.save_submit:
             messages.add_message(
                 request,
-                messages.SUCCESS,
+                messages.WARNING,
                 """
                     The course you attempted to edit is complete.
                     The GEOC committe will review your course and report back to you presently.
                 """,
-                extra_tags='alert-success',
+                extra_tags='alert-warning',
+            )
+            return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+        elif user != course.user:
+            messages.add_message(
+                request,
+                messages.WARNING,
+                "The course you attempted to edit is unavailable.",
+                extra_tags='alert-warning',
             )
             return HttpResponseRedirect(reverse_lazy('dashboard_home'))
 
