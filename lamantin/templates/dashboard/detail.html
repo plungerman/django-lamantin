@@ -1,0 +1,72 @@
+{% extends "home.html" %}
+{% block breadcrumb %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+      <h1 class="page-header">
+      Course Details
+      <a href="#" id="print" class="no-print-icon">
+        <i class="fa fa-print green" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Print to paper or PDF"></i></a> |
+      <a href="{% url 'course_update' 'course' course.id %}">
+        <i class="fa fa-pencil green" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top"
+          title="Update Course"></i></a>
+      </h1>
+    </div>
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-12 text-center">
+      <div class="panel panel-default mb-3">
+        <div class="panel-body">
+        <a href="#" class="btn btn-default btn-success proposal-status"
+          style="width:128px;" data-status="approve">Approve</a>
+        <a href="#" class="btn btn-default btn-danger proposal-status"
+          style="margin-left:24px;width:128px;" data-status="decline">Decline</a>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-8">
+      <div class="panel panel-default mb-3">
+        <div class="panel-body">
+          <h2 class="detail"><u>{{course.title}}</u></h2>
+          <h3>{{course.number}}</h3>
+          <h4>Submitted by</h4>
+          <h5>
+            <a href="mailto:{{course.user.email}}">{{course.user.last_name}},
+              {{course.user.first_name}}</a>
+          </h5>
+          <h4>Dates</h4>
+          <div class="container">
+          <dl class="row">
+          <dt class="col-sm-3">Created at</dt>
+          <dd class="col-sm-8">{{course.created_at|date:'Y-m-d'}}</dd>
+          <dt class="col-sm-3">Updated at</dt>
+          <dd class="col-sm-8">{{course.updated_at|date:'Y-m-d'}}</dd>
+          <dt class="col-sm-3">Approved date</dt>
+          <dd class="col-sm-8">{{course.approved_date|date:'Y-m-d'}}</dd>
+          </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+{% endblock content %}
