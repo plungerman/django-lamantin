@@ -4,6 +4,7 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required

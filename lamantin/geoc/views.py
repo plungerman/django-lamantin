@@ -75,6 +75,7 @@ def course_form(request, step='course', cid=None):
         else:
             form = CourseForm(
                 request.POST,
+                request.FILES,
                 instance=course,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             )

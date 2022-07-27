@@ -18,11 +18,17 @@
       <a href="#" id="print" class="no-print-icon">
         <i class="fa fa-print green" aria-hidden="true"
           data-toggle="tooltip" data-placement="top"
-          title="Print to paper or PDF"></i></a> |
-      <a href="{% url 'course_update' 'course' course.id %}">
-        <i class="fa fa-pencil green" aria-hidden="true"
-          data-toggle="tooltip" data-placement="top"
-          title="Update Course"></i></a>
+          title="Print to paper or PDF"></i></a>
+      {% if course.approved %}
+        | <i class="fa fa-check green" data-toggle="tooltip" data-placement="top"
+          title="Submitted for approval"></i>
+      {% else %}
+      {% if not course.save_submit %}
+        | <a href="{% url 'course_update' 'course' course.id %}">
+            <i class="fa fa-pencil green" aria-hidden="true"
+              data-toggle="tooltip" data-placement="top"
+              title="Update Course"></i></a>
+      {% endif %}{% endif %}
       </h1>
     </div>
   </div>
@@ -44,16 +50,33 @@
   <!-- /.row -->
   {% endif %}
   <div class="row">
-    <div class="col-8">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
-          <h2 class="detail"><u>{{course.title}}</u></h2>
-          <h3>{{course.number}}</h3>
-          <h4>Submitted by</h4>
-          <h5>
+          <h2 style="border-bottom: 1px black dotted;">{{course.title}}</h2>
+          <h3>
+            {{course.number}}
+            {% if course.phile %}
+            <a href="{{media_url}}{{course.phile}}" target="_blank">
+              <i class="fas fa-duotone fa-file"
+                data-toggle="tooltip" data-placement="top" title="Course Syllabus"></i></a>
+            {% endif %}
+          </h3>
+          <h4>User activity</h4>
+          <div class="container">
+          <dl class="row">
+          <dt class="col-sm-3">Submitted by</dt>
+          <dd class="col-sm-8">
             <a href="mailto:{{course.user.email}}">{{course.user.last_name}},
               {{course.user.first_name}}</a>
-          </h5>
+          </dd>
+          <dt class="col-sm-3">Updated by</dt>
+          <dd class="col-sm-8">
+            <a href="mailto:{{course.updated_by.email}}">{{course.updated_by.last_name}},
+              {{course.updated_by.first_name}}</a>
+          </dd>
+          </dl>
+          </div>
           <h4>Dates</h4>
           <div class="container">
           <dl class="row">
@@ -65,10 +88,49 @@
           <dd class="col-sm-8">{{course.approved_date|date:'Y-m-d'}}</dd>
           </dl>
           </div>
+          <h3 style="border-bottom: 1px black dotted;">Student Learning Outcomes</h3>
+          {% for outcome in course.outcome.all %}
+          {% if outcome.name not in "Written Communication,Oral Communication" %}
+          <div>
+            <h4>
+              {{outcome.name}}
+              <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{outcome.rationale}}">
+              <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
+            </h4>
+            <p>{{outcome.description}}</p>
+            <ol>
+              {% for element in outcome.elements.all %}
+              <li>
+                {{element.description}}
+                {% for slo in element.slo.all %}
+                  {% if slo.course == course %}
+                  <div class="mt-2">{{slo.description|safe|default:""}}</div>
+                  {% endif %}
+                {% endfor %}
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+          {% endif %}
+          {% endfor %}
         </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /col-8 -->
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+      <h2 style="border-bottom: 1px black dotted;">Comments</h2>
+      <div id="comments-list">
+        {% for note in course.notes.all %}
+          {% if note.status %}
+          {% cycle 'blue-box' 'lightgrey-box' as boxcolor silent %}
+          {% include "dashboard/annotation.inc.html" with bgcolor=boxcolor %}
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
-    <!-- /.col-lg-12 -->
+    <!-- /col-4 -->
   </div>
   <!-- /.row -->
 {% endblock content %}

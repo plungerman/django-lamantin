@@ -144,6 +144,44 @@ class CourseOutcome(models.Model):
         return '[{0}] {1}: {2}'.format(self.course, self.slo, self.slo.description)
 
 
+class Annotation(models.Model):
+    """Notes related to a Course."""
+
+    course = models.ForeignKey(
+        Course,
+        related_name='notes',
+        on_delete=models.CASCADE,
+    )
+    created_by = models.ForeignKey(
+        User,
+        verbose_name="Created by",
+        related_name='note_creator',
+        on_delete=models.PROTECT,
+    )
+    updated_by = models.ForeignKey(
+        User,
+        verbose_name="Updated by",
+        related_name='note_updated',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField("Date Created", auto_now_add=True)
+    updated_at = models.DateTimeField("Date Updated", auto_now=True)
+    body = models.TextField()
+    status = models.BooleanField(default=True, verbose_name="Active?")
+    tags = TaggableManager(blank=True)
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        """Default data for display."""
+        return "{0}, {1}".format(
+            self.created_by.last_name, self.created_by.first_name
+        )
+
+
 @receiver(models.signals.post_save, sender=Course)
 def approved_date(sender, instance, created, **kwargs):
     """Post-save signal function to set approved_date."""

@@ -71,23 +71,21 @@
       </p>
       {% else %}
       {% if outcome.name == "Oral Communication" %}
-      <p>
-         Oral Communication SLO are not available at this time.
-      </p>
+        <p>Oral Communication SLO are not available at this time.</p>
       {% else %}
       <p>{{outcome.description}}</p>
       <ol>
         {% for element in outcome.elements.all %}
         <li>
-            {{element.description}}
-            {% for slo in element.slo.all %}
-              {% if slo.course == course %}
+          {{element.description}}
+          {% for slo in element.slo.all %}
+            {% if slo.course == course %}
               <div class="form-group required">
                 <textarea name="slo{{slo.id}}-description" id="id_slo{{slo.id}}-description" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO.">{{slo.description|default:""}}</textarea>
                 <small class="form-text text-muted">Please indicate how this course meets this SLO.</small>
               </div>
-              {% endif %}
-            {% endfor %}
+            {% endif %}
+          {% endfor %}
         </li>
         {% endfor %}
       </ol>

@@ -29,7 +29,7 @@ $(function() {
       <h3 class="red">GEOC: {{step|title}}</h3>
     </div>
   </div>
-  <form method="post" action="." autocomplete="false" class="form" role="form">
+  <form method="post" action="." enctype="multipart/form-data" autocomplete="false" class="form" role="form">
     {% if form.errors %}
       <div class="alert alert-danger mt-4 mb-2">
         Please correct the errors below.

@@ -4,10 +4,24 @@
 
 from django.contrib import admin
 from django.db import models
+from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Outcome
 from lamantin.geoc.models import OutcomeElement
+
+
+class AnnotationAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'course', 'creator_name', 'created_at', 'status')
+    raw_id_fields = ('created_by', 'updated_by', 'course')
+    list_editable = ['status']
+
+    def creator_name(self, obj):
+        return '{0}, {1}'.format(
+            obj.created_by.last_name,obj.created_by.first_name,
+        )
+    creator_name.admin_order_field  = 'created_by'
+    creator_name.short_description = "Submitted by"
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -43,6 +57,7 @@ class OutcomeElementAdmin(admin.ModelAdmin):
     list_editable = ['active']
 
 
+admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseOutcome)
 admin.site.register(Outcome, OutcomeAdmin)
