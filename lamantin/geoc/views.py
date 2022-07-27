@@ -55,10 +55,11 @@ def course_form(request, step='course', cid=None):
             for outcome in course.outcome.all():
                 forms = []
                 for element in outcome.elements.all():
+                    slo = element.slo.get(course=course)
                     form = CourseOutcomeForm(
                         request.POST,
-                        prefix='slo{0}'.format(element.slo.id),
-                        instance=element.slo,
+                        prefix='slo{0}'.format(slo.id),
+                        instance=slo,
                     )
                     if form.is_valid():
                         form.save()
@@ -102,7 +103,11 @@ def course_form(request, step='course', cid=None):
             for outcome in course.outcome.all():
                 forms = []
                 for element in outcome.elements.all():
-                    form = CourseOutcomeForm(prefix='slo{0}'.format(element.slo.id), instance=element.slo)
+                    slo = element.slo.get(course=course)
+                    form = CourseOutcomeForm(
+                        prefix='slo{0}'.format(slo.id),
+                        instance=slo,
+                    )
                     forms.append(form)
                 forms_dict[outcome.get_form()] = forms
 

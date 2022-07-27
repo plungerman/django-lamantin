@@ -80,12 +80,14 @@
         {% for element in outcome.elements.all %}
         <li>
             {{element.description}}
-            {% if element.slo %}
-            <div class="form-group required">
-                <textarea name="slo{{element.slo.id}}-description" id="id_slo{{element.slo.id}}-description" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO.">{{element.slo.description|default:""}}</textarea>
-              <small class="form-text text-muted">Please indicate how this course meets this SLO.</small>
-            </div>
-            {% endif %}
+            {% for slo in element.slo.all %}
+              {% if slo.course == course %}
+              <div class="form-group required">
+                <textarea name="slo{{slo.id}}-description" id="id_slo{{slo.id}}-description" cols="40" rows="10" class="form-control" title="Please indicate how this course meets this SLO.">{{slo.description|default:""}}</textarea>
+                <small class="form-text text-muted">Please indicate how this course meets this SLO.</small>
+              </div>
+              {% endif %}
+            {% endfor %}
         </li>
         {% endfor %}
       </ol>

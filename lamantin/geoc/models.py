@@ -2,8 +2,6 @@
 
 """Data models."""
 
-import logging
-
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
@@ -11,9 +9,6 @@ from django.db import models
 from django.dispatch import receiver
 from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
-
-
-logger = logging.getLogger('debug_logfile')
 
 
 class Outcome(models.Model):
@@ -119,6 +114,9 @@ class OutcomeElement(models.Model):
         """Default data for display."""
         return '{0}: {1}'.format(self.outcome, self.description)
 
+    def get_slo(self, course):
+        return self.slo.get(course=course)
+
 
 class CourseOutcome(models.Model):
     """Specific SLO content provided by user for a course."""
@@ -129,7 +127,7 @@ class CourseOutcome(models.Model):
         related_name='outcomes',
         editable=settings.DEBUG,
     )
-    slo = models.OneToOneField(
+    slo = models.ForeignKey(
         OutcomeElement,
         related_name='slo',
         on_delete=models.CASCADE,
@@ -167,13 +165,9 @@ def signal_function(sender, instance, action, **kwargs):
             for element in outcome.elements.all():
                 slo = CourseOutcome(course=instance, slo=element)
                 slo.save()
-                element.slo=slo
+                element.slo.add(slo)
                 element.save()
-                logger.debug('slo created: {0}'.format(element.slo))
         if action == 'pre_remove':
             for element in outcome.elements.all():
-                try:
-                    logger.debug('slo deleted: {0}'.format(element.slo))
-                    element.slo.delete()
-                except Exception as xcept:
-                    logger.debug(xcept)
+                slo = element.get_slo(instance)
+                slo.delete()

@@ -16,7 +16,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lamantin.settings.shell')
 
 def main():
     """Main function that does something."""
-    course = Course.objects.get(pk=1)
+    course = Course.objects.get(pk=3)
+    print(course)
+
+
     #for outcome in course.outcomes.all():
     for outcome in course.outcome.all():
         #print(outcome.elements.all())
@@ -24,7 +27,9 @@ def main():
         #for outcome in instance.outcomes.all():
         #for element in outcome.elements.all():
         for element in outcome.elements.all():
-            print(element)
+            #slo = element.slo.get(course=course)
+            #print(slo.id)
+            print(element.get_slo(course).id)
         '''
             if getattr(element, 'slo'):
                 print(element.slo.id)
