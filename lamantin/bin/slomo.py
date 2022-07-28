@@ -16,9 +16,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lamantin.settings.shell')
 
 def main():
     """Main function that does something."""
-    course = Course.objects.get(pk=3)
-    print(course)
-
+    course = Course.objects.get(pk=4)
+    print(course.syllabus().phile.path)
 
     #for outcome in course.outcomes.all():
     for outcome in course.outcome.all():

@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
 from lamantin.geoc.forms import CourseForm
 from lamantin.geoc.forms import CourseOutcomeForm
+from lamantin.geoc.forms import DocumentForm
 from lamantin.geoc.models import Course
 
 
@@ -23,6 +24,8 @@ def course_form(request, step='course', cid=None):
     template = 'geoc/form_{0}.html'.format(step)
     forms_dict = {}
     user = request.user
+    form_syllabus = None
+    phile = None
     if cid:
         course = Course.objects.get(pk=cid)
         if course.save_submit:
@@ -44,6 +47,8 @@ def course_form(request, step='course', cid=None):
                 extra_tags='alert-warning',
             )
             return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+        if course.syllabus():
+            phile = course.syllabus()
 
     if request.method == 'POST':
         post = request.POST
@@ -79,12 +84,27 @@ def course_form(request, step='course', cid=None):
                 instance=course,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             )
-            if form.is_valid():
+            form_syllabus = DocumentForm(
+                request.POST,
+                request.FILES,
+                instance = phile,
+                use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+                prefix='syllabus',
+            )
+            if form.is_valid() and form_syllabus.is_valid():
                 course = form.save(commit=False)
                 course.user = user
                 course.updated_by = user
                 course.save()
                 form.save_m2m()
+                # document syllabus
+                doc = form_syllabus.save(commit=False)
+                doc.course = course
+                doc.name = 'Syllabus'
+                doc.created_by = user
+                doc.updated_by = user
+                doc.save()
+                doc.tags.add('Syllabus')
                 messages.add_message(
                     request,
                     messages.SUCCESS,
@@ -99,6 +119,11 @@ def course_form(request, step='course', cid=None):
             form = CourseForm(
                 instance=course,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            )
+            form_syllabus = DocumentForm(
+                instance = phile,
+                use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+                prefix='syllabus',
             )
         else:
             for outcome in course.outcome.all():
@@ -115,5 +140,10 @@ def course_form(request, step='course', cid=None):
     return render(
         request,
         template,
-        {'form': form, 'step': step, 'course': course},
+        {
+            'form': form,
+            'form_syllabus': form_syllabus,
+            'step': step,
+            'course': course,
+        },
     )

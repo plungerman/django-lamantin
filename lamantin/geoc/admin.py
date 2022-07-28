@@ -7,6 +7,7 @@ from django.db import models
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
+from lamantin.geoc.models import Document
 from lamantin.geoc.models import Outcome
 from lamantin.geoc.models import OutcomeElement
 
@@ -41,6 +42,23 @@ class CourseAdmin(admin.ModelAdmin):
     list_per_page = 500
 
 
+
+class DocumentAdmin(admin.ModelAdmin):
+    raw_id_fields = ('course', 'created_by', 'updated_by')
+    list_display = (
+        '__str__',
+        'name',
+        'course',
+        'creator_name',
+        'created_at',
+    )
+
+    def creator_name(self, obj):
+        return "{0}, {1}".format(obj.created_by.last_name, obj.created_by.first_name)
+    creator_name.admin_order_field  = 'created_by'
+    creator_name.short_description = "Submitted by"
+
+
 class OutcomeAdmin(admin.ModelAdmin):
     """Outcome admin class."""
 
@@ -60,5 +78,6 @@ class OutcomeElementAdmin(admin.ModelAdmin):
 admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseOutcome)
+admin.site.register(Document, DocumentAdmin)
 admin.site.register(Outcome, OutcomeAdmin)
 admin.site.register(OutcomeElement, OutcomeElementAdmin)

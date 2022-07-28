@@ -11,6 +11,19 @@ from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
 
 
+ICONS = {
+    'xls': 'excel',
+    'xlsx': 'excel',
+    'pdf': 'pdf',
+    'doc': 'word',
+    'docx': 'word',
+    'txt': 'text',
+    'png': 'image',
+    'jpg': 'image',
+    'jpeg': 'image',
+}
+
+
 class Outcome(models.Model):
     """Choices for model and form fields that accept for multiple values."""
 
@@ -69,15 +82,6 @@ class Course(models.Model):
     # core
     title = models.CharField(max_length=255)
     number = models.CharField(max_length=32)
-    phile = models.FileField(
-        "Syllabus",
-        upload_to=upload_to_path,
-        validators=settings.FILE_VALIDATORS,
-        max_length=767,
-        null=True,
-        blank=True,
-        help_text="PDF format",
-    )
     outcome = models.ManyToManyField(
         Outcome,
         verbose_name="Outcomes",
@@ -96,6 +100,15 @@ class Course(models.Model):
     def get_slug(self):
         """Slug for file uploads."""
         return 'files/course/'
+
+    def syllabus(self):
+        """Obtain course syllabus if one exists."""
+        phile = None
+        for doc in self.documents.annotate(tag_name=models.F('tags__name')):
+            if doc.tag_name == 'Syllabus':
+                phile = doc
+                break
+        return phile
 
 
 class OutcomeElement(models.Model):
@@ -142,6 +155,68 @@ class CourseOutcome(models.Model):
     def __str__(self):
         """Default data for display."""
         return '[{0}] {1}: {2}'.format(self.course, self.slo, self.slo.description)
+
+
+class Document(models.Model):
+    """Supporting documents for a course."""
+
+    created_by = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name='doc_creator',
+        on_delete=models.CASCADE,
+    )
+    updated_by = models.ForeignKey(
+        User,
+        verbose_name="Updated by",
+        related_name='doc_updated',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField("Date Created", auto_now_add=True)
+    updated_at = models.DateTimeField("Date Updated", auto_now=True)
+    course = models.ForeignKey(
+        Course,
+        related_name='documents',
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(
+        "Short description of file",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    phile = models.FileField(
+        "Supporting documentation",
+        upload_to=upload_to_path,
+        validators=settings.FILE_VALIDATORS,
+        max_length=767,
+        help_text="PDF format",
+        null=True,
+        blank=True,
+    )
+    tags = TaggableManager(blank=True)
+
+    class Meta:
+        ordering  = ['-created_at']
+        get_latest_by = 'created_at'
+
+    def get_slug(self):
+        """Return the slug value for this data model class."""
+        return 'files/course/'
+
+    def get_icon(self):
+        """Obtain the icon for a field."""
+        ext = self.phile.path.rpartition(".")[-1]
+        try:
+            icon = ICONS[ext.lower()]
+        except:
+            icon = ICONS['file']
+        return icon
+
+    def __str__(self):
+        """Default data for display."""
+        return str(self.course)
 
 
 class Annotation(models.Model):
