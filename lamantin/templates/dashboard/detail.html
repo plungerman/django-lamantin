@@ -56,8 +56,8 @@
           <h2 style="border-bottom: 1px black dotted;">{{course.title}}</h2>
           <h3>
             {{course.number}}
-            {% if course.phile %}
-            <a href="{{media_url}}{{course.phile}}" target="_blank">
+            {% if course.syllabus %}
+            <a href="{{media_url}}{{course.syllabus.phile}}" target="_blank">
               <i class="fas fa-duotone fa-file"
                 data-toggle="tooltip" data-placement="top" title="Course Syllabus"></i></a>
             {% endif %}
@@ -126,6 +126,14 @@
           {% if note.status %}
           {% cycle 'blue-box' 'lightgrey-box' as boxcolor silent %}
           {% include "dashboard/annotation.inc.html" with bgcolor=boxcolor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <h2 style="border-bottom: 1px black dotted;">Documents</h2>
+      <div id="docs-list">
+        {% for doc in course.docs.all %}
+          {% if course.syllabus != doc %}
+          {{doc.phile}}
           {% endif %}
         {% endfor %}
       </div>

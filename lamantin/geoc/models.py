@@ -104,7 +104,7 @@ class Course(models.Model):
     def syllabus(self):
         """Obtain course syllabus if one exists."""
         phile = None
-        for doc in self.documents.annotate(tag_name=models.F('tags__name')):
+        for doc in self.docs.annotate(tag_name=models.F('tags__name')):
             if doc.tag_name == 'Syllabus':
                 phile = doc
                 break
@@ -177,7 +177,7 @@ class Document(models.Model):
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     course = models.ForeignKey(
         Course,
-        related_name='documents',
+        related_name='docs',
         on_delete=models.CASCADE,
     )
     name = models.CharField(
