@@ -1,4 +1,4 @@
-<div id="oid_{{note.id}}" class="card mb-3 {{bgcolor}}">
+<div id="oid_{{note.id}}" class="card mb-3 {{bgcolor}}{% if note.created_by == user %} bg-warning{% endif %}">
   <div class="card-body">
     <div class="float-left">
       <h5 class="card-title mb-2">

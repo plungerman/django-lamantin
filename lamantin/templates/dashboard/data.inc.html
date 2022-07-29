@@ -5,15 +5,15 @@
       <tr>
         <th>
           Title
-          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
-            data-placement="top" aria-hidden="true"
-            title="Update Course"></i>
-        </th>
-        <th style="text-align: center;">
-          Number
           <i class="fa fa-eye green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="View Course"></i>
+        </th>
+        <th style="text-align: center;">
+          Number
+          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update Course"></i>
         </th>
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>
@@ -26,10 +26,10 @@
     {% for course in courses %}
       <tr>
         <td nowrap>
-          <a href="{% url 'course_update' 'course' course.id %}">{{course.title}}</a>
+          <a href="{% url 'course_detail' course.id %}">{{course.title}}</a>
         </td>
         <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
-          <a href="{% url 'course_detail' course.id %}">{{course.number}}</a>
+          <a href="{% url 'course_update' 'course' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
@@ -38,7 +38,7 @@
           {{course.created_at|date:'Y-m-d'}}
         </td>
         <td nowrap style="text-align: center;">
-        {% if course.syllabus %}
+        {% if course.syllabus.phile %}
         <a href="{{media_url}}{{course.syllabus.phile}}" target="_blank">
           <i class="fas fa-duotone fa-file" title="Syllabus"></i></a>
         <span style="display:none;">https://{{server_url}}{{media_url}}{{course.syllabus.phile}}</span>
@@ -67,15 +67,15 @@
       <tr>
         <th>
           Title
-          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
-            data-placement="top" aria-hidden="true"
-            title="Update Course"></i>
-        </th>
-        <th style="text-align: center;">
-          Number
           <i class="fa fa-eye green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="View Course"></i>
+        </th>
+        <th style="text-align: center;">
+          Number
+          <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="Update Course"></i>
         </th>
         <th>Created By</th>
         <th style="text-align: center;">Created At</th>

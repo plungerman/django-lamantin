@@ -198,7 +198,7 @@ class Document(models.Model):
     tags = TaggableManager(blank=True)
 
     class Meta:
-        ordering  = ['-created_at']
+        ordering  = ['created_at']
         get_latest_by = 'created_at'
 
     def get_slug(self):

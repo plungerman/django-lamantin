@@ -12,7 +12,7 @@
 {% endblock %}
 {% block content %}
   <div class="row">
-    <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <h1 class="page-header">
       Course Details
       <a href="#" id="print" class="no-print-icon">
@@ -50,13 +50,13 @@
   <!-- /.row -->
   {% endif %}
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
           <h2 style="border-bottom: 1px black dotted;">{{course.title}}</h2>
           <h3>
             {{course.number}}
-            {% if course.syllabus %}
+            {% if course.syllabus.phile %}
             <a href="{{media_url}}{{course.syllabus.phile}}" target="_blank">
               <i class="fas fa-duotone fa-file"
                 data-toggle="tooltip" data-placement="top" title="Course Syllabus"></i></a>
@@ -65,12 +65,12 @@
           <h4>User activity</h4>
           <div class="container">
           <dl class="row">
-          <dt class="col-sm-3">Submitted by</dt>
+          <dt class="col-sm-3">Submitted</dt>
           <dd class="col-sm-8">
             <a href="mailto:{{course.user.email}}">{{course.user.last_name}},
               {{course.user.first_name}}</a>
           </dd>
-          <dt class="col-sm-3">Updated by</dt>
+          <dt class="col-sm-3">Updated</dt>
           <dd class="col-sm-8">
             <a href="mailto:{{course.updated_by.email}}">{{course.updated_by.last_name}},
               {{course.updated_by.first_name}}</a>
@@ -80,11 +80,11 @@
           <h4>Dates</h4>
           <div class="container">
           <dl class="row">
-          <dt class="col-sm-3">Created at</dt>
+          <dt class="col-sm-3">Created</dt>
           <dd class="col-sm-8">{{course.created_at|date:'Y-m-d'}}</dd>
-          <dt class="col-sm-3">Updated at</dt>
+          <dt class="col-sm-3">Updated</dt>
           <dd class="col-sm-8">{{course.updated_at|date:'Y-m-d'}}</dd>
-          <dt class="col-sm-3">Approved date</dt>
+          <dt class="col-sm-3">Approved</dt>
           <dd class="col-sm-8">{{course.approved_date|date:'Y-m-d'}}</dd>
           </dl>
           </div>
@@ -119,8 +119,13 @@
       <!-- /.panel -->
     </div>
     <!-- /col-8 -->
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-      <h2 style="border-bottom: 1px black dotted;">Comments</h2>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+      <h2 style="border-bottom: 1px black dotted;">Comments
+      <a href="" data-toggle="modal" data-target="#textModal"
+        data-mod="comment" class="text-update">
+        <i class="fa fa-comments green" data-toggle="tooltip"
+          data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+      </h2>
       <div id="comments-list">
         {% for note in course.notes.all %}
           {% if note.status %}
@@ -132,9 +137,12 @@
       <h2 style="border-bottom: 1px black dotted;">Documents</h2>
       <div id="docs-list">
         {% for doc in course.docs.all %}
-          {% if course.syllabus != doc %}
-          {{doc.phile}}
-          {% endif %}
+        <div>
+          <a href="{{media_url}}{{doc.phile}}" target="_blank">
+            <i class="fas fa-duotone fa-file"
+               data-toggle="tooltip" data-placement="top" title="{{doc.name}}"></i></a>
+          {{doc.name}}
+        </div>
         {% endfor %}
       </div>
     </div>
@@ -142,3 +150,37 @@
   </div>
   <!-- /.row -->
 {% endblock content %}
+{% block footer %}
+<!-- #textModal -->
+<div class="modal fade" id="textModal" tabindex="-1" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false" role="dialog"
+  aria-labelledby="textModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="commentsForm">
+        <div class="header" style="padding:4px 8px 0 16px;">
+          <label for="id_body" style="margin-bottom:0;">
+              <h5 id="textModalHeader">New comment</h5>
+          </label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <textarea class="form-control" name="body" id="id_body" rows="8" maxlength="1500" style="resize: none;height: 150px !important;width:95% !important;" placeholder="Limit: 250 words"></textarea>
+            <input type="hidden" name="oid" value="0" id="id_oid">
+            <input type="hidden" name="mod" value="comment" id="id_mod">
+            <input type="hidden" name="fld" value="" id="id_fld">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-success" id="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /#textModal -->
+{% endblock %}
