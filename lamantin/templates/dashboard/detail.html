@@ -137,12 +137,14 @@
       <h2 style="border-bottom: 1px black dotted;">Documents</h2>
       <div id="docs-list">
         {% for doc in course.docs.all %}
+        {% if doc.phile %}
         <div>
           <a href="{{media_url}}{{doc.phile}}" target="_blank">
             <i class="fas fa-duotone fa-file"
-               data-toggle="tooltip" data-placement="top" title="{{doc.name}}"></i></a>
-          {{doc.name}}
+               data-toggle="tooltip" data-placement="top" title="{{doc.name}}"></i>
+            {{doc.name}}</a>
         </div>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

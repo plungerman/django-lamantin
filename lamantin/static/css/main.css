@@ -3,7 +3,9 @@ li.ctrlHolder div ul li {display:inline;}
 label[for=id_results_file] {color: #337ab7;}
 label { margin-bottom: .25em; }
 label h5 {font-weight:545;font-size: 1.2rem;margin-bottom:0;}
-.form-check-label {font-size: .9em;}
+li.form-group h3, .form-group label { font-size: 1.2em; font-weight: 600; }
+.form-check label { font-size: 1em; font-weight: normal; }
+#id_outcome .form-check label { font-size: .9em; font-weight: 666; }
 .form-check-inline {margin-right: 1.75rem;}
 .placeholder {color:#800;}
 h1,h2,h3 {font-weight:normal;}
@@ -38,6 +40,8 @@ input[type="radio"]{
 .blue, .blue .glyphicon-ok {color:#085ab1;}
 .blue-box {background-color:#eef6fe;}
 .lightgrey-box {background-color:#f7f0e4;}
+.lightblue-box {background-color: #a6d3dd;}
+.terracotta-box {background-color: #e1BBB3;}
 div.growlUI { position:relative;margin-top:60px; }
 div.growlUI:before { color:green; font-size: 4em;position: absolute; font-family: 'FontAwesome'; top: 0; left: 10px; content: "\f0f3"; }
 div.growlUI h1, div.growlUI h2 {
@@ -56,8 +60,6 @@ table.dataTable tfoot th, table.dataTable tfoot td { padding: 6px 4px 2px 4px; }
 table.dataTable thead th, table.dataTable tfoot th { text-align: center; }
 .navbar-default {z-index:100;}
 .center{text-align:center;}
-li.form-group h3, .form-group label { font-size: 1.2em; font-weight: 600; }
-.form-check label { font-size: 1em; font-weight: normal; }
 .form fieldset {
 background-color: #fcffff;
 border: 2px solid #ddf3f3;

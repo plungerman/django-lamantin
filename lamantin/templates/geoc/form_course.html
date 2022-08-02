@@ -4,10 +4,9 @@
 {{block.super}}
 <script>
 $(function() {
-  $('#id_outcome').attr('style', 'width:275px');
-  {% if form.outcome.errors %}
-    $('.invalid-feedback').css('display', 'inherit');
-  {% endif %}
+{% if form.outcome.errors %}
+  $('.invalid-feedback').css('display', 'inherit');
+{% endif %}
 });
 </script>
 {% endblock %}
@@ -29,17 +28,148 @@ $(function() {
       <h3 class="red">GEOC: Course Elements</h3>
     </div>
   </div>
+  {% if form.errors %}
+    <div class="alert alert-danger mt-4 mb-2">
+      Please correct the errors below.
+    </div>
+  {% endif %}
   <form method="post" action="." enctype="multipart/form-data" autocomplete="false" class="form" role="form">
-    {% if form.errors %}
-      <div class="alert alert-danger mt-4 mb-2">
-        Please correct the errors below.
-      </div>
-    {% endif %}
     {% csrf_token %}
-    <ul class="nobull">
-    {% bootstrap_form form %}
+    <div class="form-group">
+      <label for="id_title">Title</label>
+      <input type="text" name="title" maxlength="255" class="form-control{% if form.title.errors %} is-invalid{% endif %}" value="{{form.title.value|default:''}}" id="id_title">
+      {% if form.title.errors %}
+      <div class="invalid-feedback">This field is required.</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="id_number">Number</label>
+      <input type="text" name="number" maxlength="32" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
+      {% if form.number.errors %}
+      <div class="invalid-feedback">This field is required.</div>
+      {% endif %}
+    </div>
+    <div class="form-group row">
+      <div class="col-12">
+        <h4>Student Learning Outcomes</h4>
+        <small class="form-text text-muted mb-1">Choose one, two, or none.</small>
+        {% if form.outcome.errors %}
+        <div class="invalid-feedback mb-2">Please verify that only one SLO is selected per group.</div>
+        {% endif %}
+      </div>
+      <div class="col-12" id="id_outcome">
+        <div class="col=12 lightgrey-box p-3">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_4">
+              <input class="form-check-input" id="id_outcome_4" name="outcome" type="checkbox" value="1"{% if '1' in form.outcome.value %} checked="checked"{%endif %}>
+              Intellectual Foundations
+            </label>
+          </div>
+          <!--
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_13">
+              <input class="form-check-input" id="id_outcome_13" name="outcome" title="" type="checkbox" value="14"/>
+              Wellness
+            </label>
+          </div>
+          -->
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_9">
+              <input class="form-check-input" id="id_outcome_9" name="outcome" title="" type="checkbox" value="15"{% if '15' in form.outcome.value %} checked="checked" {%endif %}>
+              Reflection Framework
+            </label>
+          </div>
+        </div>
+        <h5 class="mt-1 mb-0">Explorations</h5>
+        <small class="form-text text-muted mb-1">Choose only one</small>
+        <div class="col=12 p-3 lightblue-box">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_0">
+              <input class="form-check-input" id="id_outcome_0" name="outcome" title="" type="checkbox" value="2"{% if '2' in form.outcome.value %} checked="checked" {%endif %}>
+              Artistic Inquiries
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_1">
+              <input class="form-check-input" id="id_outcome_1" name="outcome" title="" type="checkbox" value="3"{% if '3' in form.outcome.value %} checked="checked" {%endif %}>
+              Cultural Legacies
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_12">
+              <input class="form-check-input" id="id_outcome_12" name="outcome" title="" type="checkbox" value="4"{% if '4' in form.outcome.value %} checked="checked" {%endif %}>
+              Social Interactions
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_11">
+              <input class="form-check-input" id="id_outcome_11" name="outcome" title="" type="checkbox" value="5"{% if '5' in form.outcome.value %} checked="checked" {%endif %}>
+              Scientific Exploration
+            </label>
+          </div>
+        </div>
+        <h5 class="mt-1 mb-0">Abilitities</h5>
+        <small class="form-text text-muted mb-1">Choose only one</small>
+        <div class="col=12 bg-warning p-3">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_3">
+              <input class="form-check-input" id="id_outcome_3" name="outcome" title="" type="checkbox" value="6"{% if '6' in form.outcome.value %} checked="checked" {%endif %}>
+              Global Language
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_14">
+              <input class="form-check-input" id="id_outcome_14" name="outcome" title="" type="checkbox" value="7"{% if '7' in form.outcome.value %} checked="checked" {%endif %}>
+              Written Communication
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_7">
+              <input class="form-check-input" id="id_outcome_7" name="outcome" title="" type="checkbox" value="8"{% if '8' in form.outcome.value %} checked="checked" {%endif %}>
+              Oral Communication
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_8">
+              <input class="form-check-input" id="id_outcome_8" name="outcome" title="" type="checkbox" value="9"{% if '9' in form.outcome.value %} checked="checked" {%endif %}>
+              Quantitative Reasoning
+            </label>
+          </div>
+        </div>
+        <h5 class="mt-1 mb-0">Perspectives</h5>
+        <small class="form-text text-muted mb-1">Choose only one</small>
+        <div class="col=12 terracotta-box p-3">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_2">
+              <input class="form-check-input" id="id_outcome_2" name="outcome" title="" type="checkbox" value="11"{% if '11' in form.outcome.value %} checked="checked" {%endif %}>
+              Diverse Perspectives
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_5">
+              <input class="form-check-input" id="id_outcome_5" name="outcome" title="" type="checkbox" value="13"{% if '13' in form.outcome.value %} checked="checked" {%endif %}>
+              Interdisciplinary Perspectives
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_6">
+              <input class="form-check-input" id="id_outcome_6" name="outcome" title="" type="checkbox" value="12"{% if '12' in form.outcome.value %} checked="checked" {%endif %}>
+              International Perspectives
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_10">
+              <input class="form-check-input" id="id_outcome_10" name="outcome" title="" type="checkbox" value="10"{% if '10' in form.outcome.value %} checked="checked" {%endif %}>
+              Religious Perspectives
+            </label>
+          </div>
+        </div>
+        <!-- /.col-12 -->
+      </div>
+      <!-- /#id_outcome -->
+    </div>
+    <!-- /.form-group  -->
     {% bootstrap_form form_syllabus %}
-    </ul>
     <button class="btn btn-primary btn-block" type="submit" value="Submit" id="submit-button">Proceed to Step 2</button>
   </form>
 </div>

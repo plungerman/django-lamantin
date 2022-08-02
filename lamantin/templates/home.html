@@ -51,30 +51,24 @@ $(function() {
 <ul class="navbar-nav navbar-sidenav">
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
     <a class="nav-link" href="{% url 'dashboard_home' %}">
-      <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
+      <i class="fa fa-fw fa-dashboard" aria-hidden="true"></i>
       <span class="nav-link-text">Dashboard</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit a Course">
+    <a class="nav-link" href="{% url 'course' %}">
+      <i class="fa fa-chalkboard-teacher" aria-hidden="true"></i>
+      <span class="nav-link-text">Submit Course</span>
     </a>
   </li>
   {% if user.is_superuser %}
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Administration">
     <a class="nav-link" href="{% url 'admin:index' %}">
-      <i class="fa fa-fw fa fa-cog" aria-hidden="true"></i>
+      <i class="fa fa-fw fa-cog" aria-hidden="true"></i>
       <span class="nav-link-text">Administration</span>
     </a>
   </li>
   {% endif %}
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Carthage Home">
-    <a class="nav-link" href="https://www.carthage.edu/">
-      <i class="fa fa-fw fa fa-home" aria-hidden="true"></i>
-      <span class="nav-link-text">Carthage Home</span>
-    </a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My.Carthage">
-    <a class="nav-link" href="https://my.carthage.edu/">
-      <i class="fa fa-fw fa fa-lemon-o" aria-hidden="true"></i>
-      <span class="nav-link-text">My.Carthage</span>
-    </a>
-  </li>
   <li class="nav-item">
     <a class="nav-link text-center" data-toggle="tooltip" data-placement="right" title="Expand Menu" id="sidenavToggler">
       <i class="fa fa-fw fa-angle-double-left" aria-hidden="true"></i>
