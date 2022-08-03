@@ -28,17 +28,14 @@ class Dupes:
 
     def get_outcomes(self):
         for tag, outcomes in self.tags.items():
-            print(tag)
             self.tags[tag]['outcomes'] = Outcome.objects.filter(tags__name__in=[tag])
-            print(self.tags[tag]['outcomes'])
-            print(self.tags[tag]['error'])
 
-    def check(self, course):
-        for outcome in course.outcome.all():
+    def check(self, outcomes):
+        for outcome in outcomes:
             for tag, slo in self.tags.items():
-                #print('\t{0}'.format(self.tags[tag]['outcomes']))
-                if outcome in slo['outcomes'] and not slo['error']:
+                if outcome in slo['outcomes'] and tag not in self.error:
                     print(outcome)
+                    self.error.append(tag)
                     slo['error'] = True
 
 
@@ -46,9 +43,10 @@ def main():
     """Main function that does something."""
     dupes = Dupes()
     dupes.get_outcomes()
-    print('Course outcomes')
+    print('Course outcome dupes')
     course = Course.objects.get(pk=6)
-    dupes.check(course)
+    dupes.check(course.outcome.all())
+    print(dupes.error)
 
 
 if __name__ == '__main__':
