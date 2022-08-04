@@ -1,4 +1,4 @@
-<div id="oid_{{note.id}}" class="card mb-3 {{bgcolor}}{% if note.created_by == user %} bg-warning{% endif %}">
+<div id="nid_{{note.id}}" class="card mb-3 {{bgcolor}}{% if note.created_by == user %} bg-warning{% endif %}">
   <div class="card-body">
     <div class="float-left">
       <h5 class="card-title mb-2">
@@ -9,13 +9,13 @@
     {% if user.is_superuser %}
     <div class="float-right">
       <a href="#" data-toggle="modal" data-href="{# url 'delete_note' note.id #}"
-        data-title="Follow-up" data-target="#confirm-delete">
-        <i class="fa fa-trash-o red blue-tooltip" data-toggle="tooltip"
+        data-title="Comment" data-target="#confirm-delete">
+        <i class="fa fa-trash red" data-toggle="tooltip"
           data-placement="top" aria-hidden="true"
-          title="Delete follow-up"></i></a>
+          title="Delete comment"></i></a>
       <a href="" data-toggle="modal" data-target="#textModal"
-        data-oid="{{note.id}}" data-mod="comment" class="text-update">
-        <i class="fa fa-pencil-square-o green blue-toolsip"
+        data-nid="{{note.id}}" data-mod="comment" class="text-update">
+        <i class="fa fa-pencil green"
           data-placement="top" title="Update this follow-up" aria-hidden="true"></i></a>
     </div>
     {% endif %}

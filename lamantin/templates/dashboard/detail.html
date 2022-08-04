@@ -2,14 +2,16 @@
 {% block extra_javascript %}
 {{block.super}}
 <script type="text/javascript">
+var $annotation = "{% url 'annotation' %}";
+var $cid = "{{course.id}}";
 $(function() {
   $(".course-status").click(function () {
     $.ajax({
       type: "POST",
       url: "{% url 'course_status' %}",
-      data: {'status':$(this).data('status'), 'cid':'{{course.id}}'},
+      data: {'status': $(this).data('status'), 'cid': '{{course.id}}'},
       cache: false,
-      beforeSend: function(){
+      beforeSend: function() {
         spinner.spin(target);
       },
       success: function(data) {
@@ -20,7 +22,6 @@ $(function() {
       error: function(data) {
         spinner.stop(target);
         $.growlUI('Error', data);
-        //$.growlUI('Test eh', 'status: ' + $(this).data('status'));
       }
     });
   });
@@ -204,9 +205,7 @@ $(function() {
         <div class="modal-body">
           <div class="form-group">
             <textarea class="form-control" name="body" id="id_body" rows="8" maxlength="1500" style="resize: none;height: 150px !important;width:95% !important;" placeholder="Limit: 250 words"></textarea>
-            <input type="hidden" name="oid" value="0" id="id_oid">
-            <input type="hidden" name="mod" value="comment" id="id_mod">
-            <input type="hidden" name="fld" value="" id="id_fld">
+            <input type="hidden" name="cid" value="0" id="id_cid">
           </div>
         </div>
         <div class="modal-footer">

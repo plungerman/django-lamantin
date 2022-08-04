@@ -8,10 +8,12 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.template import loader
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
 from djtools.utils.users import in_group
+from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 
 
@@ -83,3 +85,53 @@ def course_status(request):
         message = "Requires POST request"
 
     return HttpResponse(message)
+
+
+@csrf_exempt
+def annotation(request):
+    """Manage annotations for a course on the detail view via ajax post."""
+    user = request.user
+    data =  {'msg': "Success", 'id': ''}
+    if request.is_ajax() and request.method == 'POST':
+        post = request.POST
+        # simple error handling to prevent malicious values
+        try:
+            nid = int(post.get('nid'))
+            cid = int(post.get('cid'))
+        except:
+            raise Http404("Invalid course or annotation ID")
+        course = get_object_or_404(Course, pk=cid)
+        note = None
+        body = post.get('value')
+        template = loader.get_template('alert/annotation.inc.html')
+        if nid == 0:
+            note = Annotation.objects.create(
+                course=course,
+                created_by=user,
+                updated_by=user,
+                body=body,
+                tags='Comments',
+            )
+            course.notes.add(note)
+            context = {'note': note, 'bgcolor': 'bg-warning'}
+            data['msg'] = template.render(context, request)
+        else:
+            try:
+                note = Annotation.objects.get(pk=cid)
+                if action == 'fetch':
+                    data['msg'] = note.body
+                elif action == 'delete':
+                    note.delete()
+                else:
+                    note.body=body
+                    note.updated_by = user
+                    note.save()
+                    context = {'note': note, 'bgcolor': 'bg-warning'}
+                    data['msg'] = template.render(context, request)
+                data['id'] = note.id
+            except:
+                data['msg'] = "Follow-up not found"
+
+    return HttpResponse(
+        json.dumps(data), content_type='application/json; charset=utf-8',
+    )

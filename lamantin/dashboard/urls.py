@@ -12,6 +12,8 @@ urlpatterns = [
         views.course_detail,
         name='course_detail',
     ),
+    # manager course comments
+    path('course/annotation/', views.annotation, name='annotation'),
     # course status view for 'approve' or 'decline' actions
     path('course/status/', views.course_status, name='course_status'),
     path('', views.home, name='dashboard_home'),

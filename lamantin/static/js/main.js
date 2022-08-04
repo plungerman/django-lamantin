@@ -82,24 +82,18 @@ $(function(){
   $('#textModal').submit(function(e){
     e.preventDefault();
     var $body = $('#id_body').val();
-    var $oid = $('#id_oid').val();
-    var $mod = $('#id_mod').val();
-    var $fld = $('#id_fld').val();
+    var $nid = $('#id_nid').val();
     $.ajax({
       type: 'POST',
-      url: $manager,
-      data: {'aid':$aid,'value':$body,'mod':$mod,'oid':$oid,'name':$fld},
+      url: $annotation,
+      data: {'cid': $cid, 'nid': $nid, 'value': $body},
       cache: false,
       beforeSend: function(){
         $('#textModal').modal('hide');
       },
       success: function(data){
         if (data['id']) {
-          $id = ''
-          if ($fld) {
-            $id = $fld + '_'
-          }
-          $('#oid_' + $id + data['id']).replaceWith(data['msg']);
+          $('#nid_' + data['id']).replaceWith(data['msg']);
         } else {
           $('#comments-list').prepend(data['msg']);
         }
@@ -107,8 +101,8 @@ $(function(){
         $('.modal-backdrop').remove();
       },
       error: function(data){
-        //console.log(data);
-        $.growlUI($mod + " Form", "Error");
+        console.log(data);
+        $.growlUI("Form", "Error");
       }
     });
     return false;
