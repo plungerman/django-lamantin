@@ -78,6 +78,11 @@ class Course(models.Model):
         default=False,
     )
     approved_date = models.DateField(null=True, blank=True)
+    declined = models.BooleanField(
+        help_text="Has the course been declined?",
+        default=False,
+    )
+    declined_date = models.DateField(null=True, blank=True)
     save_submit = models.BooleanField(default=False)
     # core
     title = models.CharField(max_length=255)

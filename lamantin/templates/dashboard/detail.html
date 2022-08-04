@@ -1,4 +1,37 @@
 {% extends "home.html" %}
+{% block extra_javascript %}
+{{block.super}}
+<script type="text/javascript">
+$(function() {
+  $(".course-status").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "{% url 'course_status' %}",
+      data: {'status':$(this).data('status'), 'cid':'{{course.id}}'},
+      cache: false,
+      beforeSend: function(){
+        spinner.spin(target);
+      },
+      success: function(data) {
+        spinner.stop(target);
+        $.growlUI(data);
+        $('#courseStatus').hide();
+      },
+      error: function(data) {
+        spinner.stop(target);
+        $.growlUI('Error', data);
+        //$.growlUI('Test eh', 'status: ' + $(this).data('status'));
+      }
+    });
+  });
+  $('#print').click(function() {
+    window.print();
+    return false;
+  });
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+{% endblock %}
 {% block breadcrumb %}
   {% if messages %}
     {% for message in messages %}
@@ -34,14 +67,14 @@
   </div>
   {% if course.save_submit and not course.approved %}
   <!-- /.row -->
-  <div class="row">
+  <div class="row mb-2" id="courseStatus">
     <div class="col-12 text-center">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
-        <a href="#" class="btn btn-default btn-success proposal-status"
-          style="width:128px;" data-status="approve">Approve</a>
-        <a href="#" class="btn btn-default btn-danger proposal-status"
-          style="margin-left:24px;width:128px;" data-status="decline">Decline</a>
+        <a href="#" class="btn btn-default btn-success course-status"
+          style="width:128px;" data-status="approved">Approve</a>
+        <a href="#" class="btn btn-default btn-danger course-status"
+          style="margin-left:24px;width:128px;" data-status="declined">Decline</a>
         </div>
       </div>
     </div>
