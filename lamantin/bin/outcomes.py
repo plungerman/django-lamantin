@@ -7,7 +7,6 @@ import sys
 import django
 django.setup()
 from lamantin.geoc.models import Course
-from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Outcome
 
 
