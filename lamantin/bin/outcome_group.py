@@ -18,7 +18,7 @@ def main():
     """Main function that does something."""
     course = Course.objects.get(pk=3)
     for outcome in course.outcome.all():
-        print(outcome.group.all())
+        print(outcome.group)
 
 
 if __name__ == '__main__':

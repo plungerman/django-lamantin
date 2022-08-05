@@ -64,7 +64,7 @@ class DocumentAdmin(admin.ModelAdmin):
 class OutcomeAdmin(admin.ModelAdmin):
     """Outcome admin class."""
 
-    list_display = ('name', 'tag_list', 'active')
+    list_display = ('name', 'group', 'tag_list', 'active')
     list_per_page = 500
     list_editable = ['active']
 
