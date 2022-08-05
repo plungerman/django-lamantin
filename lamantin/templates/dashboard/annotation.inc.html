@@ -8,7 +8,7 @@
     </div>
     {% if user.is_superuser %}
     <div class="float-right">
-      <a href="#" data-toggle="modal" data-href="{# url 'delete_note' note.id #}"
+      <a href="#" data-toggle="modal" data-href="{% url 'delete_note' note.id %}"
         data-title="Comment" data-target="#confirm-delete">
         <i class="fa fa-trash red" data-toggle="tooltip"
           data-placement="top" aria-hidden="true"

@@ -79,6 +79,40 @@ $(function(){
     });
     return false;
   });
+  /* modal form for textarea data */
+  $(document).on('click','.text-update', function (e) {
+    var $dis = $(this);
+    var $nid = $dis.attr('data-nid');
+    console.log($nid);
+    if ($nid) {
+      $.ajax({
+        url: $annotation,
+        type: 'post',
+        data: {'cid': $cid, 'action': 'fetch', 'nid': $nid},
+        success: function(data){
+          // Add response in Modal body
+          $('#id_nid').val(data['id']);
+          $('#id_body').val(data['msg']);
+          $('#textModalHeader').text('Update comment');
+          // Display Modal
+          $('#id_body').trumbowyg('destroy');
+          $('#textModal').modal('show');
+          $('#id_body').trumbowyg($trumBowygDict);
+        }
+      });
+    } else {
+        if ($mod == 'comment') {
+          $('#id_nid').val(0);
+          $('#id_body').val('');
+          $('#textModalHeader').text('New comment');
+          // Display Modal
+          $('#id_body').trumbowyg('destroy');
+          $('#textModal').modal('show');
+          $('#id_body').trumbowyg($trumBowygDict);
+        }
+    }
+  });
+
   $('#textModal').submit(function(e){
     e.preventDefault();
     var $body = $('#id_body').val();
@@ -99,6 +133,8 @@ $(function(){
         }
         $('#id_body').val('');
         $('.modal-backdrop').remove();
+        console.log('success');
+        console.log(data);
       },
       error: function(data){
         console.log(data);
@@ -113,5 +149,9 @@ $(function(){
   $('#textModal').on('hidden.bs.modal', function () {
     $('#id_body').trumbowyg('destroy');
     $('#id_body').trumbowyg($trumBowygDict);
+  });
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    $('.object-title').text( $(e.relatedTarget).data('title') );
   });
 });

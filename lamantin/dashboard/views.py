@@ -2,10 +2,14 @@
 
 """URLs for all views."""
 
+import json
+import logging
+
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
@@ -15,6 +19,9 @@ from djauth.decorators import portal_auth_required
 from djtools.utils.users import in_group
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
+
+
+logger = logging.getLogger('debug_logfile')
 
 
 @portal_auth_required(
@@ -87,7 +94,30 @@ def course_status(request):
     return HttpResponse(message)
 
 
+@portal_auth_required(
+    group = settings.MANAGER_GROUP,
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def delete_note(request, nid):
+    """Delete a comment form an Alert."""
+    note = get_object_or_404(Annotation, pk=nid)
+    note.delete()
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        "Comment was deleted",
+        extra_tags='alert-success',
+    )
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 @csrf_exempt
+@portal_auth_required(
+    group = settings.MANAGER_GROUP,
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
 def annotation(request):
     """Manage annotations for a course on the detail view via ajax post."""
     user = request.user
@@ -99,11 +129,13 @@ def annotation(request):
             nid = int(post.get('nid'))
             cid = int(post.get('cid'))
         except:
-            raise Http404("Invalid course or annotation ID")
+            return HttpResponse("Invalid course or annotation ID")
         course = get_object_or_404(Course, pk=cid)
         note = None
         body = post.get('value')
-        template = loader.get_template('alert/annotation.inc.html')
+        action = post.get('action')
+        template = loader.get_template('dashboard/annotation.inc.html')
+        logger.debug('course: {0}'.format(course));
         if nid == 0:
             note = Annotation.objects.create(
                 course=course,
@@ -117,7 +149,7 @@ def annotation(request):
             data['msg'] = template.render(context, request)
         else:
             try:
-                note = Annotation.objects.get(pk=cid)
+                note = Annotation.objects.get(pk=nid)
                 if action == 'fetch':
                     data['msg'] = note.body
                 elif action == 'delete':
@@ -131,6 +163,8 @@ def annotation(request):
                 data['id'] = note.id
             except:
                 data['msg'] = "Follow-up not found"
+    else:
+        data['msg'] = "Requires AJAX POST request"
 
     return HttpResponse(
         json.dumps(data), content_type='application/json; charset=utf-8',
