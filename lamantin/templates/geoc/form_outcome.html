@@ -43,9 +43,10 @@
     </div>
   </div>
   <form method="post" action="." autocomplete="false" class="form" role="form" id="courseOutcomes">
-    {% if form.errors %}
+    {% if errors %}
       <div class="alert alert-danger mt-4">
-        Please correct the errors below.
+        You must complete all of the SLO descriptions before you
+        can submit the course for review by the GEOC committe.
       </div>
     {% endif %}
     {% csrf_token %}

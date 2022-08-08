@@ -63,9 +63,21 @@ class CourseForm(forms.ModelForm):
 class CourseOutcomeForm(forms.ModelForm):
     """GEOC specific outcome form."""
 
+    def __init__(self, *args, **kwargs):
+        """Override of the initialization method to obtain the request object."""
+        self.request = kwargs.pop('request', None)
+        super(CourseOutcomeForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = CourseOutcome
-        fields = ('description',)
+        fields = ['description']
+
+    def clean(self):
+        """Form validation."""
+        cd = self.cleaned_data
+        if self.request.POST.get('save_submit') and not cd.get('description'):
+             self.add_error('description', 'Please provide a description')
+        return cd
 
 
 class DocumentForm(forms.ModelForm):

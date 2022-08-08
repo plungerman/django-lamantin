@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """URLs for all views."""
+import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -14,6 +15,9 @@ from lamantin.geoc.forms import DocumentForm
 from lamantin.geoc.models import Course
 
 
+logger = logging.getLogger('debug_logfile')
+
+
 @portal_auth_required(
     session_var='LAMANTIN_AUTH',
     redirect_url=reverse_lazy('access_denied'),
@@ -23,6 +27,7 @@ def course_form(request, step='course', cid=None):
     course = None
     template = 'geoc/form_{0}.html'.format(step)
     forms_dict = {}
+    errors = False
     user = request.user
     form_syllabus = None
     phile = None
@@ -53,30 +58,36 @@ def course_form(request, step='course', cid=None):
     if request.method == 'POST':
         post = request.POST
         if step=='outcome':
-            if post.get('save_submit') and not course.save_submit:
+            for outcome in course.outcome.all():
+                if outcome.active:
+                    forms = []
+                    for element in outcome.elements.all():
+                        slo = element.slo.get(course=course)
+                        form = CourseOutcomeForm(
+                            request.POST,
+                            request=request,
+                            prefix='slo{0}'.format(slo.id),
+                            instance=slo,
+                        )
+                        if form.is_valid():
+                            form.save()
+                        else:
+                            errors = True
+                            logger.debug(form['description'])
+                            logger.debug(form.errors)
+                        forms.append(form)
+                    forms_dict[outcome.get_form()] = forms
+            if not errors and post.get('save_submit') and not course.save_submit:
                 # set the save submit flag so user cannot update
                 course.save_submit = True
                 course.save()
-            for outcome in course.outcome.all():
-                forms = []
-                for element in outcome.elements.all():
-                    slo = element.slo.get(course=course)
-                    form = CourseOutcomeForm(
-                        request.POST,
-                        prefix='slo{0}'.format(slo.id),
-                        instance=slo,
-                    )
-                    if form.is_valid():
-                        form.save()
-                    forms.append(form)
-                forms_dict[outcome.get_form()] = forms
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
-                extra_tags='alert-success',
-            )
-            return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
+                    extra_tags='alert-success',
+                )
+                return HttpResponseRedirect(reverse_lazy('dashboard_home'))
         else:
             form = CourseForm(
                 request.POST,
@@ -127,21 +138,24 @@ def course_form(request, step='course', cid=None):
             )
         else:
             for outcome in course.outcome.all():
-                forms = []
-                for element in outcome.elements.all():
-                    slo = element.slo.get(course=course)
-                    form = CourseOutcomeForm(
-                        prefix='slo{0}'.format(slo.id),
-                        instance=slo,
-                    )
-                    forms.append(form)
-                forms_dict[outcome.get_form()] = forms
+                if outcome.active:
+                    forms = []
+                    for element in outcome.elements.all():
+                        slo = element.slo.get(course=course)
+                        form = CourseOutcomeForm(
+                            prefix='slo{0}'.format(slo.id),
+                            request=request,
+                            instance=slo,
+                        )
+                        forms.append(form)
+                    forms_dict[outcome.get_form()] = forms
 
     return render(
         request,
         template,
         {
             'form': form,
+            'errors': errors,
             'form_syllabus': form_syllabus,
             'step': step,
             'course': course,

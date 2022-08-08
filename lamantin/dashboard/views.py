@@ -3,7 +3,6 @@
 """URLs for all views."""
 
 import json
-import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -19,9 +18,6 @@ from djauth.decorators import portal_auth_required
 from djtools.utils.users import in_group
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
-
-
-logger = logging.getLogger('debug_logfile')
 
 
 @portal_auth_required(
@@ -135,7 +131,6 @@ def annotation(request):
         body = post.get('value')
         action = post.get('action')
         template = loader.get_template('dashboard/annotation.inc.html')
-        logger.debug('course: {0}'.format(course));
         if nid == 0:
             note = Annotation.objects.create(
                 course=course,
