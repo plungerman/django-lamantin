@@ -83,6 +83,13 @@ class CourseOutcomeForm(forms.ModelForm):
 class DocumentForm(forms.ModelForm):
     """GEOC documents."""
 
+    phile = forms.FileField(
+        label="""
+            If you have a syllabus, please upload it here
+            but it is not required to provide one.
+        """,
+        required=False,
+    )
     class Meta:
         model = Document
         fields = ['phile']

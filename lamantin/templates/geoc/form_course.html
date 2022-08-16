@@ -60,14 +60,6 @@ $(function() {
         {% endif %}
       </div>
       <div class="col-12" id="id_outcome">
-        <div class="col-12 card lightgrey-box p-3">
-          <div class="form-check">
-            <label class="form-check-label" for="id_outcome_4">
-              <input class="form-check-input" id="id_outcome_4" name="outcome" type="checkbox" value="1"{% if 1 in form.outcome.value or '1' in form.outcome.value %} checked="checked"{%endif %}>
-              Intellectual Foundations
-            </label>
-          </div>
-        </div>
         <h5 class="mt-1 mb-0">Explorations</h5>
         <small class="form-text text-muted mb-1">Choose only one</small>
         <div class="col-12 card p-3 lightblue-box">
@@ -101,14 +93,14 @@ $(function() {
         <div class="col-12 card bg-warning p-3">
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_3">
-              <input class="form-check-input" id="id_outcome_3" name="outcome" title="" type="checkbox" value="6"{% if 6 in form.outcome.value or '6' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input" id="id_outcome_3" name="outcome" title="" type="checkbox" value="6"{% if 6 in form.outcome.value or '6' in form.outcome.value %} checked="checked" {%endif %} disabled>
               Global Language
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_14">
               <input class="form-check-input" id="id_outcome_14" name="outcome" title="" type="checkbox" value="7"{% if 7 in form.outcome.value or '7' in form.outcome.value %} checked="checked" {%endif %}>
-              Written Communication
+              Written Communication  (currently handled through WAC)
             </label>
           </div>
           <div class="form-check">
@@ -149,6 +141,22 @@ $(function() {
             <label class="form-check-label" for="id_outcome_10">
               <input class="form-check-input" id="id_outcome_10" name="outcome" title="" type="checkbox" value="10"{% if 10 in form.outcome.value or '10' in form.outcome.value %} checked="checked" {%endif %}>
               Religious Perspectives
+            </label>
+          </div>
+        </div>
+        <!-- /.col-12 -->
+        <h5 class="mt-1 mb-1">Other elements of the GEOC include:</h5>
+        <div class="col-12 card lightgrey-box p-3">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_1">
+              <input class="form-check-input" id="id_outcome_1" name="outcome" type="checkbox" value="1"{% if 1 in form.outcome.value or '1' in form.outcome.value %} checked="checked"{%endif %} disabled>
+              Intellectual Foundations
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_15">
+              <input class="form-check-input" id="id_outcome_15" name="outcome" type="checkbox" value="15"{% if 15 in form.outcome.value or '15' in form.outcome.value %} checked="checked"{%endif %} disabled>
+              Reflection Framework
             </label>
           </div>
         </div>
