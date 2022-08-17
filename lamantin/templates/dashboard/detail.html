@@ -154,11 +154,11 @@ $(function() {
     </div>
     <!-- /col-8 -->
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-      <h2 style="border-bottom: 1px black dotted;">Comments
-      <a href="" data-toggle="modal" data-target="#textModal"
-        data-mod="comment" class="text-update">
-        <i class="fa fa-comments green" data-toggle="tooltip"
-          data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+      <h2 style="border-bottom: 1px black dotted;">
+        Comments
+        <a href="" data-toggle="modal" data-target="#textModal" class="text-update">
+          <i class="fa fa-comments green" data-toggle="tooltip"
+            data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
       </h2>
       <div id="comments-list">
         {% for note in course.notes.all %}
@@ -168,7 +168,12 @@ $(function() {
           {% endif %}
         {% endfor %}
       </div>
-      <h2 style="border-bottom: 1px black dotted;">Documents</h2>
+      <h2 style="border-bottom: 1px black dotted;">
+        Documents
+        <a href="" data-toggle="modal" data-target="#phileModal" class="phile-upload">
+          <i class="fa fa-upload green" data-toggle="tooltip"
+            data-placement="top" title="Upload a file" aria-hidden="true"></i></a>
+      </h2>
       <div id="docs-list">
         {% for doc in course.docs.all %}
         {% if doc.phile %}
@@ -187,8 +192,43 @@ $(function() {
   <!-- /.row -->
 {% endblock content %}
 {% block footer %}
+<!-- #phileModal -->
+<div class="modal fade" id="phileModal" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false" role="dialog"
+  aria-labelledby="phileModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form method="post" action="{% url 'phile_upload' %}" enctype="multipart/form-data" autocomplete="false" class="form" role="form">
+        {% csrf_token %}
+        <input type="hidden" name="cid" value="{{course.id}}" id="id_course">
+        <div class="header" style="padding:4px 8px 0 16px;">
+          <label for="id_phile" style="margin-bottom:0;">
+            <h5 id="phileModalHeader">Upload file</h5>
+          </label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="file" name="phile" id="id_phile" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="id_name">Short Description</label><br>
+            <input type="text" name="name" id="id_name" style="width:95%">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-success" id="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /#phileModal -->
 <!-- #textModal -->
-<div class="modal fade" id="textModal" tabindex="-1" aria-hidden="true"
+<div class="modal fade" id="textModal" aria-hidden="true"
   data-backdrop="static" data-keyboard="false" role="dialog"
   aria-labelledby="textModalLabel">
   <div class="modal-dialog" role="document">
@@ -218,7 +258,7 @@ $(function() {
 </div>
 <!-- /#textModal -->
 <!-- #confirm-delete -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+<div class="modal fade" id="confirm-delete" role="dialog"
   aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

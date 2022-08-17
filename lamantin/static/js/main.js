@@ -83,7 +83,6 @@ $(function(){
   $(document).on('click','.text-update', function (e) {
     var $dis = $(this);
     var $nid = $dis.attr('data-nid');
-    console.log($nid);
     if ($nid) {
       $.ajax({
         url: $annotation,
@@ -101,15 +100,13 @@ $(function(){
         }
       });
     } else {
-        if ($mod == 'comment') {
-          $('#id_nid').val(0);
-          $('#id_body').val('');
-          $('#textModalHeader').text('New comment');
-          // Display Modal
-          $('#id_body').trumbowyg('destroy');
-          $('#textModal').modal('show');
-          $('#id_body').trumbowyg($trumBowygDict);
-        }
+      $('#id_nid').val(0);
+      $('#id_body').val('');
+      $('#textModalHeader').text('New comment');
+      // Display Modal
+      $('#id_body').trumbowyg('destroy');
+      $('#textModal').modal('show');
+      $('#id_body').trumbowyg($trumBowygDict);
     }
   });
 
@@ -133,11 +130,8 @@ $(function(){
         }
         $('#id_body').val('');
         $('.modal-backdrop').remove();
-        console.log('success');
-        console.log(data);
       },
       error: function(data){
-        console.log(data);
         $.growlUI("Form", "Error");
       }
     });

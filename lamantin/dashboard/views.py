@@ -16,6 +16,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
 from djtools.utils.users import in_group
+from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 
@@ -59,7 +60,7 @@ def course_detail(request, cid):
     redirect_url=reverse_lazy('access_denied'),
 )
 def course_status(request):
-    """Set the status on a proposal."""
+    """Set the status on a course."""
     user = request.user
     if request.POST:
         cid = request.POST.get('cid')
@@ -105,6 +106,53 @@ def delete_note(request, nid):
         "Comment was deleted",
         extra_tags='alert-success',
     )
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@portal_auth_required(
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def phile_upload(request):
+    """Upload a file for a course."""
+    user = request.user
+    message = None
+    mtype = messages.WARNING
+    extra_tags = 'alert-warning'
+    if request.POST:
+        cid = request.POST.get('cid')
+        try:
+            cid = int(cid)
+        except ValueError:
+            message = "Invalid course ID"
+        if cid:
+            course = get_object_or_404(Course, pk=cid)
+            form = DocumentRequiredForm(
+                request.POST,
+                request.FILES,
+                use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            )
+
+            if form.is_valid():
+                doc = form.save(commit=False)
+                doc.course = course
+                doc.created_by = user
+                doc.updated_by = user
+                doc.save()
+                message = "File uploaded successfully."
+                mtype = messages.SUCCESS
+                extra_tags = 'alert-success'
+            else:
+                message = "Upload failed. Please provide a valid file and description."
+    else:
+        message = "Requires POST."
+    if message:
+        messages.add_message(
+            request,
+            mtype,
+            message,
+            extra_tags=extra_tags,
+        )
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

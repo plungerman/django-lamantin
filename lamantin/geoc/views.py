@@ -111,7 +111,8 @@ def course_form(request, step='course', cid=None):
                 # document syllabus
                 doc = form_syllabus.save(commit=False)
                 doc.course = course
-                doc.name = 'Syllabus: {0} ({1})'.format(course.title, course.number)
+                if not doc.name:
+                    doc.name = 'Syllabus: {0} ({1})'.format(course.title, course.number)
                 doc.created_by = user
                 doc.updated_by = user
                 doc.save()

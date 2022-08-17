@@ -18,6 +18,8 @@ urlpatterns = [
         views.delete_note,
         name='delete_note',
     ),
+    # phile upload
+    path('course/phile/', views.phile_upload, name='phile_upload'),
     # manager course comments
     path('course/annotation/', views.annotation, name='annotation'),
     # course status view for 'approve' or 'decline' actions

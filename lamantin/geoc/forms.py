@@ -54,7 +54,8 @@ class CourseForm(forms.ModelForm):
         cd = self.cleaned_data
         dupes = Dupes()
         dupes.get_outcomes()
-        dupes.check(cd['outcome'])
+        if cd.get('outcome'):
+            dupes.check(cd['outcome'])
         if dupes.error:
              self.add_error('outcome', dupes.error)
         return cd
@@ -90,6 +91,20 @@ class DocumentForm(forms.ModelForm):
         """,
         required=False,
     )
+
     class Meta:
         model = Document
-        fields = ['phile']
+        fields = ['phile', 'name']
+
+
+class DocumentRequiredForm(DocumentForm):
+    """GEOC document required fields."""
+
+    phile = forms.FileField(
+        label="""
+            If you have a syllabus, please upload it here
+            but it is not required to provide one.
+        """,
+        required=True,
+    )
+    name = forms.CharField(required=True)

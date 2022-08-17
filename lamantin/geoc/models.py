@@ -172,13 +172,12 @@ class Document(models.Model):
     """Supporting documents for a course."""
 
     created_by = models.ForeignKey(
-        User, verbose_name="Created by",
+        User,
         related_name='doc_creator',
         on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
         User,
-        verbose_name="Updated by",
         related_name='doc_updated',
         on_delete=models.CASCADE,
         null=True,
