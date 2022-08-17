@@ -62,8 +62,8 @@
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{course.approved_date}}"><i class="fa fa-check green" title="Approved"><span style="display:none;">✓</span> </i>
             </a>
           {% else %}
-            {% if course.needswork %}
-            <i class="fa fa-2x fa-meh-o green blue-tooltip"
+            {% if course.furbish %}
+            <i class="fa-regular fa-face-meh blue"
               data-toggle="tooltip" data-placement="top" aria-hidden='true'
               title="Needs work"></i>
             {% else %}
