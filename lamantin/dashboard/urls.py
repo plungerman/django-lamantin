@@ -22,7 +22,7 @@ urlpatterns = [
     path('course/phile/', views.phile_upload, name='phile_upload'),
     # manager course comments
     path('course/annotation/', views.annotation, name='annotation'),
-    # course status view for 'approve' or 'decline' actions
+    # course status view for 'approve' or 'furbish' actions
     path('course/status/', views.course_status, name='course_status'),
     path('', views.home, name='dashboard_home'),
 ]

@@ -70,21 +70,20 @@ def course_status(request):
             return HttpResponse("Access Denied")
         course = get_object_or_404(Course, pk=cid)
         status = request.POST.get('status')
-        if course.declined or course.approved:
+        if course.furbish or course.approved:
             message = "{0} has already been {1}".format(course, status)
         else:
-            if status in ['approved', 'declined']:
+            if status in ['approved', 'furbish']:
                 from djtools.fields import NOW
                 if status == 'approved':
                     course.approved = True
                     course.approved_date = NOW
-                if status == 'declined':
-                    course.declined = True
-                    course.declined_date = NOW
+                if status == 'furbish':
+                    course.furbish = True
                 course.save()
                 message = "Course has been {0}".format(status)
             else:
-                message = "Requires 'declined' or 'approved'"
+                message = "Requires 'furbish' or 'approved'"
     else:
         message = "Requires POST request"
 

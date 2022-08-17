@@ -35,12 +35,11 @@ class CourseAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
         'save_submit',
-        'declined',
-        'declined_date',
+        'furbish',
         'approved',
         'approved_date',
     )
-    list_editable = ('approved', 'declined', 'save_submit')
+    list_editable = ('approved', 'furbish', 'save_submit')
     list_per_page = 500
 
 

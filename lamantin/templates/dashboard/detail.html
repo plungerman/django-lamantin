@@ -74,8 +74,8 @@ $(function() {
         <div class="panel-body">
         <a href="#" class="btn btn-default btn-success course-status"
           style="width:128px;" data-status="approved">Approve</a>
-        <a href="#" class="btn btn-default btn-danger course-status"
-          style="margin-left:24px;width:128px;" data-status="declined">Decline</a>
+        <a href="#" class="btn btn-default btn-warning course-status"
+          style="margin-left:24px;width:128px;" data-status="needswork">Needs Work</a>
         </div>
       </div>
     </div>
@@ -161,12 +161,14 @@ $(function() {
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
       </h2>
       <div id="comments-list">
+      {% if course.perms.approve %}
         {% for note in course.notes.all %}
           {% if note.status %}
           {% cycle 'blue-box' 'lightgrey-box' as boxcolor silent %}
           {% include "dashboard/annotation.inc.html" with bgcolor=boxcolor %}
           {% endif %}
         {% endfor %}
+      {% endif %}
       </div>
       <h2 style="border-bottom: 1px black dotted;">
         Documents

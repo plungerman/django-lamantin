@@ -24,7 +24,7 @@
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>
         <th style="text-align: center;">Submitted</th>
-        <th style="text-align: center;">Approved</th>
+        <th style="text-align: center;">Status</th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +62,13 @@
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{course.approved_date}}"><i class="fa fa-check green" title="Approved"><span style="display:none;">✓</span> </i>
             </a>
           {% else %}
+            {% if course.needswork %}
+            <i class="fa fa-2x fa-meh-o green blue-tooltip"
+              data-toggle="tooltip" data-placement="top" aria-hidden='true'
+              title="Needs work"></i>
+            {% else %}
             <i class="fa fa-times red" aria-hidden="true"></i>
+            {% endif %}
           {% endif %}
         </td>
       </tr>
@@ -91,7 +97,7 @@
         <th style="text-align: center;">Created At</th>
         <th style="text-align: center;">Syllabus</th>
         <th style="text-align: center;">Submitted</th>
-        <th style="text-align: center;">Approved</th>
+        <th style="text-align: center;">Status</th>
       </tr>
     </tfoot>
   </table>
