@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
 from djtools.fields.helpers import upload_to_path
+from djtools.utils.users import in_group
 from taggit.managers import TaggableManager
 
 
@@ -119,6 +120,19 @@ class Course(models.Model):
                 phile = doc
                 break
         return phile
+
+    def comments(self):
+        return self.notes.filter(tags__name__in=['Comments'])
+
+    def needs_work(self):
+        return self.notes.filter(tags__name__in=['Furbish'])
+
+    def permissions(self, user):
+        status = in_group(user, settings.MANAGER_GROUP)
+        for outcome in self.outcome.all():
+            if user.groups.filter(name=outcome.group).exists():
+                status = True
+        return status
 
 
 class OutcomeElement(models.Model):

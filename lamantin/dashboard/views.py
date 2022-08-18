@@ -39,10 +39,14 @@ def home(request):
 def course_detail(request, cid):
     """View course details."""
     user = request.user
-    group = in_group(user, settings.MANAGER_GROUP)
     course = Course.objects.get(pk=cid)
-    if course.user == user or group:
-        response = render(request, 'dashboard/detail.html', {'course': course})
+    perms = course.permissions(user)
+    if course.user == user or perms:
+        response = render(
+            request,
+            'dashboard/detail.html',
+            {'course': course, 'perms': perms},
+        )
     else:
         messages.add_message(
             request,
@@ -184,8 +188,8 @@ def annotation(request):
                 created_by=user,
                 updated_by=user,
                 body=body,
-                tags='Comments',
             )
+            note.tags.add('Comments')
             course.notes.add(note)
             context = {'note': note, 'bgcolor': 'bg-warning'}
             data['msg'] = template.render(context, request)
