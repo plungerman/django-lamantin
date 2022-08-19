@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Document
@@ -81,13 +82,26 @@ class CourseOutcomeForm(forms.ModelForm):
         return cd
 
 
+class AnnotationForm(forms.ModelForm):
+    """GEOC document required fields."""
+
+    body = forms.CharField(
+        label="Please provide your feedback for this course",
+        widget=forms.Textarea,
+    )
+
+    class Meta:
+        model = Annotation
+        fields = ['body']
+
+
 class DocumentForm(forms.ModelForm):
     """GEOC documents."""
 
     phile = forms.FileField(
         label="""
-            If you have a syllabus, please upload it here
-            but it is not required to provide one.
+            If you have a syllabus or course proposal for the course,
+            please upload here.
         """,
         required=False,
     )
@@ -101,10 +115,7 @@ class DocumentRequiredForm(DocumentForm):
     """GEOC document required fields."""
 
     phile = forms.FileField(
-        label="""
-            If you have a syllabus, please upload it here
-            but it is not required to provide one.
-        """,
+        label="File",
         required=True,
     )
     name = forms.CharField(required=True)

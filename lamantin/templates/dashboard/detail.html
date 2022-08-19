@@ -8,7 +8,7 @@ $(function() {
   $(".course-status").click(function () {
     $.ajax({
       type: "POST",
-      url: "{% url 'course_status' %}",
+      url: "{% url 'status' %}",
       data: {'status': $(this).data('status'), 'cid': '{{course.id}}'},
       cache: false,
       beforeSend: function() {
@@ -58,7 +58,7 @@ $(function() {
           title="Approved"></i>
       {% else %}
       {% if not course.save_submit %}
-        | <a href="{% url 'course_update' 'course' course.id %}">
+        | <a href="{% url 'update' 'course' course.id %}">
             <i class="fa fa-pencil green" aria-hidden="true"
               data-toggle="tooltip" data-placement="top"
               title="Update Course"></i></a>
@@ -75,7 +75,7 @@ $(function() {
         <a href="#" class="btn btn-default btn-success course-status"
           style="width:128px;" data-status="approved">Approve</a>
         {% if not course.furbish %}
-        <a href="#" class="btn btn-default btn-warning course-status"
+        <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
           style="margin-left:24px;width:128px;" data-status="needswork">Needs Work</a>
         {% endif %}
         </div>
@@ -158,8 +158,8 @@ $(function() {
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
       {% if course.furbish %}
       <h2 style="border-bottom: 1px black dotted;">
-        Needs Work Thread
-        <a href="" data-toggle="modal" data-target="#textModal" class="text-update">
+        Public Comments
+        <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="furbish">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
       </h2>
@@ -174,8 +174,8 @@ $(function() {
       {% endif %}
       {% if perms %}
       <h2 style="border-bottom: 1px black dotted;">
-        Comments
-        <a href="" data-toggle="modal" data-target="#textModal" class="text-update">
+        GEOC Comments
+        <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="comments">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
       </h2>
@@ -266,6 +266,7 @@ $(function() {
           <div class="form-group">
             <textarea class="form-control" name="body" id="id_body" rows="8" maxlength="1500" style="resize: none;height: 150px !important;width:95% !important;" placeholder="Limit: 250 words"></textarea>
             <input type="hidden" name="nid" value="0" id="id_nid">
+            <input type="hidden" name="ctype" value="" id="id_ctype">
           </div>
         </div>
         <div class="modal-footer">

@@ -16,6 +16,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
 from djtools.utils.users import in_group
+from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
@@ -36,7 +37,7 @@ def home(request):
     return render(request, 'dashboard/home.html', {'courses': courses})
 
 
-def course_detail(request, cid):
+def detail(request, cid):
     """View course details."""
     user = request.user
     course = Course.objects.get(pk=cid)
@@ -58,12 +59,45 @@ def course_detail(request, cid):
     return response
 
 
+@portal_auth_required(
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def furbish(request, cid):
+    """Set the status on a course."""
+    user = request.user
+    course = get_object_or_404(Course, pk=cid)
+    if request.POST:
+        form = AnnotationForm(
+            request.POST,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.course = course
+            note.created_by = user
+            note.updated_by = user
+            note.save()
+            note.tags.add('Furbish')
+            course.furbish = True
+            course.save()
+            return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+    else:
+        form = AnnotationForm(use_required_attribute=settings.REQUIRED_ATTRIBUTE)
+
+    return render(
+        request,
+        'dashboard/furbish.html',
+        {'course': course, 'form': form},
+    )
+
+
 @csrf_exempt
 @portal_auth_required(
     session_var='LAMANTIN_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
-def course_status(request):
+def status(request):
     """Set the status on a course."""
     user = request.user
     if request.POST:
@@ -180,6 +214,7 @@ def annotation(request):
         course = get_object_or_404(Course, pk=cid)
         note = None
         body = post.get('value')
+        ctype = post.get('ctype')
         action = post.get('action')
         template = loader.get_template('dashboard/annotation.inc.html')
         if nid == 0:
@@ -189,7 +224,7 @@ def annotation(request):
                 updated_by=user,
                 body=body,
             )
-            note.tags.add('Comments')
+            note.tags.add(ctype.capitalize())
             course.notes.add(note)
             context = {'note': note, 'bgcolor': 'bg-warning'}
             data['msg'] = template.render(context, request)

@@ -31,10 +31,10 @@
     {% for course in courses %}
       <tr>
         <td nowrap>
-          <a href="{% url 'course_detail' course.id %}">{{course.title}}</a>
+          <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
         <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
-          <a href="{% url 'course_update' 'course' course.id %}">{{course.number}}</a>
+          <a href="{% url 'update' 'course' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>

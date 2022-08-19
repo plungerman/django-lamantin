@@ -124,7 +124,7 @@ def course_form(request, step='course', cid=None):
                     extra_tags='alert-success',
                 )
                 return HttpResponseRedirect(
-                    reverse_lazy('course_update', args=['outcome', course.id]),
+                    reverse_lazy('update', args=['outcome', course.id]),
                 )
     else:
         if step == 'course':

@@ -1,0 +1,40 @@
+{% extends "home.html" %}
+{% load bootstrap4 %}
+{% block javascript %}
+{{block.super}}
+<script type="text/javascript">
+  $(function() {
+  });
+</script>
+{% endblock %}
+{% block breadcrumb %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class=" alert {{message.tags}}">
+        <strong>{{ message }}</strong>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block content %}
+<div class="forms-container col-lg-8 col-md-12 col-sm-12 col-xs-12 mb-4" style="padding-right:0px !important;">
+  <div class="row">
+    <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+      <h3 class="red">Course Needs Work</h3>
+    </div>
+  </div>
+  <form method="post" action="." autocomplete="false" class="form" role="form" id="furbish">
+    {% if form.errors %}
+      <div class="alert alert-danger mt-4">Please provide a comment in the text box below.</div>
+    {% endif %}
+    {% csrf_token %}
+    <div class="form-group">
+      {% bootstrap_form form %}
+    </div>
+    <button class="btn btn-primary btn-block" type="submit" value="Submit" id="submit-button">Submit your note</button>
+  </form>
+</div>
+<!-- /.forms-container /.col-* -->
+{% endblock content %}

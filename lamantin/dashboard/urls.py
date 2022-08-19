@@ -9,8 +9,8 @@ from lamantin.dashboard import views
 urlpatterns = [
     path(
         'course/<int:cid>/detail/',
-        views.course_detail,
-        name='course_detail',
+        views.detail,
+        name='detail',
     ),
     # delete Annotation object
     path(
@@ -18,11 +18,13 @@ urlpatterns = [
         views.delete_note,
         name='delete_note',
     ),
+    # course needs work
+    path('course/<int:cid>/furbish/', views.furbish, name='furbish'),
     # phile upload
     path('course/phile/', views.phile_upload, name='phile_upload'),
     # manager course comments
     path('course/annotation/', views.annotation, name='annotation'),
-    # course status view for 'approve' or 'furbish' actions
-    path('course/status/', views.course_status, name='course_status'),
+    # course status view for 'approved'
+    path('course/status/', views.status, name='status'),
     path('', views.home, name='dashboard_home'),
 ]

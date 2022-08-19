@@ -12,7 +12,7 @@ urlpatterns = [
     path(
         'form/<str:step>/<int:cid>/update/',
         views.course_form,
-        name='course_update',
+        name='update',
     ),
     path('form/', views.course_form, name='course'),
     # home: redirect to dashboard

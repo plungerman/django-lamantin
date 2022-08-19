@@ -83,6 +83,7 @@ $(function(){
   $(document).on('click','.text-update', function (e) {
     var $dis = $(this);
     var $nid = $dis.attr('data-nid');
+    var $ctype = $dis.attr('data-ctype');
     if ($nid) {
       $.ajax({
         url: $annotation,
@@ -100,8 +101,10 @@ $(function(){
         }
       });
     } else {
+      console.log($ctype);
       $('#id_nid').val(0);
       $('#id_body').val('');
+      $('#id_ctype').val($ctype);
       $('#textModalHeader').text('New comment');
       // Display Modal
       $('#id_body').trumbowyg('destroy');
@@ -109,15 +112,15 @@ $(function(){
       $('#id_body').trumbowyg($trumBowygDict);
     }
   });
-
   $('#textModal').submit(function(e){
     e.preventDefault();
     var $body = $('#id_body').val();
     var $nid = $('#id_nid').val();
+    var $ctype = $('#id_ctype').val();
     $.ajax({
       type: 'POST',
       url: $annotation,
-      data: {'cid': $cid, 'nid': $nid, 'value': $body},
+      data: {'cid': $cid, 'nid': $nid, 'value': $body, 'ctype': $ctype},
       cache: false,
       beforeSend: function(){
         $('#textModal').modal('hide');
@@ -126,7 +129,7 @@ $(function(){
         if (data['id']) {
           $('#nid_' + data['id']).replaceWith(data['msg']);
         } else {
-          $('#comments-list').prepend(data['msg']);
+          $('#' + $ctype + '-list').prepend(data['msg']);
         }
         $('#id_body').val('');
         $('.modal-backdrop').remove();
