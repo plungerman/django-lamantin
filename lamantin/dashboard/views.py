@@ -214,8 +214,8 @@ def annotation(request):
         course = get_object_or_404(Course, pk=cid)
         note = None
         body = post.get('value')
-        ctype = post.get('ctype')
         action = post.get('action')
+        ctype = post.get('ctype')
         template = loader.get_template('dashboard/annotation.inc.html')
         if nid == 0:
             note = Annotation.objects.create(
