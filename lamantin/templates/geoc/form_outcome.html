@@ -1,8 +1,11 @@
 {% extends "home.html" %}
+{% load bootstrap4 %}
 {% block javascript %}
 {{block.super}}
 <script type="text/javascript">
   $(function() {
+    /* custom lable for annotation */
+    $('label[for="id_body"]').text("Is there anything else about your course that you would like to share with the committee?");
     /* End course outcomes */
     $('[type="submit"]').on('click', function () {
         if ($(this).attr('id') == 'id_submit') {
@@ -43,6 +46,7 @@
     </div>
   </div>
   <form method="post" action="." autocomplete="false" class="form" role="form" id="courseOutcomes">
+    {{form_note.errors}}
     {% if errors %}
       <div class="alert alert-danger mt-4">
         You must complete all of the SLO descriptions before you
@@ -86,6 +90,9 @@
       {% endif %}{% endif %}
     </div>
     {% endfor %}
+    <div>
+    {% bootstrap_form form_note %}
+    </div>
     <div class="d-flex justify-content-center">
       <input type="hidden" id="id_save_submit" name="save_submit" value="">
       <label for="id_save" style="display:none;">

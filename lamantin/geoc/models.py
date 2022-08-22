@@ -124,8 +124,8 @@ class Course(models.Model):
     def comments(self):
         return self.notes.filter(tags__name__in=['Comments'])
 
-    def needs_work(self):
-        return self.notes.filter(tags__name__in=['Furbish'])
+    def adenda(self):
+        return self.notes.filter(tags__name__in=['Furbish', 'Adenda'])
 
     def permissions(self, user):
         status = in_group(user, settings.MANAGER_GROUP)

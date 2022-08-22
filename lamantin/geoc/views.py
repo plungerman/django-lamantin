@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
+from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import CourseForm
 from lamantin.geoc.forms import CourseOutcomeForm
 from lamantin.geoc.forms import DocumentForm
@@ -29,10 +30,17 @@ def course_form(request, step='course', cid=None):
     forms_dict = {}
     errors = False
     user = request.user
+    form_note = None
     form_syllabus = None
+    adendum = None
     phile = None
     if cid:
         course = Course.objects.get(pk=cid)
+        adendum = course.notes.filter(tags__name__in=['Adenda']).first()
+        form_note = AnnotationForm(
+            instance=adendum,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
         if course.save_submit:
             messages.add_message(
                 request,
@@ -64,7 +72,7 @@ def course_form(request, step='course', cid=None):
                     for element in outcome.elements.all():
                         slo = element.slo.get(course=course)
                         form = CourseOutcomeForm(
-                            request.POST,
+                            post,
                             request=request,
                             prefix='slo{0}'.format(slo.id),
                             instance=slo,
@@ -73,10 +81,24 @@ def course_form(request, step='course', cid=None):
                             form.save()
                         else:
                             errors = True
-                            logger.debug(form['description'])
-                            logger.debug(form.errors)
                         forms.append(form)
                     forms_dict[outcome.get_form()] = forms
+            # note
+            form_note = AnnotationForm(
+                post,
+                instance=adendum,
+                use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            )
+            if adendum:
+                note = form_note.save()
+            elif form_note.is_valid():
+                note = form_note.save(commit=False)
+                note.course = course
+                note.created_by = user
+                note.updated_by = user
+                note.save()
+                note.tags.add('Adenda')
+
             if not errors and post.get('save_submit') and not course.save_submit:
                 # set the save submit flag so user cannot update
                 course.save_submit = True
@@ -87,18 +109,24 @@ def course_form(request, step='course', cid=None):
                     "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
                     extra_tags='alert-success',
                 )
+            elif not errors:
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    "Your course has been saved but has not been submitted to GEOC for review.",
+                    extra_tags='alert-success',
+                )
                 return HttpResponseRedirect(reverse_lazy('dashboard_home'))
         else:
             form = CourseForm(
-                request.POST,
-                request.FILES,
+                post,
                 instance=course,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             )
             form_syllabus = DocumentForm(
-                request.POST,
+                post,
                 request.FILES,
-                instance = phile,
+                instance=phile,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
                 prefix='syllabus',
             )
@@ -133,11 +161,15 @@ def course_form(request, step='course', cid=None):
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             )
             form_syllabus = DocumentForm(
-                instance = phile,
+                instance=phile,
                 use_required_attribute=settings.REQUIRED_ATTRIBUTE,
                 prefix='syllabus',
             )
         else:
+            form_note = AnnotationForm(
+                instance=adendum,
+                use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            )
             for outcome in course.outcome.all():
                 if outcome.active:
                     forms = []
@@ -156,8 +188,9 @@ def course_form(request, step='course', cid=None):
         template,
         {
             'form': form,
-            'errors': errors,
+            'form_note': form_note,
             'form_syllabus': form_syllabus,
+            'errors': errors,
             'step': step,
             'course': course,
         },
