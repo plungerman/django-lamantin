@@ -80,7 +80,11 @@
             {% if slo.course == course %}
               <div class="form-group required">
                 <textarea name="slo{{slo.id}}-description" id="id_slo{{slo.id}}-description" cols="40" rows="10" class="form-control" title="In a few short sentences, please indicate how this course meets this SLO. Examples might include course materials/readings, class activities, assignments, assessments, or feedback.">{{slo.description|default:""}}</textarea>
-                <small class="form-text text-muted">In a few short sentences, please indicate how this course meets this SLO. Examples might include course materials/readings, class activities, assignments, assessments, or feedback.</small>
+                <small class="form-text text-muted">
+                  In a few short sentences, please indicate how this course meets this SLO.
+                  Examples might include course materials/readings, class activities,
+                  assignments, assessments, or feedback.
+                </small>
               </div>
             {% endif %}
           {% endfor %}

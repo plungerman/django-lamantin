@@ -94,19 +94,20 @@ $(function() {
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_3">
               <input class="form-check-input" id="id_outcome_3" name="outcome" title="" type="checkbox" value="6"{% if 6 in form.outcome.value or '6' in form.outcome.value %} checked="checked" {%endif %} disabled>
-              Global Language
+              Global Language (Not available at this time)
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_14">
-              <input class="form-check-input" id="id_outcome_14" name="outcome" title="" type="checkbox" value="7"{% if 7 in form.outcome.value or '7' in form.outcome.value %} checked="checked" {%endif %}>
-              Written Communication  (currently handled through WAC)
+              <input class="form-check-input" id="id_outcome_14" name="outcome" title="" type="checkbox" value="7"{% if 7 in form.outcome.value or '7' in form.outcome.value %} checked="checked" {%endif %} disabled>
+              Written Communication
+              <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-html="true" data-content="Written Communication applications are currently being run through WAC committee. To apply for Writing Intensive / WC designation, please use the <a href='https://app.carthage.edu/forms/writingcurriculum/' target='_blank'>WAC proposal form</a>."><i class="fa fa-question-circle green" aria-hidden="true"></i></a>
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_7">
-              <input class="form-check-input" id="id_outcome_7" name="outcome" title="" type="checkbox" value="8"{% if 8 in form.outcome.value or '8' in form.outcome.value %} checked="checked" {%endif %}>
-              Oral Communication
+              <input class="form-check-input" id="id_outcome_7" name="outcome" title="" type="checkbox" value="8"{% if 8 in form.outcome.value or '8' in form.outcome.value %} checked="checked" {%endif %} disabled>
+              Oral Communication (Not available at this time)
             </label>
           </div>
           <div class="form-check">
