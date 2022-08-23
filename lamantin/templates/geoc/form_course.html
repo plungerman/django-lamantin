@@ -4,9 +4,9 @@
 {{block.super}}
 <script>
 $(function() {
-{% if form.outcome.errors %}
+  {% if form.outcome.errors %}
   $('.invalid-feedback').css('display', 'inherit');
-{% endif %}
+  {% endif %}
 });
 </script>
 {% endblock %}
@@ -65,25 +65,25 @@ $(function() {
         <div class="col-12 card p-3 lightblue-box">
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_0">
-              <input class="form-check-input" id="id_outcome_0" name="outcome" title="" type="checkbox" value="2"{% if 2 in form.outcome.value or '2' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input explorations" id="id_outcome_0" name="outcome" title="" type="checkbox" value="2"{% if 2 in form.outcome.value or '2' in form.outcome.value %} checked="checked" {%endif %}>
               Artistic Inquiries
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_1">
-              <input class="form-check-input" id="id_outcome_1" name="outcome" title="" type="checkbox" value="3"{% if 3 in form.outcome.value or '3' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input explorations" id="id_outcome_1" name="outcome" title="" type="checkbox" value="3"{% if 3 in form.outcome.value or '3' in form.outcome.value %} checked="checked" {%endif %}>
               Cultural Legacies
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_12">
-              <input class="form-check-input" id="id_outcome_12" name="outcome" title="" type="checkbox" value="4"{% if 4 in form.outcome.value or '4' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input explorations" id="id_outcome_12" name="outcome" title="" type="checkbox" value="4"{% if 4 in form.outcome.value or '4' in form.outcome.value %} checked="checked" {%endif %}>
               Social Interactions
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_11">
-              <input class="form-check-input" id="id_outcome_11" name="outcome" title="" type="checkbox" value="5"{% if 5 in form.outcome.value or '5' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input explorations" id="id_outcome_11" name="outcome" title="" type="checkbox" value="5"{% if 5 in form.outcome.value or '5' in form.outcome.value %} checked="checked" {%endif %}>
               Scientific Exploration
             </label>
           </div>
@@ -122,25 +122,25 @@ $(function() {
         <div class="col-12 card terracotta-box p-3">
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_2">
-              <input class="form-check-input" id="id_outcome_2" name="outcome" title="" type="checkbox" value="11"{% if 11 in form.outcome.value or '11' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input perspectives" id="id_outcome_2" name="outcome" title="" type="checkbox" value="11"{% if 11 in form.outcome.value or '11' in form.outcome.value %} checked="checked" {%endif %}>
               Diverse Perspectives
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_5">
-              <input class="form-check-input" id="id_outcome_5" name="outcome" title="" type="checkbox" value="13"{% if 13 in form.outcome.value or '13' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input perspectives" id="id_outcome_5" name="outcome" title="" type="checkbox" value="13"{% if 13 in form.outcome.value or '13' in form.outcome.value %} checked="checked" {%endif %}>
               Interdisciplinary Perspectives
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_6">
-              <input class="form-check-input" id="id_outcome_6" name="outcome" title="" type="checkbox" value="12"{% if 12 in form.outcome.value or '12' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input perspectives" id="id_outcome_6" name="outcome" title="" type="checkbox" value="12"{% if 12 in form.outcome.value or '12' in form.outcome.value %} checked="checked" {%endif %}>
               International Perspectives
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_10">
-              <input class="form-check-input" id="id_outcome_10" name="outcome" title="" type="checkbox" value="10"{% if 10 in form.outcome.value or '10' in form.outcome.value %} checked="checked" {%endif %}>
+              <input class="form-check-input perspectives" id="id_outcome_10" name="outcome" title="" type="checkbox" value="10"{% if 10 in form.outcome.value or '10' in form.outcome.value %} checked="checked" {%endif %}>
               Religious Perspectives
             </label>
           </div>

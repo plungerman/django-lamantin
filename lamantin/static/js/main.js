@@ -34,6 +34,21 @@ $(function(){
     removeformatPasted: true, semantic: true, autogrow: true, resetCss: true
   };
   $('textarea').trumbowyg($trumBowygDict);
+  /* radio behaviour for checkboxes */
+  $('body').delegate('.explorations', 'click', function (e) {
+    var $element = $(this)[0];
+    $('.explorations').each(function () {
+        if ($(this)[0] !== $element)
+            $(this).prop('checked', false);
+    });
+  });
+  $('body').delegate('.perspectives', 'click', function (e) {
+    var $element = $(this)[0];
+    $('.perspectives').each(function () {
+        if ($(this)[0] !== $element)
+            $(this).prop('checked', false);
+    });
+  });
   /* datatables initialization for vaccine verification data */
   $('#courses').DataTable({
     'lengthMenu': [
