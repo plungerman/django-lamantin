@@ -20,6 +20,7 @@ from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
+from lamantin.geoc.models import Outcome
 
 
 @portal_auth_required(
@@ -29,12 +30,25 @@ from lamantin.geoc.models import Course
 def home(request):
     """GEOC dashboard."""
     user = request.user
-    group = in_group(user, settings.MANAGER_GROUP)
-    if group:
-        courses = Course.objects.all()
+    manager = in_group(user, settings.MANAGER_GROUP)
+    if manager:
+        if request.POST:
+            try:
+                outcome = int(request.POST.get('outcome'))
+            except Exception:
+                outcome = False
+            if outcome:
+                courses = Course.objects.filter(outcome__id=outcome)
+        else:
+            courses = Course.objects.all()
     else:
         courses = Course.objects.filter(user=user)
-    return render(request, 'dashboard/home.html', {'courses': courses})
+    outcomes = Outcome.objects.filter(active=True)
+    return render(
+        request,
+        'dashboard/home.html',
+        {'courses': courses, 'outcomes': outcomes, 'manager': manager},
+    )
 
 
 def detail(request, cid):
