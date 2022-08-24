@@ -15,6 +15,7 @@
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Outcomes</th>
         <th>
           Created By
           <i class="fa fa-envelope green ml-1" data-toggle="tooltip"
@@ -36,6 +37,11 @@
         <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
           <a href="{% url 'update' 'course' course.id %}">{{course.number}}</a>
         </td>
+        <td nowrap class="pl-4">
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Explorations" data-content="{% for slo in course.explorations %}{{slo}}{% endfor %}"><i class="fa fa-shuttle-space mr-1" style="color:#538dd7"><span style="display:none;">{% for slo in course.explorations %}{{slo}}{% endfor %}</span></i></a>
+          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Abilities" data-content="{% for slo in course.abilities %}{{slo}}{% endfor %}"><i class="fa fa-hands-asl-interpreting mr-1" style="color:#c39201"><span style="display:none;">{% for slo in course.abilities %}{{slo}}{% endfor %}</span></i></a>
+          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}"><i class="fa fa-cube mr-1" style="color:#d2725e"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i></a>
+        </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
         </td>
@@ -51,7 +57,7 @@
         </td>
         <td nowrap style="text-align: center;">
           {% if course.save_submit  %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="Submitted for approval"><i class="fa fa-check green" title="Submitted for approval"><span style="display:none;">✓</span> </i>
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="Submitted for approval"><i class="fa fa-check green" title="Submitted for approval"><span style="display:none;">✓</span></i>
             </a>
           {% else %}
             <i class="fa fa-times red" aria-hidden="true"></i>
@@ -59,7 +65,7 @@
         </td>
         <td nowrap style="text-align: center;">
           {% if course.approved  %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{course.approved_date}}"><i class="fa fa-check green" title="Approved"><span style="display:none;">✓</span> </i>
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{course.approved_date}}"><i class="fa fa-check green" title="Approved"><span style="display:none;">✓</span></i>
             </a>
           {% else %}
             {% if course.furbish %}
@@ -88,6 +94,7 @@
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Outcomes</th>
         <th>
           Created By
           <i class="fa fa-envelope green ml-1" data-toggle="tooltip"

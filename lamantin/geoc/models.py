@@ -122,9 +122,11 @@ class Course(models.Model):
         return phile
 
     def comments(self):
+        """Return annotation comments."""
         return self.notes.filter(tags__name__in=['Comments'])
 
     def adenda(self):
+        """Return adenda comments."""
         return self.notes.filter(tags__name__in=['Furbish', 'Adenda'])
 
     def permissions(self, user):
@@ -133,6 +135,18 @@ class Course(models.Model):
             if user.groups.filter(name=outcome.group).exists():
                 status = True
         return status
+
+    def perspectives(self):
+        """Return perspective SLO."""
+        return self.outcome.filter(group__name='Perspectives')
+
+    def abilities(self):
+        """Return abilities SLO."""
+        return self.outcome.filter(group__name='Abilities')
+
+    def explorations(self):
+        """Return explorations SLO."""
+        return self.outcome.filter(group__name='Explorations')
 
 
 class OutcomeElement(models.Model):
