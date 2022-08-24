@@ -109,6 +109,7 @@ def course_form(request, step='course', cid=None):
                     "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
                     extra_tags='alert-success',
                 )
+                return HttpResponseRedirect(reverse_lazy('dashboard_home'))
             elif not errors:
                 messages.add_message(
                     request,

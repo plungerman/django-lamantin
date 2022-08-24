@@ -25,6 +25,7 @@ list-style: decimal !important;
     margin: 9px 0;
     padding-top: 9px;
 }
+h3.popover-header{font-weight:666 !important;font-size:2.5em !important;}
 .slider-container { display:none; width: 795px; }
 .form fieldset.btnHolder {background-color:#fff; }
 .help {margin-top:-2px;}
