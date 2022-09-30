@@ -42,9 +42,10 @@
             <div class="form-group">
               <label style="margin-right:10px;">Only show</label>
               <select name="outcome" class="form-control">
-              {% for outcome in outcomes %}
+                <option value="0">Show All</option>
+                {% for outcome in outcomes %}
                 <option value="{{outcome.id}}">{{outcome.name}}</option>
-              {% endfor %}
+                {% endfor %}
               </select>
             </div>
             <input type="submit" name="submit" value="submit"

@@ -47,6 +47,7 @@ input[type="radio"]{
 .lightblue-box {background-color: #a6d3dd;}
 .lightblue {color: #a6d3dd;}
 .terracotta-box {background-color: #e1BBB3;}
+.mint-box {background-color: #76d776;}
 div.growlUI { position:relative;margin-top:60px; }
 div.growlUI:before { color:green; font-size: 4em;position: absolute; font-family: 'FontAwesome'; top: 0; left: 10px; content: "\f0f3"; }
 div.growlUI h1, div.growlUI h2 {

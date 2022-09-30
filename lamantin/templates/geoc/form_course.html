@@ -146,17 +146,27 @@ $(function() {
           </div>
         </div>
         <!-- /.col-12 -->
+
+        <h5 class="mt-1 mb-0">Wellness</h5>
+        <div class="col-12 card mint-box p-3">
+          <div class="form-check">
+            <label class="form-check-label" for="id_outcome_9">
+              <input class="form-check-input" id="id_outcome_9" name="outcome" title="" type="checkbox" value="14"{% if 14 in form.outcome.value or '14' in form.outcome.value %} checked="checked" {%endif %}>
+              Wellness
+            </label>
+          </div>
+        </div>
+        <!-- /.col-12 -->
+
         <h5 class="mt-1 mb-1">Other elements of the GEOC include:</h5>
         <div class="col-12 card lightgrey-box p-3">
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_1">
-              <input class="form-check-input" id="id_outcome_1" name="outcome" type="checkbox" value="1"{% if 1 in form.outcome.value or '1' in form.outcome.value %} checked="checked"{%endif %} disabled>
               Intellectual Foundations
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_15">
-              <input class="form-check-input" id="id_outcome_15" name="outcome" type="checkbox" value="15"{% if 15 in form.outcome.value or '15' in form.outcome.value %} checked="checked"{%endif %} disabled>
               Reflection Framework
             </label>
           </div>

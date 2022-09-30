@@ -1,0 +1,14 @@
+<p>
+  Thank you for submitting your course for general education requirement
+  approval.
+</p>
+<p>
+  <a href="https://{{server_url}}{{root_url}}{% url 'detail' data.id %}">
+    {{data.title}} ({{data.number}})</a>
+</p>
+<p>
+  Someone from the GEOC committee will contact you presently.
+</p>
+{% if data.managers %}
+<pre style="font-size:1.5em;">{{data.managers}}</pre>
+{% endif %}

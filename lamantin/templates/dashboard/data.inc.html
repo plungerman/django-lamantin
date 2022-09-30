@@ -38,9 +38,15 @@
           <a href="{% url 'update' 'course' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap class="pl-4">
+          {% if course.explorations %}
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Explorations" data-content="{% for slo in course.explorations %}{{slo}}{% endfor %}"><i class="fa fa-shuttle-space mr-1" style="color:#538dd7"><span style="display:none;">{% for slo in course.explorations %}{{slo}}{% endfor %}</span></i></a>
+          {% endif %}
+          {% if course.abilities %}
           <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Abilities" data-content="{% for slo in course.abilities %}{{slo}}{% endfor %}"><i class="fa fa-hands-asl-interpreting mr-1" style="color:#c39201"><span style="display:none;">{% for slo in course.abilities %}{{slo}}{% endfor %}</span></i></a>
+          {% endif %}
+          {% if course.perspectives %}
           <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}"><i class="fa fa-cube mr-1" style="color:#d2725e"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i></a>
+          {% endif %}
         </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>

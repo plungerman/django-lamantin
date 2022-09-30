@@ -5,10 +5,12 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.decorators import portal_auth_required
+from djtools.utils.mail import send_mail
 from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import CourseForm
 from lamantin.geoc.forms import CourseOutcomeForm
@@ -108,6 +110,25 @@ def course_form(request, step='course', cid=None):
                     messages.SUCCESS,
                     "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
                     extra_tags='alert-success',
+                )
+                subject = 'GEOC course: {0} ({1})'.format(course.title, course.number)
+                managers = []
+                for man in User.objects.filter(groups__name='Managers'):
+                    managers.append(man.email)
+                if settings.DEBUG:
+                    course.managers = managers
+                    to_list = bcc = [settings.MANAGERS[0][1]]
+                else:
+                    to_list = [course.user.email]
+                    bcc = managers
+                send_mail(
+                    request,
+                    to_list,
+                    subject,
+                    course.user.email,
+                    'geoc/email_submit.html',
+                    course,
+                    bcc,
                 )
                 return HttpResponseRedirect(reverse_lazy('dashboard_home'))
             elif not errors:

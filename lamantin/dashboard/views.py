@@ -31,15 +31,17 @@ def home(request):
     """GEOC dashboard."""
     user = request.user
     manager = in_group(user, settings.MANAGER_GROUP)
+    outcome = 0
+    courses = None
     if manager:
         if request.POST:
             try:
                 outcome = int(request.POST.get('outcome'))
             except Exception:
-                outcome = False
+                outcome = 0
             if outcome:
                 courses = Course.objects.filter(outcome__id=outcome)
-        else:
+        if not courses or outcome == 0:
             courses = Course.objects.all()
     else:
         courses = Course.objects.filter(user=user)

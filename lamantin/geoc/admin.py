@@ -43,7 +43,6 @@ class CourseAdmin(admin.ModelAdmin):
     list_per_page = 500
 
 
-
 class DocumentAdmin(admin.ModelAdmin):
     raw_id_fields = ('course', 'created_by', 'updated_by')
     list_display = (
