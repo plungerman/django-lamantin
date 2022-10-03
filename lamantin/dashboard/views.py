@@ -15,6 +15,7 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from djauth.decorators import portal_auth_required
+from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
 from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import DocumentRequiredForm
@@ -135,7 +136,25 @@ def status(request):
                 if status == 'furbish':
                     course.furbish = True
                 course.save()
-                message = "Course has been {0}".format(status)
+                if status == 'approved':
+                    subject = message = "{0} ({1}) has been approved".format(
+                        course.title,
+                        course.number,
+                    )
+                    bcc = [settings.MANAGERS[0][1]]
+                    to_list = [course.user.email]
+                    if settings.DEBUG:
+                        course.to_list = to_list
+                        to_list = bcc
+                    send_mail(
+                        request,
+                        to_list,
+                        subject,
+                        course.user.email,
+                        'geoc/email_status.html',
+                        course,
+                        bcc,
+                    )
             else:
                 message = "Requires 'furbish' or 'approved'"
     else:
