@@ -67,7 +67,7 @@ DATABASES = {
         'NAME': 'django_lamantin',
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'django_lamantin',
-        'PASSWORD': 'RE@46mLOGnri%bFp258NxsS8jC7mVfUe',
+        'PASSWORD': '',
     },
 }
 INSTALLED_APPS = (
