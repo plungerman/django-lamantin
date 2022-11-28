@@ -126,16 +126,21 @@ def status(request):
             return HttpResponse("Access Denied")
         course = get_object_or_404(Course, pk=cid)
         status = request.POST.get('status')
-        if course.furbish or course.approved:
-            message = "{0} has already been {1}".format(course, status)
+        if course.approved:
+            message = "{0} has already been approved".format(course)
+        elif course.furbish and status != 'refurbish':
+            message = "{0} has already been flagged as needing more work".format(course, status)
         else:
-            if status in ['approved', 'furbish']:
+            if status in ['approved', 'furbish', 'refurbish']:
                 from djtools.fields import NOW
                 if status == 'approved':
                     course.approved = True
                     course.approved_date = NOW
                 if status == 'furbish':
                     course.furbish = True
+                if status == 'refurbish':
+                    course.save_submit = False
+                    course.furbish = False
                 course.save()
                 if status == 'approved':
                     subject = message = "{0} ({1}) has been approved".format(
@@ -157,7 +162,7 @@ def status(request):
                         bcc,
                     )
             else:
-                message = "Requires 'furbish' or 'approved'"
+                message = "Requires 'furbish','refurbish', or 'approved'"
     else:
         message = "Requires POST request"
 

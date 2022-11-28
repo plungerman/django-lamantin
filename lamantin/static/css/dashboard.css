@@ -15,6 +15,7 @@ nav .input-group-btn {font-size:1.3em;}
 .navbar-nav .dropdown, .dropup { padding: 3px; }
 .success a { color: #007bff; }
 .panel-primary > .panel-heading {color: inherit;}
+.outcome {background-color: #efefef;}
 #students-toggle{margin:10px 0;}
 /* bootstrap overrides */
 .card-header {

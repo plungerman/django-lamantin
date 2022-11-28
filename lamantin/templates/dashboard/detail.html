@@ -78,6 +78,9 @@ $(function() {
         {% if not course.furbish %}
         <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
           style="margin-left:24px;width:128px;" data-status="needswork">Needs Work</a>
+        {% else %}
+        <a href="#" class="btn btn-default btn-warning course-status"
+          style="width:128px;" data-status="refurbish">Re-open</a>
         {% endif %}
         </div>
       </div>
@@ -141,7 +144,9 @@ $(function() {
                 {{element.description}}
                 {% for slo in element.slo.all %}
                   {% if slo.course == course %}
-                  <div class="mt-2">{{slo.description|safe|default:""}}</div>
+                  <div class="card mt-2 blue-box">
+                      <div class="card-body">{{slo.description|safe|default:""}}</div>
+                  </div>
                   {% endif %}
                 {% endfor %}
               </li>
