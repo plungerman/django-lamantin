@@ -111,6 +111,7 @@ def furbish(request, cid):
 
 @csrf_exempt
 @portal_auth_required(
+    group = settings.MANAGER_GROUP,
     session_var='LAMANTIN_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
