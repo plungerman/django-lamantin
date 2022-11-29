@@ -157,7 +157,7 @@ def status(request):
                 course.save()
                 if status == 'approved':
                     bcc = [settings.MANAGERS[0][1]]
-                    to_list = [course.user.email]
+                    to_list = [course.user.email, settings.REGISTRAR_EMAIL]
                     if settings.DEBUG:
                         course.to_list = to_list
                         to_list = bcc

@@ -42,6 +42,7 @@ class CourseAdmin(admin.ModelAdmin):
     )
     list_editable = ('approved', 'archive', 'furbish', 'save_submit')
     list_per_page = 500
+    save_on_top = True
 
 
 class DocumentAdmin(admin.ModelAdmin):

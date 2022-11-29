@@ -181,6 +181,7 @@ SERVER_EMAIL = ''
 SERVER_MAIL = ''
 # app specific settings
 MANAGER_GROUP = ''
+REGISTRAR_EMAIL = ''
 SUMMERNOTE_THEME = 'bs4'
 # tests
 FACULTY_EXPLORATIONS = 0

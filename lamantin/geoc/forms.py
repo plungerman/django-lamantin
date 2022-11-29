@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from djtools.fields import BINARY_CHOICES
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
@@ -45,10 +46,15 @@ class CourseForm(forms.ModelForm):
         queryset=Outcome.objects.all(),
         required=True,
     )
+    multipass = forms.TypedChoiceField(
+        label="I am submitting multiple courses under the same SLO's",
+        choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
+    )
 
     class Meta:
         model = Course
-        fields = ('title', 'number', 'outcome')
+        fields = ('title', 'number', 'outcome', 'multipass')
 
     def clean(self):
         """Form validation."""

@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
+from djtools.fields import BINARY_CHOICES
 from djtools.fields.helpers import upload_to_path
 from djtools.utils.users import in_group
 from taggit.managers import TaggableManager
@@ -93,7 +94,12 @@ class Course(models.Model):
     archive = models.BooleanField(default=True)
     # core
     title = models.CharField(max_length=255)
-    number = models.CharField(max_length=32)
+    number = models.CharField("Number(s)", max_length=255)
+    multipass = models.CharField(
+        "I am submitting multiple courses under the same SLO's",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
     outcome = models.ManyToManyField(
         Outcome,
         verbose_name="Outcomes",
