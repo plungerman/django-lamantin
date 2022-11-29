@@ -118,6 +118,7 @@ def furbish(request, cid):
 def status(request):
     """Set the status on a course."""
     user = request.user
+    message = ""
     if request.POST:
         cid = request.POST.get('cid')
         try:
@@ -126,19 +127,17 @@ def status(request):
             return HttpResponse("Access Denied")
         course = get_object_or_404(Course, pk=cid)
         status = request.POST.get('status')
-        if course.approved:
+        if course.approved and status == 'approved':
             message = "{0} has already been approved".format(course)
-        elif course.furbish and status != 'refurbish':
+        elif course.furbish and status == 'furbish':
             message = "{0} has already been flagged as needing more work".format(course, status)
         else:
-            if status in ['approved', 'furbish', 'refurbish']:
+            if status in ['approved', 'furbish']:
                 from djtools.fields import NOW
                 if status == 'approved':
                     course.approved = True
                     course.approved_date = NOW
                 if status == 'furbish':
-                    course.furbish = True
-                if status == 'refurbish':
                     course.save_submit = False
                     course.furbish = False
                 course.save()
@@ -161,8 +160,13 @@ def status(request):
                         course,
                         bcc,
                     )
+                elif status == 'furbished':
+                    message = "{0} ({1}) has been reopend for updates".format(
+                        course.title,
+                        course.number,
+                    )
             else:
-                message = "Requires 'furbish','refurbish', or 'approved'"
+                message = "Requires 'furbish' or 'approved'"
     else:
         message = "Requires POST request"
 
