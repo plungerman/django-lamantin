@@ -132,20 +132,30 @@ def status(request):
         elif course.furbish and status == 'furbish':
             message = "{0} has already been flagged as needing more work".format(course, status)
         else:
-            if status in ['approved', 'furbish']:
+            if status in ['approved', 'archive', 'furbish']:
                 from djtools.fields import NOW
                 if status == 'approved':
                     course.approved = True
                     course.approved_date = NOW
-                if status == 'furbish':
-                    course.save_submit = False
-                    course.furbish = False
-                course.save()
-                if status == 'approved':
                     subject = message = "{0} ({1}) has been approved".format(
                         course.title,
                         course.number,
                     )
+                if status == 'furbish':
+                    course.save_submit = False
+                    course.furbish = False
+                    message = "{0} ({1}) has been reopend for updates".format(
+                        course.title,
+                        course.number,
+                    )
+                if status == 'archive':
+                    course.archive = True
+                    message = "{0} ({1}) has been archived".format(
+                        course.title,
+                        course.number,
+                    )
+                course.save()
+                if status == 'approved':
                     bcc = [settings.MANAGERS[0][1]]
                     to_list = [course.user.email]
                     if settings.DEBUG:
@@ -160,13 +170,8 @@ def status(request):
                         course,
                         bcc,
                     )
-                elif status == 'furbished':
-                    message = "{0} ({1}) has been reopend for updates".format(
-                        course.title,
-                        course.number,
-                    )
             else:
-                message = "Requires 'furbish' or 'approved'"
+                message = "Requires 'furbish' or 'approved' or 'archive'"
     else:
         message = "Requires POST request"
 

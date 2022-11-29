@@ -66,29 +66,32 @@ $(function() {
       </h1>
     </div>
   </div>
-  {% if course.save_submit and not course.approved %}
   {% if perms %}
   <!-- /.row -->
   <div class="row mb-2" id="courseStatus">
     <div class="col-12 text-center">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
+        {% if not course.approved %}
         <a href="#" class="btn btn-default btn-success course-status"
           style="width:128px;" data-status="approved">Approve</a>
+        {% endif %}
         {% if not course.furbish %}
         <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
-          style="margin-left:24px;width:128px;" data-status="needswork">Needs Work</a>
+          style="width:128px;" data-status="needswork">Needs Work</a>
         {% else %}
         <a href="#" class="btn btn-default btn-warning course-status"
           style="width:128px;" data-status="furbish">Re-open</a>
         {% endif %}
+        <a href="#" class="btn btn-default btn-danger course-status"
+          style="width:128px;" data-status="archive">Archive</a>
         </div>
       </div>
     </div>
     <!-- /.col-lg-12 -->
   </div>
   <!-- /.row -->
-  {% endif %}{% endif %}
+  {% endif %}
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
       <div class="panel panel-default mb-3">
