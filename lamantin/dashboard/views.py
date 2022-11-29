@@ -41,11 +41,11 @@ def home(request):
             except Exception:
                 outcome = 0
             if outcome:
-                courses = Course.objects.filter(outcome__id=outcome)
+                courses = Course.objects.filter(outcome__id=outcome).filter(archive=False)
         if not courses or outcome == 0:
-            courses = Course.objects.all()
+            courses = Course.objects.filter(archive=False)
     else:
-        courses = Course.objects.filter(user=user)
+        courses = Course.objects.filter(user=user).filter(archive=False)
     outcomes = Outcome.objects.filter(active=True)
     return render(
         request,
