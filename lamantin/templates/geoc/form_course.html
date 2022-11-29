@@ -50,7 +50,11 @@ $(function() {
       {% endif %}
     </div>
     <div class="form-group">
-      <label for="id_multipass">I am submitting multiple courses under the same SLO's</label>
+      <label for="id_multipass">
+        I am submitting multiple courses under the same SLO's
+        <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{form.multipass.help_text}}">
+          <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
+      </label>
       {% bootstrap_field form.multipass show_label=False %}
     </div>
     <div class="form-group row">

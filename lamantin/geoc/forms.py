@@ -50,6 +50,12 @@ class CourseForm(forms.ModelForm):
         label="I am submitting multiple courses under the same SLO's",
         choices=BINARY_CHOICES,
         widget=forms.RadioSelect(),
+        help_text="""
+            You may submit multiple courses if those courses
+            substantially fulfill the same SLO categories within the GE structure.
+            If any of the courses you are submitting also carry another designation,
+            they would need to be submitted individually.
+        """
     )
 
     class Meta:

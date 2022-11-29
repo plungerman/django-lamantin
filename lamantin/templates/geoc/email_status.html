@@ -5,6 +5,33 @@
   <a href="https://{{server_url}}{% url 'detail' data.id %}">
     {{data.title}} ({{data.number}})</a>
 </p>
+<h3 style="border-bottom: 1px black dotted;">Student Learning Outcomes</h3>
+{% for outcome in data.outcome.all %}
+{% if outcome.name not in "Written Communication,Oral Communication" %}
+<div>
+  <h4>
+    {{outcome.name}}
+    <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{outcome.rationale}}">
+    <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
+  </h4>
+  <p>{{outcome.description}}</p>
+  <ol>
+    {% for element in outcome.elements.all %}
+    <li>
+      {{element.description}}
+      {% for slo in element.slo.all %}
+        {% if slo.course == data %}
+        <div style="background-color:#eef6fe;padding:2px;border: 1px solid rgba(0,0,0,.125); border-radius: 0.25rem;">
+          {{slo.description|safe|default:""}}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </li>
+    {% endfor %}
+  </ol>
+</div>
+{% endif %}
+{% endfor %}
 <p>
   The office of the registrar have been copied on this email to notify
   them of the new status of this course.
