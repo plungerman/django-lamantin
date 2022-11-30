@@ -93,7 +93,12 @@ class Course(models.Model):
     save_submit = models.BooleanField(default=False)
     archive = models.BooleanField(default=True)
     # core
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=255,
+        help_text="""
+            Course name or a descriptive title if you are submiting multiple courses
+        """,
+    )
     number = models.CharField("Number(s)", max_length=255)
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",

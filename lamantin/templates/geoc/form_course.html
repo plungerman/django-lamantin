@@ -41,6 +41,7 @@ $(function() {
       {% if form.title.errors %}
       <div class="invalid-feedback">This field is required.</div>
       {% endif %}
+      <small class="form-text text-muted">{{form.title.help_text}}</small>
     </div>
     <div class="form-group">
       <label for="id_number">Number(s)</label>
