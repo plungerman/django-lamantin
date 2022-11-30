@@ -292,8 +292,26 @@ def annotation(request):
                     context = {'note': note, 'bgcolor': 'bg-warning'}
                     data['msg'] = template.render(context, request)
                 data['id'] = note.id
+                bcc = [settings.MANAGERS[0][1]]
+                if ctype == 'furbish':
+                    to_list = [course.user.email]
+                else:
+                    to_list = [note.created_by.email]
+                if settings.DEBUG:
+                    course.to_list = to_list
+                    to_list = bcc
+                send_mail(
+                    request,
+                    to_list,
+                    subject,
+                    user.email,
+                    'dashboard/email_note.html',
+                    course,
+                    bcc,
+                )
             except:
                 data['msg'] = "Follow-up not found"
+
     else:
         data['msg'] = "Requires AJAX POST request"
 

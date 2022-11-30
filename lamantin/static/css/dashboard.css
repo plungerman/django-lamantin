@@ -42,6 +42,25 @@ table.dataTable thead span.sort-icon {
 }
 .dataTables_wrapper{margin-bottom:20px;}
 .dataTables_length{margin-right:50px;}
+table.dataTable td.course-number {
+  font-family: monospace;
+  font-size:1.1em;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all .5s;
+  max-width: 120px;
+  word-break: break-all;
+}
+table.dataTable td.course-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all .5s;
+  max-width: 200px;
+  word-break: break-all;
+}
 /* Overrides for BS form classes */
 .form-group.required .control-label:after {
   content:"*";

@@ -10,7 +10,7 @@
             title="View Course"></i>
         </th>
         <th style="text-align: center;">
-          Number
+          Number(s)
           <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
@@ -31,10 +31,10 @@
     <tbody>
     {% for course in courses %}
       <tr>
-        <td nowrap>
+        <td class="course-title">
           <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
-        <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
+        <td class="course-number">
           <a href="{% url 'update' 'course' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap class="pl-4">

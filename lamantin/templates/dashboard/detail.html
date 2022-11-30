@@ -76,7 +76,7 @@ $(function() {
         <a href="#" class="btn btn-default btn-success course-status"
           style="width:128px;" data-status="approved">Approve</a>
         {% endif %}
-        {% if not course.furbish %}
+        {% if not course.furbish and not course.approved %}
         <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
           style="width:128px;" data-status="needswork">Needs Work</a>
         {% else %}
