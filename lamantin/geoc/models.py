@@ -91,7 +91,7 @@ class Course(models.Model):
         default=False,
     )
     save_submit = models.BooleanField(default=False)
-    archive = models.BooleanField(default=True)
+    archive = models.BooleanField(default=False)
     # core
     title = models.CharField(
         max_length=255,
