@@ -136,12 +136,19 @@ def status(request):
         elif course.furbish and status == 'furbish':
             message = "{0} has already been flagged as needing more work".format(course, status)
         else:
-            if status in ['approved', 'archive', 'furbish', 'unarchive']:
+            if status in ['approved', 'archive', 'furbish', 'unapprove', 'unarchive']:
                 from djtools.fields import NOW
                 if status == 'approved':
                     course.approved = True
                     course.approved_date = NOW
                     subject = message = "{0} ({1}) has been approved".format(
+                        course.title,
+                        course.number,
+                    )
+                if status == 'unapprove':
+                    course.approved = False
+                    course.approved_date = None
+                    subject = message = "{0} ({1}) has been changed from approved to un-approved".format(
                         course.title,
                         course.number,
                     )

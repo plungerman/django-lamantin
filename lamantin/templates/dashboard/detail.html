@@ -76,16 +76,19 @@ $(function() {
           <a href="#" class="btn btn-default btn-danger course-status"
           style="width:128px;" data-status="unarchive">Un-archive</a>
         {% else %}
-          {% if not course.approved %}
-          <a href="#" class="btn btn-default btn-success course-status"
-            style="width:128px;" data-status="approved">Approve</a>
-          {% endif %}
-          {% if not course.furbish and not course.approved %}
-          <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
-            style="width:128px;" data-status="needswork">Needs Work</a>
+          {% if course.approved %}
+            <a href="#" class="btn btn-default btn-danger course-status"
+              style="width:128px;" data-status="unapprove">Un-approve</a>
           {% else %}
-          <a href="#" class="btn btn-default btn-warning course-status"
-            style="width:128px;" data-status="furbish">Re-open</a>
+            <a href="#" class="btn btn-default btn-success course-status"
+              style="width:128px;" data-status="approved">Approve</a>
+            {% if not course.furbish %}
+              <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
+              style="width:128px;" data-status="needswork">Needs Work</a>
+            {% else %}
+              <a href="#" class="btn btn-default btn-warning course-status"
+                style="width:128px;" data-status="furbish">Re-open</a>
+            {% endif %}
           {% endif %}
           <a href="#" class="btn btn-default btn-danger course-status"
           style="width:128px;" data-status="archive">Archive</a>
