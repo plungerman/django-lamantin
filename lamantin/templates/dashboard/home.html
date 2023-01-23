@@ -43,6 +43,7 @@
               <label style="margin-right:10px;">Only show</label>
               <select name="outcome" class="form-control">
                 <option value="0">Show All</option>
+                <option value="archives">Show Archives</option>
                 {% for outcome in outcomes %}
                 <option value="{{outcome.id}}">{{outcome.name}}</option>
                 {% endfor %}

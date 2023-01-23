@@ -36,13 +36,17 @@ def home(request):
     courses = None
     if manager:
         if request.POST:
-            try:
-                outcome = int(request.POST.get('outcome'))
-            except Exception:
-                outcome = 0
-            if outcome:
-                courses = Course.objects.filter(outcome__id=outcome).filter(archive=False)
-        if not courses or outcome == 0:
+            show = request.POST.get('outcome')
+            if show == 'archives':
+                courses = Course.objects.filter(archive=True)
+            else:
+                try:
+                    outcome = int(request.POST.get('outcome'))
+                except Exception:
+                    outcome = 0
+                if outcome:
+                    courses = Course.objects.filter(outcome__id=outcome).filter(archive=False)
+        else:
             courses = Course.objects.filter(archive=False)
     else:
         courses = Course.objects.filter(user=user).filter(archive=False)
