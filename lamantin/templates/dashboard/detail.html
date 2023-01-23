@@ -72,19 +72,24 @@ $(function() {
     <div class="col-12 text-center">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
-        {% if not course.approved %}
-        <a href="#" class="btn btn-default btn-success course-status"
-          style="width:128px;" data-status="approved">Approve</a>
-        {% endif %}
-        {% if not course.furbish and not course.approved %}
-        <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
-          style="width:128px;" data-status="needswork">Needs Work</a>
+        {% if course.archive %}
+          <a href="#" class="btn btn-default btn-danger course-status"
+          style="width:128px;" data-status="unarchive">Un-archive</a>
         {% else %}
-        <a href="#" class="btn btn-default btn-warning course-status"
-          style="width:128px;" data-status="furbish">Re-open</a>
-        {% endif %}
-        <a href="#" class="btn btn-default btn-danger course-status"
+          {% if not course.approved %}
+          <a href="#" class="btn btn-default btn-success course-status"
+            style="width:128px;" data-status="approved">Approve</a>
+          {% endif %}
+          {% if not course.furbish and not course.approved %}
+          <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
+            style="width:128px;" data-status="needswork">Needs Work</a>
+          {% else %}
+          <a href="#" class="btn btn-default btn-warning course-status"
+            style="width:128px;" data-status="furbish">Re-open</a>
+          {% endif %}
+          <a href="#" class="btn btn-default btn-danger course-status"
           style="width:128px;" data-status="archive">Archive</a>
+        {% endif %}
         </div>
       </div>
     </div>
