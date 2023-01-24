@@ -32,20 +32,18 @@ def home(request):
     """GEOC dashboard."""
     user = request.user
     manager = in_group(user, settings.MANAGER_GROUP)
-    outcome = 0
     courses = None
+    show = None
     if manager:
         if request.POST:
-            show = request.POST.get('outcome')
-            if show == 'archives':
+            show = int(request.POST.get('show'))
+            if show == 1:
                 courses = Course.objects.filter(archive=True)
             else:
-                try:
-                    outcome = int(request.POST.get('outcome'))
-                except Exception:
-                    outcome = 0
-                if outcome:
-                    courses = Course.objects.filter(outcome__id=outcome).filter(archive=False)
+                if show:
+                    courses = Course.objects.filter(outcome__id=show).filter(archive=False)
+                else:
+                    courses = Course.objects.filter(archive=False)
         else:
             courses = Course.objects.filter(archive=False)
     else:
@@ -54,7 +52,12 @@ def home(request):
     return render(
         request,
         'dashboard/home.html',
-        {'courses': courses, 'outcomes': outcomes, 'manager': manager},
+        {
+            'courses': courses,
+            'outcomes': outcomes,
+            'manager': manager,
+            'show': show,
+        },
     )
 
 

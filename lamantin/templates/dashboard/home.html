@@ -40,12 +40,15 @@
           <form id="courses-toggle" class="form-inline" method="post" action="." role="form">
             {% csrf_token %}
             <div class="form-group">
-              <label style="margin-right:10px;">Only show</label>
-              <select name="outcome" class="form-control">
-                <option value="0">Show All</option>
-                <option value="archives">Show Archives</option>
+                <label style="margin-right:10px;">
+                    Only show
+                    {% if show == outcome %}{{outcome}}{% endif %}
+                </label>
+              <select name="show" class="form-control">
+                <option value="0"{% if show == 0 %} selected{% endif %}>Show All</option>
+                <option value="1"{% if show == 1 %} selected{% endif %}>Show Archives</option>
                 {% for outcome in outcomes %}
-                <option value="{{outcome.id}}">{{outcome.name}}</option>
+                <option value="{{outcome.id}}"{% if outcome.id == show %} selected{% endif %}>{{outcome.name}}</option>
                 {% endfor %}
               </select>
             </div>
