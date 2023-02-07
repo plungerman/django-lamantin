@@ -134,14 +134,22 @@ def status(request):
             return HttpResponse("Access Denied")
         course = get_object_or_404(Course, pk=cid)
         status = request.POST.get('status')
-        if course.approved and status == 'approved':
+        if course.approved and status == 'approve':
             message = "{0} has already been approved".format(course)
         elif course.furbish and status == 'furbish':
             message = "{0} has already been flagged as needing more work".format(course, status)
         else:
-            if status in ['approved', 'archive', 'furbish', 'unapprove', 'unarchive']:
+            valid_status = [
+                'approve',
+                'archive',
+                'furbish',
+                'reopen',
+                'unapprove',
+                'unarchive',
+            ]
+            if status in valid_status:
                 from djtools.fields import NOW
-                if status == 'approved':
+                if status == 'approve':
                     course.approved = True
                     course.approved_date = NOW
                     subject = message = "{0} ({1}) has been approved".format(
@@ -151,14 +159,14 @@ def status(request):
                 if status == 'unapprove':
                     course.approved = False
                     course.approved_date = None
-                    subject = message = "{0} ({1}) has been changed from approved to un-approved".format(
+                    message = "{0} ({1}) has been changed from approved to un-approved".format(
                         course.title,
                         course.number,
                     )
-                if status == 'furbish':
+                if status == 'reopen':
                     course.save_submit = False
                     course.furbish = False
-                    message = "{0} ({1}) has been reopend for updates".format(
+                    subject = message = "{0} ({1}) has been reopened for updates".format(
                         course.title,
                         course.number,
                     )
@@ -170,14 +178,23 @@ def status(request):
                     )
                 if status == 'unarchive':
                     course.archive = False
-                    message = "{0} ({1}) has been re-actived".format(
+                    subject = message = "{0} ({1}) has been re-actived".format(
                         course.title,
                         course.number,
                     )
+                messages.add_message(
+                    request,
+                    messages.WARNING,
+                    message,
+                    extra_tags='alert-success',
+                )
                 course.save()
-                if status == 'approved':
+                if status in ['approve', 'reopen', 'unarchive']:
+                    course.status = status
                     bcc = [settings.MANAGERS[0][1]]
-                    to_list = [course.user.email, settings.REGISTRAR_EMAIL]
+                    to_list = [course.user.email]
+                    if status == 'approve':
+                        to_list.append(settings.REGISTRAR_EMAIL)
                     if settings.DEBUG:
                         course.to_list = to_list
                         to_list = bcc
@@ -191,7 +208,7 @@ def status(request):
                         bcc,
                     )
             else:
-                message = "Requires 'furbish' or 'approved' or 'archive'"
+                message = "Requires '{0}'".format(valid_status)
     else:
         message = "Requires POST request"
 

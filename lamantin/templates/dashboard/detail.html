@@ -17,7 +17,7 @@ $(function() {
       success: function(data) {
         spinner.stop(target);
         $.growlUI(data);
-        $('#courseStatus').hide();
+        location.reload();
       },
       error: function(data) {
         spinner.stop(target);
@@ -80,14 +80,16 @@ $(function() {
             <a href="#" class="btn btn-default btn-danger course-status"
               style="width:128px;" data-status="unapprove">Un-approve</a>
           {% else %}
+            {% if not course.furbish %}
             <a href="#" class="btn btn-default btn-success course-status"
-              style="width:128px;" data-status="approved">Approve</a>
+              style="width:128px;" data-status="approve">Approve</a>
+            {% endif %}
             {% if not course.furbish %}
               <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
               style="width:128px;" data-status="needswork">Needs Work</a>
             {% else %}
               <a href="#" class="btn btn-default btn-warning course-status"
-                style="width:128px;" data-status="furbish">Re-open</a>
+                style="width:128px;" data-status="reopen">Re-open</a>
             {% endif %}
           {% endif %}
           <a href="#" class="btn btn-default btn-danger course-status"
