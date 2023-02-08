@@ -105,6 +105,38 @@ def furbish(request, cid):
             note.tags.add('Furbish')
             course.furbish = True
             course.save()
+            course.status = 'needs work'
+            course.note = note
+            bcc = [settings.MANAGERS[0][1]]
+            to_list = [course.user.email]
+            message = subject = '''
+                The status of course {0} ({1}) has been set to "needs more work"
+                and we have sent an email to {2} {3} with your comments.
+            '''.format(
+                course.title,
+                course.number,
+                course.user.first_name,
+                course.user.last_name,
+            )
+            messages.add_message(
+                request,
+                messages.WARNING,
+                message,
+                extra_tags='alert-success',
+            )
+            if settings.DEBUG:
+                course.to_list = to_list
+                to_list = bcc
+            send_mail(
+                request,
+                to_list,
+                subject,
+                course.user.email,
+                'geoc/email_status.html',
+                course,
+                bcc,
+            )
+
             return HttpResponseRedirect(reverse_lazy('dashboard_home'))
     else:
         form = AnnotationForm(use_required_attribute=settings.REQUIRED_ATTRIBUTE)

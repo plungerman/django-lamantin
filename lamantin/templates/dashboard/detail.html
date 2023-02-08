@@ -16,7 +16,6 @@ $(function() {
       },
       success: function(data) {
         spinner.stop(target);
-        $.growlUI(data);
         location.reload();
       },
       error: function(data) {

@@ -1,5 +1,14 @@
-<p>
+{% if data.status == 'needs work' %}
+  The GEOC committes have indicated that your course submission below
+  needs more work. Here is the message from GEOC member
+  {{data.note.created_by.first_name}}
+  {{data.note.created_by.last_name}}:
+  <div>
+    {{data.note.body|safe}}
+  </div>
+{% else %}
   The GEOC committee have {{data.status}}d your course:
+{% endif %}
 </p>
 <p>
   <a href="https://{{server_url}}{% url 'detail' data.id %}">
