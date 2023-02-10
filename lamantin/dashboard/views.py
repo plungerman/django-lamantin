@@ -3,6 +3,7 @@
 """URLs for all views."""
 
 import json
+import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -22,6 +23,9 @@ from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import Outcome
+
+
+logger = logging.getLogger('debug_logfile')
 
 
 @portal_auth_required(
@@ -337,6 +341,7 @@ def annotation(request):
         ctype = post.get('ctype')
         template = loader.get_template('dashboard/annotation.inc.html')
         if nid == 0:
+            logger.debug(nid)
             note = Annotation.objects.create(
                 course=course,
                 created_by=user,
@@ -347,28 +352,19 @@ def annotation(request):
             course.notes.add(note)
             context = {'note': note, 'bgcolor': 'bg-warning'}
             data['msg'] = template.render(context, request)
-        else:
-            try:
-                note = Annotation.objects.get(pk=nid)
-                if action == 'fetch':
-                    data['msg'] = note.body
-                elif action == 'delete':
-                    note.delete()
-                else:
-                    note.body=body
-                    note.updated_by = user
-                    note.save()
-                    context = {'note': note, 'bgcolor': 'bg-warning'}
-                    data['msg'] = template.render(context, request)
-                data['id'] = note.id
+            if ctype == 'furbish':
+                course.body = note.body
                 bcc = [settings.MANAGERS[0][1]]
-                if ctype == 'furbish':
-                    to_list = [course.user.email]
-                else:
-                    to_list = [note.created_by.email]
+                to_list = [course.user.email]
                 if settings.DEBUG:
                     course.to_list = to_list
                     to_list = bcc
+                subject = message = "{0} ({1}): new comment from {2} {3}".format(
+                    course.title,
+                    course.number,
+                    user.first_name,
+                    user.last_name,
+                )
                 send_mail(
                     request,
                     to_list,
@@ -378,9 +374,19 @@ def annotation(request):
                     course,
                     bcc,
                 )
-            except:
-                data['msg'] = "Follow-up not found"
-
+        else:
+            note = Annotation.objects.get(pk=nid)
+            if action == 'fetch':
+                data['msg'] = note.body
+            elif action == 'delete':
+                note.delete()
+            else:
+                note.body=body
+                note.updated_by = user
+                note.save()
+                context = {'note': note, 'bgcolor': 'bg-warning'}
+                data['msg'] = template.render(context, request)
+            data['id'] = note.id
     else:
         data['msg'] = "Requires AJAX POST request"
 

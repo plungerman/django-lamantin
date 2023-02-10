@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """URLs for all views."""
-import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -16,9 +15,6 @@ from lamantin.geoc.forms import CourseForm
 from lamantin.geoc.forms import CourseOutcomeForm
 from lamantin.geoc.forms import DocumentForm
 from lamantin.geoc.models import Course
-
-
-logger = logging.getLogger('debug_logfile')
 
 
 @portal_auth_required(

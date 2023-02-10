@@ -1,6 +1,12 @@
 <p>
   A new comment has been made on your course for general education requirement
-  approval. You can see the comments at the following URL:
+  approval:
+</p>
+<div>
+  {{data.body|safe}}
+</div>
+<p>
+  You can see the comments thread at the following URL:
 </p>
 <p>
   <a href="https://{{server_url}}{% url 'detail' data.id %}">
