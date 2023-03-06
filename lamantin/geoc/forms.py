@@ -112,8 +112,13 @@ class DocumentForm(forms.ModelForm):
 
     phile = forms.FileField(
         label="""
-            If you have a syllabus or course proposal for the course,
-            please upload here.
+            (Optional) If you believe it may be necessary to provide
+            context or additional information, you may upload a syllabus
+            or course proposal for the course here. If it’s necessary
+            to upload multiple files, you may do so after saving a draft
+            or after submission by clicking the icon next to "Documents".
+            Alternatively, you may provide links to a folder or documents
+            in the final response box of the form.
         """,
         required=False,
     )
