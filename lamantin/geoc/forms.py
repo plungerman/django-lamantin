@@ -111,10 +111,11 @@ class DocumentForm(forms.ModelForm):
     """GEOC documents."""
 
     phile = forms.FileField(
-        label="""
+        label="Supplimentary file",
+        help_text="""
             (Optional) If you believe it may be necessary to provide
             context or additional information, you may upload a syllabus
-            or course proposal for the course here. If it’s necessary
+            or course proposal for the course here. If it is necessary
             to upload multiple files, you may do so after saving a draft
             or after submission by clicking the icon next to "Documents".
             Alternatively, you may provide links to a folder or documents
