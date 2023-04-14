@@ -15,8 +15,14 @@ urlpatterns = [
     # delete Annotation object
     path(
         'course/annotation/<str:nid>/delete/',
-        views.delete_note,
-        name='delete_note',
+        views.note_delete,
+        name='note_delete',
+    ),
+    # delete course
+    path(
+        'course/<int:cid>/delete/',
+        views.course_delete,
+        name='course_delete',
     ),
     # course needs work
     path('course/<int:cid>/furbish/', views.furbish, name='furbish'),

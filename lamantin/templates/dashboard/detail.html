@@ -57,6 +57,14 @@ $(function() {
           title="Approved"></i>
       {% else %}
       {% if not course.save_submit %}
+        {% if course.user == user or user.is_superuser %}
+        | <a href="#" data-href="{% url 'course_delete' course.id %}"
+            data-title="{{course.title}}" data-toggle="modal"
+            data-target="#confirm-delete">
+            <i class="fa fa-trash red blue-tooltip"  data-toggle="tooltip"
+              data-placement="top" aria-hidden="true"
+              title="Delete Course: {{course.title}}"></i></a>
+          {% endif %}
         | <a href="{% url 'update' 'course' course.id %}">
             <i class="fa fa-pencil green" aria-hidden="true"
               data-toggle="tooltip" data-placement="top"

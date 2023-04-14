@@ -252,11 +252,37 @@ def status(request):
 
 
 @portal_auth_required(
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def course_delete(request, cid):
+    """Delete a course form."""
+    course = get_object_or_404(Course, pk=cid)
+    user = request.user
+    if course.user == user or user.is_superuser and not course.save_submit:
+        course.delete()
+        mtype = messages.SUCCESS
+        extra_tags='alert-success'
+        message = "Course was deleted"
+    else:
+        mtype = messages.WARNING
+        extra_tags = 'alert-warning'
+        message = "You do not have permission to delete this Course."
+    messages.add_message(
+        request,
+        mtype,
+        message,
+        extra_tags=extra_tags,
+    )
+    return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+
+
+@portal_auth_required(
     group = settings.MANAGER_GROUP,
     session_var='LAMANTIN_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
-def delete_note(request, nid):
+def note_delete(request, nid):
     """Delete a comment form an Alert."""
     note = get_object_or_404(Annotation, pk=nid)
     note.delete()
