@@ -16,7 +16,7 @@
 </p>
 <h3 style="border-bottom: 1px black dotted;">Student Learning Outcomes</h3>
 {% for outcome in data.outcome.all %}
-{% if outcome.name not in "Written Communication,Oral Communication" %}
+{% if outcome.name != "Written Communication" %}
 <div>
   <h4>
     {{outcome.name}}

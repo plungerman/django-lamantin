@@ -69,9 +69,6 @@
         <a href="https://app.carthage.edu/forms/writingcurriculum/">WAC proposal form</a>.
       </p>
       {% else %}
-      {% if outcome.name == "Oral Communication" %}
-        <p>Oral Communication SLO are not available at this time.</p>
-      {% else %}
       <p>{{outcome.description}}</p>
       <ol>
         {% for element in outcome.elements.all %}
@@ -92,7 +89,7 @@
         </li>
         {% endfor %}
       </ol>
-      {% endif %}{% endif %}
+      {% endif %}
     </div>
     {% endfor %}
     <div>
