@@ -113,7 +113,7 @@ def furbish(request, cid):
             course.note = note
             bcc = [settings.MANAGERS[0][1]]
             to_list = [course.user.email]
-            message = subject = '''
+            message = '''
                 The status of course {0} ({1}) has been set to "needs more work"
                 and we have sent an email to {2} {3} with your comments.
             '''.format(
@@ -128,14 +128,14 @@ def furbish(request, cid):
                 message,
                 extra_tags='alert-success',
             )
+            subject = '[GEOC] {0} ({1}) has been set to "needs more work"'.format(
+                course.title,
+                course.number,
+            )
             if settings.DEBUG:
                 course.to_list = to_list
                 to_list = bcc
-            logger.debug('boo')
-            logger.debug(to_list)
-            logger.debug(subject)
-            logger.debug(bcc)
-            send_mail(
+            recci = send_mail(
                 request,
                 to_list,
                 subject,

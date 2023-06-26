@@ -48,7 +48,7 @@ $(function() {
       <small class="form-text text-muted">{{form.title.help_text}}</small>
     </div>
     <div class="form-group">
-      <label for="id_number">Number(s)</label>
+      <label for="id_number">Course Number(s)</label>
       <input type="text" name="number" maxlength="255" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
       {% if form.number.errors %}
       <div class="invalid-feedback">This field is required.</div>

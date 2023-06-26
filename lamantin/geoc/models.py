@@ -148,10 +148,6 @@ class Course(models.Model):
                 status = True
         return status
 
-    def perspectives(self):
-        """Return perspective SLO."""
-        return self.outcome.filter(group__name='Perspectives')
-
     def abilities(self):
         """Return abilities SLO."""
         return self.outcome.filter(group__name='Abilities')
@@ -159,6 +155,14 @@ class Course(models.Model):
     def explorations(self):
         """Return explorations SLO."""
         return self.outcome.filter(group__name='Explorations')
+
+    def perspectives(self):
+        """Return perspective SLO."""
+        return self.outcome.filter(group__name='Perspectives')
+
+    def wellness(self):
+        """Return wellnesse SLO."""
+        return self.outcome.filter(group__name='Wellness')
 
 
 class OutcomeElement(models.Model):

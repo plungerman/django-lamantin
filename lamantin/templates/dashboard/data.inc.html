@@ -47,6 +47,9 @@
           {% if course.perspectives %}
           <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}"><i class="fa fa-cube mr-1" style="color:#d2725e"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i></a>
           {% endif %}
+          {% if course.wellness %}
+          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Wellness" data-content="{% for slo in course.wellnesss %}{{slo}}{% endfor %}"><i class="fa fa-heartbeat mr-1" style="color:#76d776"><span style="display:none;">{% for slo in course.wellness %}{{slo}}{% endfor %}</span></i></a>
+          {% endif %}
         </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
