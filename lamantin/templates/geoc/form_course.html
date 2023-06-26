@@ -26,6 +26,10 @@ $(function() {
   <div class="row">
     <div class="col-11 col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
       <h3 class="red">Course Elements</h3>
+      <p>
+        <a href="https://sites.google.com/carthage.edu/gen-ed-revision/geoc/2019-framework-document?authuser=0" target="_blank">
+          GEOC foundational document</a>
+      </p>
     </div>
   </div>
   {% if form.errors %}
@@ -147,15 +151,16 @@ $(function() {
               International Perspectives
             </label>
           </div>
+          <!--
           <div class="form-check">
             <label class="form-check-label" for="id_outcome_10">
               <input class="form-check-input perspectives" id="id_outcome_10" name="outcome" title="" type="checkbox" value="10"{% if 10 in form.outcome.value or '10' in form.outcome.value %} checked="checked" {%endif %}>
               Religious Perspectives
             </label>
           </div>
+        -->
         </div>
         <!-- /.col-12 -->
-
         <h5 class="mt-1 mb-0">Wellness</h5>
         <div class="col-12 card mint-box p-3">
           <div class="form-check">
@@ -166,7 +171,6 @@ $(function() {
           </div>
         </div>
         <!-- /.col-12 -->
-
         <h5 class="mt-1 mb-1">Other elements of the GEOC include:</h5>
         <div class="col-12 card lightgrey-box p-3">
           <div class="form-check">
