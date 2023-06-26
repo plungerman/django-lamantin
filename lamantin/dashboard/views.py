@@ -131,6 +131,10 @@ def furbish(request, cid):
             if settings.DEBUG:
                 course.to_list = to_list
                 to_list = bcc
+            logger.debug('boo')
+            logger.debug(to_list)
+            logger.debug(subject)
+            logger.debug(bcc)
             send_mail(
                 request,
                 to_list,
@@ -367,7 +371,6 @@ def annotation(request):
         ctype = post.get('ctype')
         template = loader.get_template('dashboard/annotation.inc.html')
         if nid == 0:
-            logger.debug(nid)
             note = Annotation.objects.create(
                 course=course,
                 created_by=user,
