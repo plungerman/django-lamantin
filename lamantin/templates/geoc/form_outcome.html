@@ -70,6 +70,7 @@
       </p>
       {% else %}
       <p>{{outcome.description}}</p>
+      <p>{{outcome.mechanism}}</p>
       <ol>
         {% for element in outcome.elements.all %}
         <li>
