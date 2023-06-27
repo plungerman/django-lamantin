@@ -32,6 +32,7 @@ class Outcome(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     rationale = models.TextField(null=True, blank=True)
+    mechanism = models.TextField(null=True, blank=True)
     group = models.ForeignKey(
         Group,
         related_name='group',
