@@ -108,6 +108,7 @@ class Course(models.Model):
     )
     outcome = models.ManyToManyField(
         Outcome,
+        through='OutcomeCourse',
         verbose_name="Outcomes",
         help_text="Check all that apply",
     )
@@ -161,9 +162,41 @@ class Course(models.Model):
         """Return perspective SLO."""
         return self.outcome.filter(group__name='Perspectives')
 
+    def set_outcome(self, status, date):
+        """Set outcome status."""
+        for outcome in self.outcome.all():
+            outcome_course = OutcomeCourse.objects.get(outcome=outcome, course=self)
+            outcome_course.approved = status
+            outcome_course.approved_date = date
+            outcome_course.save()
+
     def wellness(self):
         """Return wellnesse SLO."""
         return self.outcome.filter(group__name='Wellness')
+
+
+class OutcomeCourse(models.Model):
+    """Specific Outocomes for each course."""
+
+    outcome = models.ForeignKey(
+        Outcome,
+        related_name='course_outcomes',
+        on_delete=models.CASCADE,
+    )
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    approved_date = models.DateField(null=True, blank=True)
+    furbish = models.BooleanField(
+        help_text="Needs work?",
+        default=False,
+    )
+
+    class Meta:
+        db_table = 'geoc_course_outcome'
+
+    def __str__(self):
+        """Default data for display."""
+        return '{0}: {1}'.format(self.course, self.outcome)
 
 
 class OutcomeElement(models.Model):
@@ -243,7 +276,7 @@ class Document(models.Model):
     phile = models.FileField(
         "Supporting documentation",
         upload_to=upload_to_path,
-        validators=settings.FILE_VALIDATORS,
+        #validators=settings.FILE_VALIDATORS,
         max_length=767,
         help_text="PDF format",
         null=True,

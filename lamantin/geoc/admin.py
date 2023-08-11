@@ -9,6 +9,7 @@ from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Document
 from lamantin.geoc.models import Outcome
+from lamantin.geoc.models import OutcomeCourse
 from lamantin.geoc.models import OutcomeElement
 
 
@@ -69,6 +70,14 @@ class OutcomeAdmin(admin.ModelAdmin):
     list_editable = ['active']
 
 
+class OutcomeCourseAdmin(admin.ModelAdmin):
+    """Outcome course admin class."""
+
+    list_display = ('course', 'outcome', 'approved', 'furbish')
+    list_per_page = 500
+    list_editable = ('approved', 'furbish')
+
+
 class OutcomeElementAdmin(admin.ModelAdmin):
     """Outcome element admin class."""
 
@@ -77,6 +86,7 @@ class OutcomeElementAdmin(admin.ModelAdmin):
     list_editable = ['active']
 
 
+admin.site.register(OutcomeCourse)
 admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseOutcome)

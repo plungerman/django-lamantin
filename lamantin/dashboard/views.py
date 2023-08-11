@@ -196,6 +196,8 @@ def status(request):
                         course.title,
                         course.number,
                     )
+                    # approve each course outcome
+                    course.set_outcome(True, NOW)
                 if status == 'unapprove':
                     course.approved = False
                     course.approved_date = None
@@ -203,6 +205,8 @@ def status(request):
                         course.title,
                         course.number,
                     )
+                    # un-approve each course outcome
+                    course.set_outcome(False, None)
                 if status == 'reopen':
                     course.save_submit = False
                     course.furbish = False
@@ -210,6 +214,8 @@ def status(request):
                         course.title,
                         course.number,
                     )
+                    # un-approve each course outcome
+                    course.set_outcome(False, None)
                 if status == 'archive':
                     course.archive = True
                     message = "{0} ({1}) has been archived".format(
@@ -222,6 +228,8 @@ def status(request):
                         course.title,
                         course.number,
                     )
+                    # un-approve each course outcome
+                    course.set_outcome(False, None)
                 messages.add_message(
                     request,
                     messages.WARNING,

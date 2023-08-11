@@ -152,11 +152,16 @@ $(function() {
           {% for outcome in course.outcome.all %}
           {% if outcome.name != "Written Communication" %}
           <div>
-            <h4>
+            <h4 class="float-left">
               {{outcome.name}}
               <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="{{outcome.rationale}}">
               <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
             </h4>
+            <div class="float-right">
+              <input type="checkbox" name="outcome_course" id="outcome_course_{{outcome.id}}">
+              <label for="outcome_course_{{outcome.id}}">Approve</label>
+            </div>
+            <div class="float-left">
             <p>{{outcome.description}}</p>
             <ol>
               {% for element in outcome.elements.all %}
@@ -172,6 +177,7 @@ $(function() {
               </li>
               {% endfor %}
             </ol>
+            </div>
           </div>
           {% endif %}
           {% endfor %}

@@ -39,16 +39,26 @@
         </td>
         <td nowrap class="pl-4">
           {% if course.explorations %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Explorations" data-content="{% for slo in course.explorations %}{{slo}}{% endfor %}"><i class="fa fa-shuttle-space mr-1" style="color:#538dd7"><span style="display:none;">{% for slo in course.explorations %}{{slo}}{% endfor %}</span></i></a>
+            <span class="fa-stack" style="cursor: help;--fa-inverse: #cacaca;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Explorations" data-content="{% for slo in course.explorations %}{{slo}}{% endfor %}">
+              <i class="fa fa-shuttle-space mr-1" style="color:#538dd7;margin-left:2px""><span style="display:none;">{% for slo in course.explorations %}{{slo}}{% endfor %}</span></i>
+              <i class="fa-solid fa-ban fa-stack-1x explorations-stack fa-inverse"></i>
+            </span>
           {% endif %}
           {% if course.abilities %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Abilities" data-content="{% for slo in course.abilities %}{{slo}}{% endfor %}"><i class="fa fa-hands-asl-interpreting mr-1" style="color:#c39201"><span style="display:none;">{% for slo in course.abilities %}{{slo}}{% endfor %}</span></i></a>
+          <span style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Abilities" data-content="{% for slo in course.abilities %}{{slo}}{% endfor %}">
+            <i class="fa fa-hands-asl-interpreting mr-1" style="color:{% if True %}#c39201{% else %}#cacaca{% endif %};margin-left:2px;"><span style="display:none;">{% for slo in course.abilities %}{{slo}}{% endfor %}</span></i>
+          </span>
           {% endif %}
           {% if course.perspectives %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}"><i class="fa fa-cube mr-1" style="color:#d2725e"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i></a>
+          <span class="fa-stack" style="cursor: help;--fa-inverse: #cacaca;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}">
+            <i class="fa fa-cube" style="color:#d2725e;margin-left:4px"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i>
+          </span>
           {% endif %}
           {% if course.wellness %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Wellness" data-content="{% for slo in course.wellnesss %}{{slo}}{% endfor %}"><i class="fa fa-heartbeat mr-1" style="color:#76d776"><span style="display:none;">{% for slo in course.wellness %}{{slo}}{% endfor %}</span></i></a>
+          <span class="fa-stack" style="cursor: help;--fa-inverse: #cacaca;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Wellness" data-content="{% for slo in course.wellnesss %}{{slo}}{% endfor %}">
+            <i class="fa fa-heartbeat mr-1" style="color:#76d776"><span style="display:none;">{% for slo in course.wellness %}{{slo}}{% endfor %}</span></i>
+            <i class="fa-solid fa-ban fa-stack-1x wellnesss-stack fa-inverse"></i>
+          </span>
           {% endif %}
         </td>
         <td nowrap>
