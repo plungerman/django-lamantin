@@ -21,9 +21,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lamantin.settings.shell')
 def main():
     """Main function that does something."""
     course = Course.objects.get(pk=settings.COURSE_TEST_ID)
+    print(settings.COURSE_TEST_ID)
     for outcome in course.outcome.all():
         oc = OutcomeCourse.objects.get(outcome=outcome, course=course)
         print(oc)
+        print(course.outcomes_status('furbish'))
     print(course.get_outcomes())
 
 

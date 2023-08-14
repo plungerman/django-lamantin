@@ -158,10 +158,6 @@ class Course(models.Model):
         """Return explorations SLO."""
         return self.outcome.filter(group__name='Explorations')
 
-    def perspectives(self):
-        """Return perspective SLO."""
-        return self.outcome.filter(group__name='Perspectives')
-
     def get_outcomes(self):
         """Get outcomes."""
         outcomes = []
@@ -169,6 +165,23 @@ class Course(models.Model):
             oc = OutcomeCourse.objects.get(outcome=outcome, course=self)
             outcomes.append(oc)
         return outcomes
+
+    def perspectives(self):
+        """Return perspective SLO."""
+        return self.outcome.filter(group__name='Perspectives')
+
+    def outcomes_status(self, field):
+        """Check if all outcomes are approved."""
+        status = False
+        outcomes = self.outcome.all().count()
+        count = 0
+        for outcome in self.outcome.all():
+            oc = OutcomeCourse.objects.get(outcome=outcome, course=self)
+            if getattr(oc, field):
+                count += 1
+        if count >= outcomes:
+            status = True
+        return status
 
     def set_outcome(self, state, status, date):
         """Set outcome status."""

@@ -23,6 +23,7 @@ from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
 from lamantin.geoc.models import Course
 from lamantin.geoc.models import Outcome
+from lamantin.geoc.models import OutcomeCourse
 
 
 logger = logging.getLogger('debug_logfile')
@@ -85,6 +86,55 @@ def detail(request, cid):
         )
         response = HttpResponseRedirect(reverse_lazy('dashboard_home'))
     return response
+
+
+@csrf_exempt
+@portal_auth_required(
+    session_var='LAMANTIN_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def outcome_status(request):
+    """Update the status of a course outcome."""
+    if request.POST:
+        oid = request.POST.get('oid')
+        field = request.POST.get('field')
+        status = request.POST.get('status')
+        # simple data validation
+        if field in {'approved', 'furbish'} and status in {'true', 'false'}:
+            try:
+                oc = OutcomeCourse.objects.get(pk=oid)
+            except Exception:
+                oc = None
+            course = oc.course
+            if oc:
+                status = True
+                if status == 'false':
+                    status = False
+                setattr(oc, field, status)
+                oc.save()
+                if course.outcomes_status(field):
+                    if field == 'furbish':
+                        field = 'Needs Work'
+                    message = 'All course outcomes have been set "{0}".'.format(field)
+                    setattr(course, field, True)
+                    course.save()
+                else:
+                    message = "Course outcome status: {0}.".format(field)
+            else:
+                message = "Could not find course outcome with that ID."
+        else:
+            message = "Invalid field or status."
+    else:
+        message = "Requires POST request."
+
+    messages.add_message(
+        request,
+        messages.WARNING,
+        message,
+        extra_tags='alert-success',
+    )
+
+    return HttpResponse(message)
 
 
 @portal_auth_required(
