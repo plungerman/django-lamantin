@@ -113,6 +113,12 @@ def furbish(request, cid):
             course.note = note
             bcc = [settings.MANAGERS[0][1]]
             to_list = [course.user.email]
+            # set course outcomes values for 'approve' and 'furbish'.
+            course.set_outcome('approve', False, None)
+            course.set_outcome('furbish', True, None)
+            for outcome in course.get_outcomes():
+                outcome.furbish = True
+                outcome.save()
             message = '''
                 The status of course {0} ({1}) has been set to "needs more work"
                 and we have sent an email to {2} {3} with your comments.
@@ -144,7 +150,6 @@ def furbish(request, cid):
                 course,
                 bcc,
             )
-
             return HttpResponseRedirect(reverse_lazy('dashboard_home'))
     else:
         form = AnnotationForm(use_required_attribute=settings.REQUIRED_ATTRIBUTE)
@@ -197,7 +202,8 @@ def status(request):
                         course.number,
                     )
                     # approve each course outcome
-                    course.set_outcome(True, NOW)
+                    course.set_outcome('approve', True, NOW)
+                    course.set_outcome('furbish', False, None)
                 if status == 'unapprove':
                     course.approved = False
                     course.approved_date = None
@@ -206,7 +212,8 @@ def status(request):
                         course.number,
                     )
                     # un-approve each course outcome
-                    course.set_outcome(False, None)
+                    course.set_outcome('approve', False, None)
+                    course.set_outcome('furbish', False, None)
                 if status == 'reopen':
                     course.save_submit = False
                     course.furbish = False
@@ -215,7 +222,8 @@ def status(request):
                         course.number,
                     )
                     # un-approve each course outcome
-                    course.set_outcome(False, None)
+                    course.set_outcome('approve', False, None)
+                    course.set_outcome('furbish', False, None)
                 if status == 'archive':
                     course.archive = True
                     message = "{0} ({1}) has been archived".format(
@@ -228,8 +236,6 @@ def status(request):
                         course.title,
                         course.number,
                     )
-                    # un-approve each course outcome
-                    course.set_outcome(False, None)
                 messages.add_message(
                     request,
                     messages.WARNING,

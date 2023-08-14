@@ -162,12 +162,23 @@ class Course(models.Model):
         """Return perspective SLO."""
         return self.outcome.filter(group__name='Perspectives')
 
-    def set_outcome(self, status, date):
+    def get_outcomes(self):
+        """Get outcomes."""
+        outcomes = []
+        for outcome in self.outcome.all():
+            oc = OutcomeCourse.objects.get(outcome=outcome, course=self)
+            outcomes.append(oc)
+        return outcomes
+
+    def set_outcome(self, state, status, date):
         """Set outcome status."""
         for outcome in self.outcome.all():
             outcome_course = OutcomeCourse.objects.get(outcome=outcome, course=self)
-            outcome_course.approved = status
-            outcome_course.approved_date = date
+            if state == 'approve':
+                outcome_course.approved = status
+                outcome_course.approved_date = date
+            if state == 'furbish':
+                outcome_course.furbish = status
             outcome_course.save()
 
     def wellness(self):
@@ -197,6 +208,18 @@ class OutcomeCourse(models.Model):
     def __str__(self):
         """Default data for display."""
         return '{0}: {1}'.format(self.course, self.outcome)
+
+    def is_approved(self):
+        status = False
+        if self.course.approved or self.approved:
+            status = True
+        return status
+
+    def is_furbished(self):
+        status = False
+        if self.course.furbish or self.furbish:
+            status = True
+        return status
 
 
 class OutcomeElement(models.Model):

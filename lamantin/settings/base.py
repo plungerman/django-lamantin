@@ -185,6 +185,7 @@ REGISTRAR_EMAIL = ''
 SUMMERNOTE_THEME = 'bs4'
 # tests
 FACULTY_EXPLORATIONS = 0
+COURSE_TEST_ID = 0
 # logging
 LOG_FILEPATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',
