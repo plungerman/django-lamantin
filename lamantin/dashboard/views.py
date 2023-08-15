@@ -113,13 +113,15 @@ def outcome_status(request):
                 setattr(oc, field, status)
                 oc.save()
                 if course.outcomes_status(field):
+                    setattr(course, field, True)
                     if field == 'furbish':
                         field = 'Needs Work'
-                    message = 'All course outcomes have been set "{0}".'.format(field)
-                    setattr(course, field, True)
+                    message = 'All course outcomes have been set to "{0}".'.format(field)
                     course.save()
                 else:
-                    message = "Course outcome status: {0}.".format(field)
+                    if field == 'furbish':
+                        field = 'Needs Work'
+                    message = "Course outcome status for {0} set to: {1}.".format(oc.outcome.name, field)
             else:
                 message = "Could not find course outcome with that ID."
         else:
