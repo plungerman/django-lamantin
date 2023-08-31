@@ -2,6 +2,7 @@
 
 """URLs for all views."""
 
+import datetime
 import json
 import logging
 
@@ -245,16 +246,16 @@ def status(request):
                 'unarchive',
             ]
             if status in valid_status:
-                from djtools.fields import NOW
+                now = datetime.datetime.now()
                 if status == 'approve':
                     course.approved = True
-                    course.approved_date = NOW
+                    course.approved_date = now
                     subject = message = "{0} ({1}) has been approved".format(
                         course.title,
                         course.number,
                     )
                     # approve each course outcome
-                    course.set_outcome('approve', True, NOW)
+                    course.set_outcome('approve', True, now)
                     course.set_outcome('furbish', False, None)
                 if status == 'unapprove':
                     course.approved = False

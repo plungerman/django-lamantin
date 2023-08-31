@@ -2,6 +2,8 @@
 
 """Data models."""
 
+import datetime
+
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
@@ -384,8 +386,8 @@ class Annotation(models.Model):
 def approved_date(sender, instance, created, **kwargs):
     """Post-save signal function to set approved_date."""
     if instance.approved and not instance.approved_date:
-        from djtools.fields import NOW
-        instance.approved_date = NOW
+        now = datetime.datetime.now()
+        instance.approved_date = now
         instance.save()
     elif not instance.approved and instance.approved_date:
         instance.approved_date = None
