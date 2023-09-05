@@ -107,12 +107,14 @@ def outcome_status(request):
             except Exception:
                 oc = None
             course = oc.course
+            email = course.user.email
             if oc:
                 status = True
                 if status == 'false':
                     status = False
                 setattr(oc, field, status)
                 oc.save()
+                template = 'geoc/email_outcome_{0}.html'.format(field)
                 if course.outcomes_status(field):
                     setattr(course, field, True)
                     if field == 'furbish':
@@ -123,6 +125,26 @@ def outcome_status(request):
                     if field == 'furbish':
                         field = 'Needs Work'
                     message = "Course outcome status for {0} set to: {1}.".format(oc.outcome.name, field)
+                to_list = [email]
+                bcc = [settings.MANAGERS[0][1]]
+                if field == 'approved':
+                    to_list.append(settings.REGISTRAR_EMAIL)
+                subject = '[GEOC] {0}: {1}'.format(
+                    course.number,
+                    message,
+                )
+                if settings.DEBUG:
+                    course.to_list = to_list
+                    to_list = bcc
+                send_mail(
+                    request,
+                    to_list,
+                    subject,
+                    email,
+                    template,
+                    {'course': course, 'outcome': oc},
+                    bcc,
+                )
             else:
                 message = "Could not find course outcome with that ID."
         else:

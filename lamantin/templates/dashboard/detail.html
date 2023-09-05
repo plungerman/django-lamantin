@@ -196,14 +196,16 @@ $(function() {
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
                   {% else %}
                     {% if not course.approved %}
-                    <a href="#" class="btn btn-default btn-success outcomee-status"
+                    <a href="#" class="btn btn-default btn-success outcome-status"
                       data-oid="{{oc.id}}" data-field="approved" data-status="true"
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Approve</a>
                     {% endif %}
                     {% if not course.furbish and not oc.is_furbished %}
-                    <a href="#" class="btn btn-default btn-warning outcome-status"
-                      data-oid="{{oc.id}}" data-field="furbish" data-status="true"
-                      style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
+                      {% if not course.approved %}
+                      <a href="#" class="btn btn-default btn-warning outcome-status"
+                        data-oid="{{oc.id}}" data-field="furbish" data-status="true"
+                        style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
+                      {% endif %}
                     {% else %}
                     <i class="fa-regular fa-face-meh fa-2x blue"
                       data-toggle="tooltip" data-placement="top" aria-hidden='true'

@@ -1,0 +1,14 @@
+<p>
+  The GEOC committee have indicated that your course outcome:
+  <br><br>
+  <strong>{{data.outcome.outcome.name}}</strong>
+  <br><br>
+  needs more work.
+</p>
+<p>
+  <a href="https://{{server_url}}{% url 'detail' data.course.id %}">
+    {{data.course.title}} ({{data.course.number}})</a>
+</p>
+{% if data.course.to_list %}
+<pre style="font-size:1.5em;">{{data.course.to_list}}</pre>
+{% endif %}
