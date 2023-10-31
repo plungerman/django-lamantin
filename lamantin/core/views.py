@@ -32,7 +32,7 @@ def home(request):
 )
 def clear_cache(request, ctype='blurb'):
     """Clear the cache for API content."""
-    if request.is_ajax() and request.method == 'POST':
+    if request.method == 'POST':
         cid = request.POST.get('cid')
         key = 'livewhale_{0}_{1}'.format(ctype, cid)
         cache.delete(key)

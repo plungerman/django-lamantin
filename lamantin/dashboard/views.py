@@ -445,7 +445,7 @@ def annotation(request):
     """Manage annotations for a course on the detail view via ajax post."""
     user = request.user
     data =  {'msg': "Success", 'id': ''}
-    if request.is_ajax() and request.method == 'POST':
+    if request.method == 'POST':
         post = request.POST
         # simple error handling to prevent malicious values
         try:
