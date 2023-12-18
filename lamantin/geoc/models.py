@@ -222,7 +222,7 @@ class OutcomeCourse(models.Model):
 
     def __str__(self):
         """Default data for display."""
-        return '{0}: {1}'.format(self.course, self.outcome)
+        return '{0} ({1}): {2}'.format(self.course, self.course.id, self.outcome)
 
     def is_approved(self):
         status = False
@@ -280,7 +280,9 @@ class CourseOutcome(models.Model):
 
     def __str__(self):
         """Default data for display."""
-        return '[{0}] {1}: {2}'.format(self.course, self.slo, self.slo.description)
+        return '[{0} ({1})] {2}: {3}'.format(
+            self.course, self.course.id, self.slo, self.slo.description,
+        )
 
 
 class Document(models.Model):

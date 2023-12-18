@@ -1,14 +1,28 @@
 <p>
-  The GEOC committee have approved the outcome:
-  <br>
-  <br>
+  The GEOC committee have approved the outcome
   <strong>{{data.outcome.outcome.name}}</strong>
-  <br>
-  <br>
   for your course:
   <a href="https://{{server_url}}{% url 'detail' data.course.id %}">
-    {{data.course.title}} ({{data.course.number}})</a>
+    {{data.outcome.course.title}} ({{data.course.number}})</a>
 </p>
+<div>
+  <h4>{{data.outcome.outcome.name}}</h4>
+  <p>{{data.outcome.outcome.description}}</p>
+  <ol>
+    {% for element in data.outcome.outcome.elements.all %}
+    <li>
+      {{element.description}}
+      {% for slo in element.slo.all %}
+        {% if slo.course == data %}
+        <div style="background-color:#eef6fe;padding:2px;border: 1px solid rgba(0,0,0,.125); border-radius: 0.25rem;">
+          {{slo.description|safe|default:""}}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </li>
+    {% endfor %}
+  </ol>
+</div>
 {% if data.course.to_list %}
 <pre style="font-size:1.5em;">{{data.course.to_list}}</pre>
 {% endif %}

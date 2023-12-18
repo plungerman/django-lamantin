@@ -6,6 +6,7 @@ django-summernote
 django-taggit
 fontawesomefree
 mysqlclient
+pymemcache
 pyodbc
 python-ldap
 python-magic
