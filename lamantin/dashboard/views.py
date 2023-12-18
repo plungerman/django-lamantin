@@ -272,7 +272,7 @@ def status(request):
                 if status == 'approve':
                     course.approved = True
                     course.approved_date = now
-                    subject = message = "{0} ({1}) has been approved".format(
+                    subject = message = "[GEOC] {0} ({1}) has been approved".format(
                         course.title,
                         course.number,
                     )
@@ -292,7 +292,7 @@ def status(request):
                 if status == 'reopen':
                     course.save_submit = False
                     course.furbish = False
-                    subject = message = "{0} ({1}) has been reopened for updates".format(
+                    subject = message = "[GEOC] {0} ({1}) has been reopened for updates".format(
                         course.title,
                         course.number,
                     )
@@ -307,7 +307,7 @@ def status(request):
                     )
                 if status == 'unarchive':
                     course.archive = False
-                    subject = message = "{0} ({1}) has been re-actived".format(
+                    subject = message = "[GEOC] {0} ({1}) has been re-actived".format(
                         course.title,
                         course.number,
                     )
@@ -477,7 +477,7 @@ def annotation(request):
                 if settings.DEBUG:
                     course.to_list = to_list
                     to_list = bcc
-                subject = message = "{0} ({1}): new comment from {2} {3}".format(
+                subject = message = "[GEOC] {0} ({1}): new comment from {2} {3}".format(
                     course.title,
                     course.number,
                     user.first_name,
