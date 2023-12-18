@@ -107,14 +107,7 @@ $(function() {
             <a href="#" class="btn btn-default btn-danger course-status"
               style="width:128px;" data-status="unapprove">Un-approve</a>
           {% else %}
-            {% if not course.furbish %}
-            <a href="#" class="btn btn-default btn-success course-status"
-              style="width:128px;" data-status="approve">Approve</a>
-            {% endif %}
-            {% if not course.furbish %}
-              <a href="{% url 'furbish' course.id %}" class="btn btn-default btn-warning"
-              style="width:128px;" data-status="needswork">Needs Work</a>
-            {% else %}
+            {% if course.furbish %}
               <a href="#" class="btn btn-default btn-warning course-status"
                 style="width:128px;" data-status="reopen">Re-open</a>
             {% endif %}
