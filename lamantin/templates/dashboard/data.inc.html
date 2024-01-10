@@ -1,4 +1,4 @@
-{% load cache %}
+{% load geoc %}
 <div class="table-responsive mb-5">
   <table class="table table-striped table-bordered table-hover display" id="courses">
     <thead>
@@ -38,18 +38,10 @@
           <a href="{% url 'update' 'course' course.id %}">{{course.number}}</a>
         </td>
         <td nowrap class="pl-4">
-          {% if course.explorations %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Explorations" data-content="{% for slo in course.explorations %}{{slo}}{% endfor %}"><i class="fa fa-shuttle-space mr-1" style="color:#538dd7"><span style="display:none;">{% for slo in course.explorations %}{{slo}}{% endfor %}</span></i></a>
-          {% endif %}
-          {% if course.abilities %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Abilities" data-content="{% for slo in course.abilities %}{{slo}}{% endfor %}"><i class="fa fa-hands-asl-interpreting mr-1" style="color:#c39201"><span style="display:none;">{% for slo in course.abilities %}{{slo}}{% endfor %}</span></i></a>
-          {% endif %}
-          {% if course.perspectives %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Perspectives" data-content="{% for slo in course.perspectives %}{{slo}}{% endfor %}"><i class="fa fa-cube mr-1" style="color:#d2725e"><span style="display:none;">{% for slo in course.perspectives %}{{slo}}{% endfor %}</span></i></a>
-          {% endif %}
-          {% if course.wellness %}
-          <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="Wellness" data-content="{% for slo in course.wellnesss %}{{slo}}{% endfor %}"><i class="fa fa-heartbeat mr-1" style="color:#76d776"><span style="display:none;">{% for slo in course.wellness %}{{slo}}{% endfor %}</span></i></a>
-          {% endif %}
+          {% for outcome in course.outcome.all %}
+            {% get_outcome course outcome as oc %}
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="fa slo-{{outcome.id}} mr-1"><span style="display:none;">{{outcome}}</span></i></a>
+          {% endfor %}
         </td>
         <td nowrap>
           <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
@@ -82,7 +74,10 @@
               data-toggle="tooltip" data-placement="top" aria-hidden='true'
               title="Needs work"></i>
             {% else %}
-            <i class="fa fa-times red" aria-hidden="true"></i>
+              {% for outcome in course.outcome.all %}
+                {% get_outcome course outcome as oc %}
+                <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="mr-1 fa slo-{{outcome.id}}{% if not oc.approved %} slo-default{% endif %}"></i></a>
+              {% endfor %}
             {% endif %}
           {% endif %}
         </td>

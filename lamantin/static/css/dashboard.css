@@ -1,8 +1,13 @@
-.fa-stack{width:auto;}
-.fa-stack-1x, .fa-stack-2x{width:auto;font-size: 1.5em;}
-.abilities-stack{color: rgb(4 72 11 / 60%)}
-.explorations-stack{color: rgb(223 28 28 / 60%)}
-.perspectives-stack{color: rgb(47 27 177 / 50%)}
+.slo-abilities {color:#c39201;}
+.slo-6:before, .slo-7:before, .slo-8:before, .slo-9:before {font-family: "Font Awesome\ 5 Free"; color:#c39201; font-weight: 900; content: "\f2a3";}
+.slo-explorations {color:#538dd7;}
+.slo-2:before, .slo-3:before, .slo-4:before, .slo-5:before {font-family: "Font Awesome\ 5 Free"; color:#538dd7; font-weight: 900; content: "\f197";}
+.slo-perspectives {color:#d2725e;}
+.slo-10:before, .slo-11:before, .slo-12:before, .slo-13:before {font-family: "Font Awesome\ 5 Free"; color:#d2725e; font-weight: 900; content: "\f1b2"; }
+.slo-wellness {color:#76d776;}
+.slo-14:before {font-family: "Font Awesome\5 Free"; color:#76d776; font-weight: 900; content: "\f21e";}
+.slo-default:before {color:#a8adb4 !important;}
+
 .d-none{display:none;}
 #page-wrapper{margin:0;padding:0;}
 .panel-primary > .panel-heading { color: inherit; }
