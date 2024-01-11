@@ -3,6 +3,7 @@
 """URLs for all views."""
 
 from django.urls import path
+from django.urls import include
 from lamantin.dashboard import views
 
 
@@ -35,4 +36,6 @@ urlpatterns = [
     # course status view for 'approved'
     path('outcome/status/', views.outcome_status, name='outcome_status'),
     path('', views.home, name='dashboard_home'),
+    # designations
+    path('designation/', include('lamantin.dashboard.designation.urls')),
 ]

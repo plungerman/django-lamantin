@@ -26,6 +26,10 @@ ICONS = {
     'jpg': 'image',
     'jpeg': 'image',
 }
+STATUS_CHOICES = (
+    ('Provisional', 'Provisional'),
+    ('Confirmed', 'Confirmed'),
+)
 
 
 class Outcome(models.Model):
@@ -95,6 +99,13 @@ class Course(models.Model):
     )
     save_submit = models.BooleanField(default=False)
     archive = models.BooleanField(default=False)
+    status = models.CharField(
+        max_length=32,
+        choices=STATUS_CHOICES,
+        null=True,
+        blank=True,
+    )
+    confirmed_date = models.DateField(null=True, blank=True)
     # core
     title = models.CharField(
         max_length=255,
