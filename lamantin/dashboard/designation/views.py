@@ -19,10 +19,23 @@ from lamantin.geoc.models import Outcome
 def home(request):
     """GEOC dashboard for designations."""
     outcomes = Outcome.objects.all()
+    courses = Course.objects.all()
+    confirmed = 0
+    provisional = 0
+    for course in courses:
+        if course.status == 'Confirmed':
+            confirmed += 1
+        else:
+            provisional += 1
     return render(
         request,
         'dashboard/designation/home.html',
-        {'outcomes': outcomes},
+        {
+            'outcomes': outcomes,
+            'courses': courses,
+            'confirmed': confirmed,
+            'provisional': provisional,
+        },
     )
 
 
@@ -36,10 +49,12 @@ def courses(request, oid):
     outcome = get_object_or_404(Outcome, pk=oid)
     courses = Course.objects.filter(outcome__id=oid)
     confirmed = 0
+    percent = 0
     for course in courses:
         if course.status == 'Confirmed':
             confirmed += 1
-    percent = round(confirmed / courses.count() * 100, 2)
+    if courses.count() > 0:
+        percent = round(confirmed / courses.count() * 100, 2)
     return render(
         request,
         'dashboard/designation/courses.html',

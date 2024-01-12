@@ -166,4 +166,36 @@ $(function(){
     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     $('.object-title').text( $(e.relatedTarget).data('title') );
   });
+  /* update course approval type */
+  $('#courses').on( 'change', 'input', function () {
+      var $dis = $(this);
+      var $data = {
+          'user_id': $dis.attr("data-cid"),
+          'value': $dis.val(),
+          'name': $dis.attr("name"),
+          'table': $dis.attr("data-table"),
+          'pk': $dis.attr("data-pk")
+      }
+      $.ajax({
+          type: "POST",
+          url: "/lamantin/",
+          data: $data,
+          cache: false,
+          beforeSend: function(){
+              spinner.spin(target);
+          },
+          success: function(data) {
+              spinner.stop(target);
+              check ='<i class="fa fa-check"></i>';
+              $dis.replaceWith(check);
+              $.growlUI('Success', "Data saved.");
+          },
+          error: function(data) {
+              spinner.stop(target);
+              /* does not work */
+              $('div.growlUI').addClass('gerror');
+              $.growlUI('Error?', data);
+          }
+      });
+  });
 });

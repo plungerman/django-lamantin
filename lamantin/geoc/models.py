@@ -114,6 +114,11 @@ class Course(models.Model):
         """,
     )
     number = models.CharField("Number(s)", max_length=255)
+    cross_listings = models.CharField(
+        max_length=128,
+        null=True,
+        blank=True,
+    )
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",
         max_length=4,

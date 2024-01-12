@@ -29,23 +29,26 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col-lg-12">
-    <div class="row">
-      <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <h1>Designation Approvals by Student Learning Outcome</h1>
-      </div>
-      <div class="col-7 col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
-        <ol>
-        {% for outcome in outcomes %}
-          <li>
-            <a href="{% url 'courses' outcome.id %}">{{outcome}}</a>
-          </li>
-        {% endfor %}
-        </ol>
-      </div>
-      <!-- /.col-7 -->
+  <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <h1>Designation Approvals by Student Learning Outcome</h1>
+    <div class="col-7 col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+      <dl style="display: grid; width:200px;">
+        <dt style="grid-column-start: 1;width:175px;"><strong>Total courses:</strong></dt>
+        <dd style="grid-column-start: 2; width:10px;">{{courses.count}}</dd>
+        <dt style="grid-column-start: 1;width:175px;"><strong>Total confirmed:</strong></dt>
+        <dd style="grid-column-start: 2; width:10px;">{{confirmed}}</dd>
+        <dt style="grid-column-start: 1;width:175px;"><strong>Total provisional:</strong></dt>
+        <dd style="grid-column-start: 2; width:10px;">{{provisional}}</dd>
+      </dl>
+      <ol>
+      {% for outcome in outcomes %}
+        <li>
+          <a href="{% url 'courses' outcome.id %}">{{outcome}}</a>
+        </li>
+      {% endfor %}
+      </ol>
     </div>
-    <!-- /.row -->
+    <!-- /.col-7 -->
   </div>
   <!-- /.col-lg-12 -->
 </div>
