@@ -3,66 +3,35 @@
   <table class="table table-striped table-bordered table-hover display" id="courses">
     <thead>
       <tr>
-        <th>
-          Title
-          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
-            data-placement="top" aria-hidden="true"
-            title="View Course"></i>
-        </th>
         <th style="text-align: center;">
           Number(s)
           <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
-        <th style="text-align: center;">Outcomes</th>
         <th>
-          Created By
-          <i class="fa fa-envelope green ml-1" data-toggle="tooltip"
+          Title
+          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="Email faculty"></i>
+            title="View Course"></i>
         </th>
-        <th style="text-align: center;">Created At</th>
-        <th style="text-align: center;">Syllabus</th>
-        <th style="text-align: center;">Submitted</th>
+        <th style="text-align: center;">Outcomes</th>
         <th style="text-align: center;">Status</th>
+        <th style="text-align: center;">Approval Type</th>
       </tr>
     </thead>
     <tbody>
     {% for course in courses %}
       <tr>
+        <td class="course-number" title="{{course.number}}">{{course.number}}</td>
         <td class="course-title">
-          <a href="{% url 'detail' course.id %}">{{course.title}}</a>
-        </td>
-        <td class="course-number">
-          <a href="{% url 'update' 'course' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          <a href="{% url 'detail' course.id %}" title="{{course.title}}">{{course.title}}</a>
         </td>
         <td nowrap class="pl-4">
           {% for outcome in course.outcome.all %}
             {% get_outcome course outcome as oc %}
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="fa slo-{{outcome.id}} mr-1"><span style="display:none;">{{outcome}}</span></i></a>
           {% endfor %}
-        </td>
-        <td nowrap>
-          <a href="mailto:{{course.user.email}}">{{course.user.last_name}}, {{course.user.first_name}}</a>
-        </td>
-        <td nowrap style="font-family: monospace;font-size:1.1em; text-align: center;">
-          {{course.created_at|date:'Y-m-d'}}
-        </td>
-        <td nowrap style="text-align: center;">
-        {% if course.syllabus.phile %}
-        <a href="{{media_url}}{{course.syllabus.phile}}" target="_blank">
-          <i class="fas fa-duotone fa-file" title="Syllabus"></i></a>
-        <span style="display:none;">https://{{server_url}}{{media_url}}{{course.syllabus.phile}}</span>
-        {% endif %}
-        </td>
-        <td nowrap style="text-align: center;">
-          {% if course.save_submit  %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="Submitted for approval"><i class="fa fa-check green" title="Submitted for approval"><span style="display:none;">✓</span></i>
-            </a>
-          {% else %}
-            <i class="fa fa-times red" aria-hidden="true"></i>
-          {% endif %}
         </td>
         <td nowrap style="text-align: center;">
           {% if course.approved  %}
@@ -81,34 +50,27 @@
             {% endif %}
           {% endif %}
         </td>
+        <td nowrap style="text-align: center;"><a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="{% if course.confirmed_date %}Confirmed: {{course.confirmed_date}}{% else %}{% if course.approved %}Approved{% else %}Awaiting Approval{% endif %}{% endif %}">{{course.status|default:'Provisional'}}</a></td>
       </tr>
     {% endfor %}
     </tbody>
     <tfoot>
       <tr>
-        <th>
-          Title
-          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
-            data-placement="top" aria-hidden="true"
-            title="View Course"></i>
-        </th>
         <th style="text-align: center;">
           Number
           <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
-        <th style="text-align: center;">Outcomes</th>
         <th>
-          Created By
-          <i class="fa fa-envelope green ml-1" data-toggle="tooltip"
+          Title
+          <i class="fa fa-eye green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
-            title="Email faculty"></i>
+            title="View Course"></i>
         </th>
-        <th style="text-align: center;">Created At</th>
-        <th style="text-align: center;">Syllabus</th>
-        <th style="text-align: center;">Submitted</th>
+        <th style="text-align: center;">Outcomes</th>
         <th style="text-align: center;">Status</th>
+        <th style="text-align: center;">Approval Type</th>
       </tr>
     </tfoot>
   </table>

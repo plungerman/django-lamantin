@@ -29,23 +29,21 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <div class="row">
       <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <h1>{{outcome}}</h1>
         <strong>Count:</strong> {{courses.count}}
         <strong>Confirmed:</strong> {{confirmed}} [{{percent}}]%
+        <div class="panel panel-default">
+          <div class="panel-body" id="data-panel">
+            {% include "dashboard/designation/data.inc.html" %}
+          </div>
+          <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
       </div>
-      <div class="col-7 col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
-        <ol>
-        {% for course in courses %}
-          <li>
-            <a href="{% url 'detail' course.id %}">{{course.title}}</a>
-          </li>
-        {% endfor %}
-        </ol>
-      </div>
-      <!-- /.col-7 -->
+      <!-- /.col-12* -->
     </div>
     <!-- /.row -->
   </div>
