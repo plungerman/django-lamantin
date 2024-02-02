@@ -4,7 +4,7 @@ import sys
 
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djlamantin.settings.shell')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lamantin.settings.shell')
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
