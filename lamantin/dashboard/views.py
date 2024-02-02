@@ -8,6 +8,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import Http404
@@ -16,9 +17,9 @@ from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from djauth.decorators import portal_auth_required
 from djtools.utils.mail import send_mail
 from djtools.utils.users import in_group
+from djtools.decorators.auth import group_required
 from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import DocumentRequiredForm
 from lamantin.geoc.models import Annotation
@@ -30,10 +31,7 @@ from lamantin.geoc.models import OutcomeCourse
 logger = logging.getLogger('debug_logfile')
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def home(request):
     """GEOC dashboard."""
     user = request.user
@@ -67,6 +65,7 @@ def home(request):
     )
 
 
+@login_required
 def detail(request, cid):
     """View course details."""
     user = request.user
@@ -90,10 +89,7 @@ def detail(request, cid):
 
 
 @csrf_exempt
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def outcome_status(request):
     """Update the status of a course outcome."""
     if request.POST:
@@ -162,10 +158,7 @@ def outcome_status(request):
     return HttpResponse(message)
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def furbish(request, cid):
     """Set the status on a course."""
     user = request.user
@@ -237,11 +230,7 @@ def furbish(request, cid):
 
 
 @csrf_exempt
-@portal_auth_required(
-    group = settings.MANAGER_GROUP,
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def status(request):
     """Set the status on a course."""
     user = request.user
@@ -344,10 +333,7 @@ def status(request):
     return HttpResponse(message)
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def course_delete(request, cid):
     """Delete a course form."""
     course = get_object_or_404(Course, pk=cid)
@@ -370,11 +356,7 @@ def course_delete(request, cid):
     return HttpResponseRedirect(reverse_lazy('dashboard_home'))
 
 
-@portal_auth_required(
-    group = settings.MANAGER_GROUP,
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.MANAGER_GROUP)
 def note_delete(request, nid):
     """Delete a comment form an Alert."""
     note = get_object_or_404(Annotation, pk=nid)
@@ -388,10 +370,7 @@ def note_delete(request, nid):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def phile_upload(request):
     """Upload a file for a course."""
     user = request.user
@@ -436,11 +415,7 @@ def phile_upload(request):
 
 
 @csrf_exempt
-@portal_auth_required(
-    group = settings.MANAGER_GROUP,
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.MANAGER_GROUP)
 def annotation(request):
     """Manage annotations for a course on the detail view via ajax post."""
     user = request.user

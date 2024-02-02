@@ -4,11 +4,11 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.decorators import portal_auth_required
 from djtools.utils.mail import send_mail
 from lamantin.geoc.forms import AnnotationForm
 from lamantin.geoc.forms import CourseForm
@@ -17,10 +17,7 @@ from lamantin.geoc.forms import DocumentForm
 from lamantin.geoc.models import Course
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def course_form(request, step='course', cid=None):
     """GEOC workflow form. """
     course = None

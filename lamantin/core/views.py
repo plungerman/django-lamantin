@@ -7,29 +7,23 @@ import json
 import requests
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from djauth.decorators import portal_auth_required
 
 
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def home(request):
     """GEOC home: redirect to dashboard."""
     return HttpResponseRedirect(reverse_lazy('dashboard_home'))
 
 
 @csrf_exempt
-@portal_auth_required(
-    session_var='LAMANTIN_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def clear_cache(request, ctype='blurb'):
     """Clear the cache for API content."""
     if request.method == 'POST':
