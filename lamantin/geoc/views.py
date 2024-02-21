@@ -104,7 +104,7 @@ def course_form(request, step='course', cid=None):
                     "Step 2 is complete. The GEOC committe will review your course and report back to you presently.",
                     extra_tags='alert-success',
                 )
-                subject = '[GEOC] course: {0} ({1})'.format(course.title, course.number)
+                subject = '[GEOC] {0} ({1})'.format(course.title, course.number)
                 managers = []
                 for man in User.objects.filter(groups__name='Managers'):
                     managers.append(man.email)
