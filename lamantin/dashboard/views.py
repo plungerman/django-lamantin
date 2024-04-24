@@ -69,7 +69,7 @@ def home(request):
 def detail(request, cid):
     """View course details."""
     user = request.user
-    course = Course.objects.get(pk=cid)
+    course = get_object_or_404(Course, pk=cid)
     perms = course.permissions(user)
     if course.user == user or perms:
         response = render(
