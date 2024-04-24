@@ -92,7 +92,12 @@ def detail(request, cid):
 @login_required
 def outcome_status(request):
     """Update the status of a course outcome."""
-    if request.POST:
+    manager = in_group(request.user, settings.MANAGER_GROUP)
+    extra_tags='alert-success'
+    if not manager:
+        message = "You do not have permission to update this course."
+        extra_tags = 'alert-warning'
+    elif request.POST:
         oid = request.POST.get('oid')
         field = request.POST.get('field')
         status = request.POST.get('status')
@@ -143,16 +148,19 @@ def outcome_status(request):
                 )
             else:
                 message = "Could not find course outcome with that ID."
+                extra_tags = 'alert-warning'
         else:
             message = "Invalid field or status."
+            extra_tags = 'alert-warning'
     else:
         message = "Requires POST request."
+        extra_tags = 'alert-warning'
 
     messages.add_message(
         request,
         messages.WARNING,
         message,
-        extra_tags='alert-success',
+        extra_tags=extra_tags,
     )
 
     return HttpResponse(message)
