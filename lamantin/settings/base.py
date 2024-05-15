@@ -74,6 +74,8 @@ INSTALLED_APPS = (
     'django_summernote',
     # fontawesome 6
     'fontawesomefree',
+    # gmail api for send mail
+    'gmailapi_backend',
     # sign in as a user
     'loginas',
     # tagging package
@@ -152,16 +154,15 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_DOMAIN = ''
 SESSION_COOKIE_NAME = 'django_lamantin_cookie'
 SESSION_COOKIE_AGE = 86400
-# SMTP settings
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_FAIL_SILENTLY = True
+# gmail API settings
+EMAIL_FROM = ''
+GMAIL_USER = ''
+GMAIL_SERVICE_ACCOUNT_JSON = ''
+GOOGLE_SERVICE_ACCOUNT = ''
+# system emails
 DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
-SERVER_MAIL = ''
+SERVER_MAIL=''
 # app specific settings
 MANAGER_GROUP = ''
 REGISTRAR_EMAIL = ''

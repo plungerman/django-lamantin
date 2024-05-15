@@ -1,5 +1,6 @@
-django==4.2.10
+django==4.2.11
 django-bootstrap4
+django-gmailapi-json-backend
 django-localflavor
 django-loginas
 django-summernote
