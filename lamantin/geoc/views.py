@@ -114,14 +114,24 @@ def course_form(request, step='course', cid=None):
                 else:
                     to_list = [course.user.email]
                     bcc = managers
+
+                    subject,
+                    frum,
+                    'dashboard/email_note.html',
+                    course,
+                    reply_to=[frum,],
+                    bcc=bcc,
+                )
+                frum = course.user.email
                 send_mail(
                     request,
                     to_list,
                     subject,
-                    course.user.email,
+                    frum,
                     'geoc/email_submit.html',
                     course,
-                    bcc,
+                    reply_to=[frum,],
+                    bcc=bcc,
                 )
                 return HttpResponseRedirect(reverse_lazy('dashboard_home'))
             elif not errors:

@@ -144,7 +144,8 @@ def outcome_status(request):
                     email,
                     template,
                     {'course': course, 'outcome': oc},
-                    bcc,
+                    reply_to=[email,],
+                    bcc=bcc,
                 )
             else:
                 message = "Could not find course outcome with that ID."
@@ -217,14 +218,28 @@ def furbish(request, cid):
             if settings.DEBUG:
                 course.to_list = to_list
                 to_list = bcc
+
+                send_mail(
+                    request,
+                    to_list,
+                    subject,
+                    email,
+                    template,
+                    {'course': course, 'outcome': oc},
+                    reply_to=[email,],
+                    bcc=bcc,
+                )
+            frum = course.user.email
             recci = send_mail(
                 request,
                 to_list,
                 subject,
+                frum,
                 course.user.email,
                 'geoc/email_status.html',
                 course,
-                bcc,
+                reply_to=[frum,],
+                bcc=bcc,
             )
             return HttpResponseRedirect(reverse_lazy('dashboard_home'))
     else:
@@ -324,6 +339,7 @@ def status(request):
                     if settings.DEBUG:
                         course.to_list = to_list
                         to_list = bcc
+                    frum = course.user.email
                     send_mail(
                         request,
                         to_list,
@@ -331,7 +347,8 @@ def status(request):
                         course.user.email,
                         'geoc/email_status.html',
                         course,
-                        bcc,
+                        reply_to=[frum,],
+                        bcc=bcc,
                     )
             else:
                 message = "Requires '{0}'".format(valid_status)
@@ -466,14 +483,16 @@ def annotation(request):
                     user.first_name,
                     user.last_name,
                 )
+                frum = user.email
                 send_mail(
                     request,
                     to_list,
                     subject,
-                    user.email,
+                    frum,
                     'dashboard/email_note.html',
                     course,
-                    bcc,
+                    reply_to=[frum,],
+                    bcc=bcc,
                 )
         else:
             note = Annotation.objects.get(pk=nid)
