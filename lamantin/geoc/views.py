@@ -114,14 +114,6 @@ def course_form(request, step='course', cid=None):
                 else:
                     to_list = [course.user.email]
                     bcc = managers
-
-                    subject,
-                    frum,
-                    'dashboard/email_note.html',
-                    course,
-                    reply_to=[frum,],
-                    bcc=bcc,
-                )
                 frum = course.user.email
                 send_mail(
                     request,
