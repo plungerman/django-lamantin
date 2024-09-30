@@ -325,7 +325,7 @@ class Document(models.Model):
     )
     name = models.CharField(
         "Short description of file",
-        max_length=128,
+        max_length=255,
         null=True,
         blank=True,
     )
