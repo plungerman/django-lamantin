@@ -40,7 +40,7 @@
         <td nowrap class="pl-4">
           {% for outcome in course.outcome.all %}
             {% get_outcome course outcome as oc %}
-            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="fa slo-{{outcome.id}} mr-1"><span style="display:none;">{{outcome}}</span></i></a>
+            <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="fa-solid slo-{{outcome.id}} mr-1"><span style="display:none;">{{outcome}}</span></i></a>
           {% endfor %}
         </td>
         <td nowrap>
@@ -76,7 +76,7 @@
             {% else %}
               {% for outcome in course.outcome.all %}
                 {% get_outcome course outcome as oc %}
-                <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="mr-1 fa slo-{{outcome.id}}{% if not oc.approved %} slo-default{% endif %}"></i></a>
+                <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="top" title="{{outcome.group}}" data-content="{{outcome}}"><i class="mr-1 fa-solid slo-{{outcome.id}}{% if not oc.approved %} slo-default{% endif %}"></i></a>
               {% endfor %}
             {% endif %}
           {% endif %}
