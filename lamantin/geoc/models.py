@@ -117,7 +117,7 @@ class Course(models.Model):
     )
     number = models.CharField(
         "Number",
-        max_length=8,
+        max_length=255,
         help_text="FORMAT: AAA 1234 e.g. HIS 4200",
     )
     multipass = models.CharField(
