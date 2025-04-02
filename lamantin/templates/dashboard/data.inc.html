@@ -10,11 +10,12 @@
             title="View Course"></i>
         </th>
         <th style="text-align: center;">
-          Number(s)
+          Number
           <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Cross Listings</th>
         <th style="text-align: center;">Outcomes</th>
         <th>
           Created By
@@ -36,6 +37,11 @@
         </td>
         <td class="course-number">
           <a href="{% url 'update' 'course' course.id %}" title="{{course.number}}">{{course.number}}</a>
+        </td>
+        <td class="cross-listing">
+          {% for course in course.cross_listing.all %}
+          <a href="{% url 'detail' course.id %}" title="{{course.number}}">{{course.number}}</a>{% if not forloop.last %},&nbsp;{% endif %}
+          {% endfor %}
         </td>
         <td nowrap class="pl-4">
           {% for outcome in course.outcome.all %}
@@ -98,6 +104,7 @@
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Cross Listings</th>
         <th style="text-align: center;">Outcomes</th>
         <th>
           Created By

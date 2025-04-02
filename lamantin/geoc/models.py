@@ -86,8 +86,10 @@ class Course(models.Model):
         null=True,
         blank=True,
     )
+    cross_listing = models.ManyToManyField('self', blank=True, null=True)
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
+    # status
     approved = models.BooleanField(
         help_text="Has the course been approved?",
         default=False,
@@ -114,11 +116,6 @@ class Course(models.Model):
         """,
     )
     number = models.CharField("Number(s)", max_length=255)
-    cross_listings = models.CharField(
-        max_length=128,
-        null=True,
-        blank=True,
-    )
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",
         max_length=4,
