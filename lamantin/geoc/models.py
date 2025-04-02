@@ -115,7 +115,11 @@ class Course(models.Model):
             Course name or a descriptive title if you are submiting multiple courses
         """,
     )
-    number = models.CharField("Number(s)", max_length=255)
+    number = models.CharField(
+        "Number",
+        max_length=8,
+        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
+    )
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",
         max_length=4,

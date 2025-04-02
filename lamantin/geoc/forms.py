@@ -51,11 +51,31 @@ class CourseForm(forms.ModelForm):
         choices=BINARY_CHOICES,
         widget=forms.RadioSelect(),
         help_text="""
-            You may submit multiple courses if those courses
+            You may submit multiple courses (cross list) if those courses
             substantially fulfill the same SLO categories within the GE structure.
             If any of the courses you are submitting also carry another designation,
             they would need to be submitted individually.
         """
+    )
+    crosslist1 = forms.CharField(
+        label="Cross list 1: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
+    )
+    crosslist2 = forms.CharField(
+        label="Cross list 2: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
+    )
+    crosslist3 = forms.CharField(
+        label="Cross list 3: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
+    )
+    crosslist4 = forms.CharField(
+        label="Cross list 4: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
     )
 
     class Meta:

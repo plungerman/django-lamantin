@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djtools.utils.mail import send_mail
@@ -18,8 +19,143 @@ from lamantin.geoc.models import Course
 
 
 @login_required
-def course_form(request, step='course', cid=None):
-    """GEOC workflow form. """
+def course_create(request):
+    """GEOC workflow form to create a course."""
+    if request.method == 'POST':
+        post = request.POST
+        form = CourseForm(
+            post,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
+        form_syllabus = DocumentForm(
+            post,
+            request.FILES,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            prefix='syllabus',
+        )
+        if form.is_valid() and form_syllabus.is_valid():
+            course = form.save(commit=False)
+            course.user = user
+            course.updated_by = user
+            course.save()
+            form.save_m2m()
+            # document syllabus
+            doc = form_syllabus.save(commit=False)
+            doc.course = course
+            if not doc.name:
+                doc.name = 'Syllabus: {0} ({1})'.format(course.title, course.number)
+            doc.created_by = user
+            doc.updated_by = user
+            doc.save()
+            doc.tags.add('Syllabus')
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                "Step 1 is complete. Please complete the outcomes below.",
+                extra_tags='alert-success',
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('update', args=['outcome', course.id]),
+            )
+    else:
+        form = CourseForm(
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
+        form_syllabus = DocumentForm(
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            prefix='syllabus',
+        )
+    return render(
+        request,
+        'geoc/form_course.html',
+        {
+            'form': form,
+            'form_syllabus': form_syllabus,
+        },
+    )
+
+
+@login_required
+def course_update(request, cid):
+    """GEOC workflow form to update a course."""
+    course = get_object_or_404(Course, pk=cid)
+    syllabus = None
+    if course.save_submit:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            """
+                The course you attempted to edit is complete.
+                The GEOC committe will review your course and report back to you presently.
+            """,
+            extra_tags='alert-warning',
+        )
+        return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+
+    if course.syllabus():
+        syllabus = course.syllabus()
+
+    if request.method == 'POST':
+        post = request.POST
+        form = CourseForm(
+            post,
+            instance=course,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
+        form_syllabus = DocumentForm(
+            post,
+            request.FILES,
+            instance=phile,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            prefix='syllabus',
+        )
+        if form.is_valid() and form_syllabus.is_valid():
+            course = form.save(commit=False)
+            course.user = user
+            course.updated_by = user
+            course.save()
+            form.save_m2m()
+            # document syllabus
+            doc = form_syllabus.save(commit=False)
+            doc.course = course
+            if not doc.name:
+                doc.name = 'Syllabus: {0} ({1})'.format(course.title, course.number)
+            doc.created_by = user
+            doc.updated_by = user
+            doc.save()
+            doc.tags.add('Syllabus')
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                "Step 1 is complete. Please complete the outcomes below.",
+                extra_tags='alert-success',
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('update', args=['outcome', course.id]),
+            )
+    else:
+        form = CourseForm(
+            instance=course,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+        )
+        form_syllabus = DocumentForm(
+            instance=phile,
+            use_required_attribute=settings.REQUIRED_ATTRIBUTE,
+            prefix='syllabus',
+        )
+    return render(
+        request,
+        template,
+        {
+            'form': form,
+            'form_syllabus': form_syllabus,
+        },
+    )
+
+
+@login_required
+def outcome_form(request, step='course', cid=None):
+    """GEOC workflow form to update a course."""
     course = None
     template = 'geoc/form_{0}.html'.format(step)
     forms_dict = {}

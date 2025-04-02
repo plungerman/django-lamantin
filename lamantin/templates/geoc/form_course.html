@@ -7,6 +7,23 @@ $(function() {
   {% if form.outcome.errors %}
   $('.invalid-feedback').css('display', 'inherit');
   {% endif %}
+
+  var $cross_listing = $("#cross-listing");
+  {% if form.multipass.value == 'Yes' %}
+  $cross_listing.show();
+  {% else %}
+  $cross_listing.hide();
+  {% endif %}
+  /* cross listing yes/no */
+  $('input[name="multipass"]').click(function() {
+    $dis = $(this);
+    if ($dis.val() == 'Yes') {
+      $cross_listing.show();
+    } else {
+      $cross_listing.hide();
+    }
+    console.log($dis.val());
+  });
 });
 </script>
 {% endblock %}
@@ -48,11 +65,12 @@ $(function() {
       <small class="form-text text-muted">{{form.title.help_text}}</small>
     </div>
     <div class="form-group">
-      <label for="id_number">Course Number(s)</label>
-      <input type="text" name="number" maxlength="255" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
+      <label for="id_number">Course Number</label>
+      <input type="text" name="number" maxlength="8" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
       {% if form.number.errors %}
       <div class="invalid-feedback">This field is required.</div>
       {% endif %}
+      <small class="form-text text-muted">{{form.number.help_text}}</small>
     </div>
     <div class="form-group">
       <label for="id_multipass">
@@ -61,6 +79,28 @@ $(function() {
           <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
       </label>
       {% bootstrap_field form.multipass show_label=False %}
+    </div>
+    <div id="cross-listing">
+      <div class="form-group">
+        <label for="id_crosslist1">Cross list 1: course number</label>
+        <input type="text" name="crosslist1" maxlength="8" class="form-control{% if form.crosslist1.errors %} is-invalid{% endif %}" value="{{form.crosslist1.value|default:''}}" id="id_crosslist1">
+        <small class="form-text text-muted">{{form.crosslist1.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist2">Cross list 2: course number</label>
+        <input type="text" name="crosslist2" maxlength="8" class="form-control{% if form.crosslist2.errors %} is-invalid{% endif %}" value="{{form.crosslist2.value|default:''}}" id="id_crosslist2">
+        <small class="form-text text-muted">{{form.crosslist2.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist3">Cross list 3: course number</label>
+        <input type="text" name="crosslist3" maxlength="8" class="form-control{% if form.crosslist3.errors %} is-invalid{% endif %}" value="{{form.crosslist3.value|default:''}}" id="id_crosslist3">
+        <small class="form-text text-muted">{{form.crosslist3.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist4">Cross list 4: course number</label>
+        <input type="text" name="crosslist4" maxlength="8" class="form-control{% if form.crosslist4.errors %} is-invalid{% endif %}" value="{{form.crosslist4.value|default:''}}" id="id_crosslist4">
+        <small class="form-text text-muted">{{form.crosslist4.help_text}}</small>
+      </div>
     </div>
     <div class="form-group row">
       <div class="col-12">
