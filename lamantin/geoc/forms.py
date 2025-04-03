@@ -131,7 +131,7 @@ class CourseForm(forms.ModelForm):
         number = cd.get('number')
         if not COURSE_NUMBER.match(number):
             self.add_error('number', 'Course numbers should be in the format: AAA 1234 or AAA 123X')
-        return cd
+        return number
 
 
 class CourseOutcomeForm(forms.ModelForm):

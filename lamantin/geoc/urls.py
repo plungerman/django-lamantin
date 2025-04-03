@@ -10,7 +10,7 @@ from lamantin.geoc import views
 
 urlpatterns = [
     path(
-        'form/<str:step>/<int:cid>/update/',
+        'form/<int:cid>/update/',
         views.course_update,
         name='course_update',
     ),

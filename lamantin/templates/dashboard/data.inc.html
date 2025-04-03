@@ -36,7 +36,7 @@
           <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
         <td class="course-number">
-          <a href="{% url 'course_update' 'course' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          <a href="{% url 'course_update' course.id %}" title="{{course.number}}">{{course.number}}</a>
         </td>
         <td class="cross-listing">
           {% for course in course.cross_listing.all %}

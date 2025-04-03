@@ -2,6 +2,8 @@
 
 """URLs for all views."""
 
+import copy
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -22,6 +24,7 @@ from lamantin.geoc.models import Course
 def course_create(request):
     """GEOC workflow form to create a course."""
     if request.method == 'POST':
+        user = request.user
         post = request.POST
         form = CourseForm(
             post,
@@ -48,6 +51,27 @@ def course_create(request):
             doc.updated_by = user
             doc.save()
             doc.tags.add('Syllabus')
+            if course.multipass:
+                crosslist = {
+                    'crosslist1': request.POST.get('crosslist1'),
+                    'crosslist2': request.POST.get('crosslist2'),
+                    'crosslist3': request.POST.get('crosslist3'),
+                    'crosslist4': request.POST.get('crosslist4'),
+                }
+                slos = course.outcome.all()
+                for key, value in crosslist.items():
+                    if value:
+                        course.pk = None
+                        course._state.adding = True
+                        course.number = value
+                        course.save()
+                        course.outcome.set(slos)
+                        # doc
+                        doc.pk = None
+                        doc.course = course
+                        doc._state.adding = True
+                        doc.save()
+                        doc.tags.add('Syllabus')
             messages.add_message(
                 request,
                 messages.SUCCESS,
@@ -55,7 +79,7 @@ def course_create(request):
                 extra_tags='alert-success',
             )
             return HttpResponseRedirect(
-                reverse_lazy('update', args=['outcome', course.id]),
+                reverse_lazy('course_update', args=['outcome', course.id]),
             )
     else:
         form = CourseForm(
@@ -96,16 +120,15 @@ def course_update(request, cid):
         syllabus = course.syllabus()
 
     if request.method == 'POST':
+        user = request.user
         post = request.POST
         form = CourseForm(
             post,
-            instance=course,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
         )
         form_syllabus = DocumentForm(
             post,
             request.FILES,
-            instance=phile,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             prefix='syllabus',
         )
@@ -124,6 +147,28 @@ def course_update(request, cid):
             doc.updated_by = user
             doc.save()
             doc.tags.add('Syllabus')
+            if course.multipass:
+                crosslist = {
+                    'crosslist1': request.POST.get('crosslist1'),
+                    'crosslist2': request.POST.get('crosslist2'),
+                    'crosslist3': request.POST.get('crosslist3'),
+                    'crosslist4': request.POST.get('crosslist4'),
+                }
+                slos = course.outcome.all()
+                for key, value in crosslist.items():
+                    if value:
+                        crosslist = copy.deepcopy(course)
+                        crosslist.id = None
+                        crosslist.number = value
+                        crosslist.save()
+                        crosslist.outcome.set(slos)
+                        course.cross_listing.add(crosslist)
+                        # doc
+                        doc.pk = None
+                        doc.course = crosslist
+                        doc._state.adding = True
+                        doc.save()
+                        doc.tags.add('Syllabus')
             messages.add_message(
                 request,
                 messages.SUCCESS,
@@ -131,21 +176,19 @@ def course_update(request, cid):
                 extra_tags='alert-success',
             )
             return HttpResponseRedirect(
-                reverse_lazy('update', args=['outcome', course.id]),
+                reverse_lazy('course_update', args=['outcome', course.id]),
             )
     else:
         form = CourseForm(
-            instance=course,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
         )
         form_syllabus = DocumentForm(
-            instance=phile,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             prefix='syllabus',
         )
     return render(
         request,
-        template,
+        'geoc/form_course.html',
         {
             'form': form,
             'form_syllabus': form_syllabus,
