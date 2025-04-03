@@ -118,7 +118,7 @@ class Course(models.Model):
     number = models.CharField(
         "Number",
         max_length=255,
-        help_text="FORMAT: AAA 1234 e.g. HIS 4200",
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
     )
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",
