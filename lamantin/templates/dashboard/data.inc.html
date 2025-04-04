@@ -36,11 +36,15 @@
           <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
         <td class="course-number">
-          <a href="{% url 'course_update' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          {% if course.parent %}
+            <a href="{% url 'course_update' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          {% else %}
+            {{course.number}}
+          {% endif %}
         </td>
         <td class="cross-listing">
-          {% for course in course.cross_listing.all %}
-          <a href="{% url 'detail' course.id %}" title="{{course.number}}">{{course.number}}</a>{% if not forloop.last %},&nbsp;{% endif %}
+          {% for cross_list in course.cross_listing.all %}
+            <a href="{% url 'detail' cross_list.id %}" title="{{cross_list.number}}">{{cross_list.number}}</a>{% if not forloop.last %},&nbsp;{% endif %}
           {% endfor %}
         </td>
         <td nowrap class="pl-4">

@@ -61,14 +61,20 @@ def course_create(request):
                 slos = course.outcome.all()
                 for key, value in crosslist.items():
                     if value:
-                        course.pk = None
-                        course._state.adding = True
-                        course.number = value
-                        course.save()
-                        course.outcome.set(slos)
+                        #course.pk = None
+                        #course._state.adding = True
+                        #course.number = value
+                        #course.save()
+                        #course.outcome.set(slos)
+                        crosslist = copy.deepcopy(course)
+                        crosslist.id = None
+                        crosslist.number = value
+                        crosslist.save()
+                        crosslist.outcome.set(slos)
+                        course.cross_listing.add(crosslist)
                         # doc
                         doc.pk = None
-                        doc.course = course
+                        doc.course = crosslist
                         doc._state.adding = True
                         doc.save()
                         doc.tags.add('Syllabus')

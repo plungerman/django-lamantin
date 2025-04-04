@@ -86,7 +86,7 @@ class Course(models.Model):
         null=True,
         blank=True,
     )
-    cross_listing = models.ManyToManyField('self', blank=True, null=True)
+    cross_listing = models.ManyToManyField('self', blank=True)
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     # status
@@ -216,6 +216,17 @@ class Course(models.Model):
     def wellness(self):
         """Return wellnesse SLO."""
         return self.outcome.filter(group__name='Wellness')
+
+    def parent(self):
+        """Determine parent."""
+        parent = True
+        for cross_list in self.cross_listing.all():
+            if self.id > cross_list.id:
+                parent = False
+                break
+            else:
+                parent = True
+        return parent
 
 
 class OutcomeCourse(models.Model):
