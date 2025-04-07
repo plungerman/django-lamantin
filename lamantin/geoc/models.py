@@ -344,7 +344,7 @@ class Document(models.Model):
     phile = models.FileField(
         "Supporting documentation",
         upload_to=upload_to_path,
-        #validators=settings.FILE_VALIDATORS,
+        validators=settings.FILE_VALIDATORS,
         max_length=767,
         help_text="PDF format",
         null=True,
