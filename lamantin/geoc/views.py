@@ -52,14 +52,14 @@ def course_create(request):
             doc.save()
             doc.tags.add('Syllabus')
             if course.multipass:
-                crosslist = {
+                crosslist_dict = {
                     'crosslist1': request.POST.get('crosslist1'),
                     'crosslist2': request.POST.get('crosslist2'),
                     'crosslist3': request.POST.get('crosslist3'),
                     'crosslist4': request.POST.get('crosslist4'),
                 }
                 slos = course.outcome.all()
-                for key, value in crosslist.items():
+                for key, value in crosslist_dict.items():
                     if value:
                         #course.pk = None
                         #course._state.adding = True
@@ -122,6 +122,18 @@ def course_update(request, cid):
         )
         return HttpResponseRedirect(reverse_lazy('dashboard_home'))
 
+    if not course.parent():
+        messages.add_message(
+            request,
+            messages.WARNING,
+            """
+                The course you attempted to edit is a crosslisted course and cannot be edited.
+                Update the parent course instead.
+            """,
+            extra_tags='alert-warning',
+        )
+        return HttpResponseRedirect(reverse_lazy('dashboard_home'))
+
     if course.syllabus():
         syllabus = course.syllabus()
 
@@ -130,11 +142,13 @@ def course_update(request, cid):
         post = request.POST
         form = CourseForm(
             post,
+            instance=course,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
         )
         form_syllabus = DocumentForm(
             post,
             request.FILES,
+            instance=syllabus,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             prefix='syllabus',
         )
@@ -154,19 +168,26 @@ def course_update(request, cid):
             doc.save()
             doc.tags.add('Syllabus')
             if course.multipass:
-                crosslist = {
+                # obtain the SLOs from the parent course
+                slos = course.outcome.all()
+                # crosslist course
+                crosslist_dict = {
                     'crosslist1': request.POST.get('crosslist1'),
                     'crosslist2': request.POST.get('crosslist2'),
                     'crosslist3': request.POST.get('crosslist3'),
                     'crosslist4': request.POST.get('crosslist4'),
                 }
-                slos = course.outcome.all()
-                for key, value in crosslist.items():
+                # remove all crosslisted courses first
+                for cl in course.cross_listing.all():
+                    cl.delete()
+                # recreate all crosslisted courses
+                for key, value in crosslist_dict.items():
                     if value:
                         crosslist = copy.deepcopy(course)
                         crosslist.id = None
                         crosslist.number = value
                         crosslist.save()
+                        # add the SLOs from parent to child
                         crosslist.outcome.set(slos)
                         course.cross_listing.add(crosslist)
                         # doc
@@ -184,11 +205,20 @@ def course_update(request, cid):
             return HttpResponseRedirect(
                 reverse_lazy('course_update', args=['outcome', course.id]),
             )
+        else:
+            messages.add_message(
+                request,
+                messages.WARNING,
+                "Step 1 failed. Please try again.",
+                extra_tags='alert-warning',
+            )
     else:
         form = CourseForm(
+            instance=course,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
         )
         form_syllabus = DocumentForm(
+            instance=syllabus,
             use_required_attribute=settings.REQUIRED_ATTRIBUTE,
             prefix='syllabus',
         )
@@ -197,6 +227,7 @@ def course_update(request, cid):
         'geoc/form_course.html',
         {
             'form': form,
+            'course': course,
             'form_syllabus': form_syllabus,
         },
     )

@@ -83,7 +83,7 @@ $(function() {
     <div id="cross-listing">
       <div class="form-group">
         <label for="id_crosslist1">Cross list 1: course number</label>
-        <input type="text" name="crosslist1" maxlength="8" style="text-transform:uppercase" class="form-control{% if form.crosslist1.errors %} is-invalid{% endif %}" value="{{form.crosslist1.value|default:''}}" id="id_crosslist1">
+        <input type="text" name="crosslist1" maxlength="8" value="{% if form.crosslist1.value %}{{form.crosslist1.value|default:''}}{% else %}{{course.cross_listing.all.0.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist1.errors %} is-invalid{% endif %}" id="id_crosslist1">
         {% if form.crosslist1.errors %}
         <div class="invalid-feedback">{{form.crosslist1.errors}}</div>
         {% endif %}
@@ -91,7 +91,7 @@ $(function() {
       </div>
       <div class="form-group">
         <label for="id_crosslist2">Cross list 2: course number</label>
-        <input type="text" name="crosslist2" maxlength="8" style="text-transform:uppercase" class="form-control{% if form.crosslist2.errors %} is-invalid{% endif %}" value="{{form.crosslist2.value|default:''}}" id="id_crosslist2">
+        <input type="text" name="crosslist2" maxlength="8" value="{% if form.crosslist2.value %}{{form.crosslist2.value|default:''}}{% else %}{{course.cross_listing.all.1.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist2.errors %} is-invalid{% endif %}" id="id_crosslist2">
         {% if form.crosslist2.errors %}
         <div class="invalid-feedback">{{form.crosslist2.errors}}</div>
         {% endif %}
@@ -99,7 +99,7 @@ $(function() {
       </div>
       <div class="form-group">
         <label for="id_crosslist3">Cross list 3: course number</label>
-        <input type="text" name="crosslist3" maxlength="8" style="text-transform:uppercase" class="form-control{% if form.crosslist3.errors %} is-invalid{% endif %}" value="{{form.crosslist3.value|default:''}}" id="id_crosslist3">
+        <input type="text" name="crosslist3" maxlength="8" value="{% if form.crosslist3.value %}{{form.crosslist3.value|default:''}}{% else %}{{course.cross_listing.all.2.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist3.errors %} is-invalid{% endif %}" id="id_crosslist3">
         {% if form.crosslist3.errors %}
         <div class="invalid-feedback">{{form.crosslist3.errors}}</div>
         {% endif %}
@@ -107,7 +107,7 @@ $(function() {
       </div>
       <div class="form-group">
         <label for="id_crosslist4">Cross list 4: course number</label>
-        <input type="text" name="crosslist4" maxlength="8" style="text-transform:uppercase" class="form-control{% if form.crosslist4.errors %} is-invalid{% endif %}" value="{{form.crosslist4.value|default:''}}" id="id_crosslist4">
+        <input type="text" name="crosslist4" maxlength="8" value="{% if form.crosslist4.value %}{{form.crosslist4.value|default:''}}{% else %}{{course.cross_listing.all.3.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist4.errors %} is-invalid{% endif %}" id="id_crosslist4">
         {% if form.crosslist4.errors %}
         <div class="invalid-feedback">{{form.crosslist4.errors}}</div>
         {% endif %}

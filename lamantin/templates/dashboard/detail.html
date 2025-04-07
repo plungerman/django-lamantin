@@ -85,7 +85,7 @@ $(function() {
               data-placement="top" aria-hidden="true"
               title="Delete Course: {{course.title}}"></i></a>
           {% endif %}
-        | <a href="{% url 'course_update' 'course' course.id %}">
+        | <a href="{% url 'course_update' course.id %}">
             <i class="fa fa-pencil green" aria-hidden="true"
               data-toggle="tooltip" data-placement="top"
               title="Update Course"></i></a>
