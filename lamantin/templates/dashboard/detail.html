@@ -241,9 +241,11 @@ $(function() {
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
       <h2 style="border-bottom: 1px black dotted;">
         Public Comments
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="furbish">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="furbish-list">
         {% for note in course.adenda %}
@@ -256,9 +258,11 @@ $(function() {
       {% if perms %}
       <h2 style="border-bottom: 1px black dotted;">
         GEOC Comments
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="comments">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="comments-list">
         {% for note in course.comments %}
@@ -271,9 +275,11 @@ $(function() {
       {% endif %}
       <h2 style="border-bottom: 1px black dotted;">
         Documents
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#phileModal" class="phile-upload">
           <i class="fa fa-upload green" data-toggle="tooltip"
             data-placement="top" title="Upload a file" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="docs-list">
         {% for doc in course.docs.all %}
