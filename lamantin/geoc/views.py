@@ -332,6 +332,10 @@ def outcome_form(request, cid):
             # set the save submit flag so user cannot update
             course.save_submit = True
             course.save()
+            # update crosslisted courses
+            for cl in course.cross_listing.all():
+                cl.save_submit = True
+                cl.save()
             messages.add_message(
                 request,
                 messages.SUCCESS,

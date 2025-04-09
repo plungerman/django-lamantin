@@ -25,7 +25,9 @@ $(function() {
 {% endblock %}
 {% block body_tag %}{% endblock %}
 {% block navbar-header %}
-  <i class="fas fa-home fa-2x"></i>
+  <a href="{% url 'dashboard_home' %}" class="mr-sm-3 mr-lg-3">
+    <i class="fa fa-home fa-2x"></i></a>
+  <a class="navbar-brand" href="{% url 'dashboard_home' %}">General Education Course Approval Workflow</a>
 {% endblock %}
 {% block navbar-top-links %}
   <ul class="navbar-nav ml-auto">

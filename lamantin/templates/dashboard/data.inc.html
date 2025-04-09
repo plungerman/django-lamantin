@@ -36,7 +36,7 @@
           <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
         <td class="course-number">
-          {% if course.parent %}
+          {% if course.parent and not course.save_submit %}
             <a href="{% url 'course_update' course.id %}" title="{{course.number}}">{{course.number}}</a>
           {% else %}
             {{course.number}}

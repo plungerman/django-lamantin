@@ -175,7 +175,7 @@ $(function() {
             <div class="float-right">
             {% get_outcome course outcome as oc %}
             {% if course.save_submit %}
-              {% if not oc.is_approved and not oc.is_furbished %}
+              {% if not oc.is_approved and not oc.is_furbished and course.user != user %}
                 <a href="#" class="btn btn-default btn-success outcome-status"
                   data-oid="{{oc.id}}" data-field="approved" data-status="true"
                   style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Approve</a>
@@ -186,26 +186,28 @@ $(function() {
                 {% if not course.approved and not course.furbish and oc.approved %}
                   <i class="fa fa-check fa-2x green" data-oid="{{oc.id}}" data-toggle="tooltip" data-placement="top" title="Approved"></i>
                 {% else %}
-                  {% if not oc.is_furbished and not course.approved %}
+                  {% if not oc.is_furbished and not course.approved and course.user != user %}
                     <a href="#" class="btn btn-default btn-warning outcome-status"
                       data-oid="{{oc.id}}" data-field="furbish" data-status="true"
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
                   {% else %}
-                    {% if not course.approved %}
+                    {% if not course.approved and not oc.is_furbished and course.user != user %}
                     <a href="#" class="btn btn-default btn-success outcome-status"
                       data-oid="{{oc.id}}" data-field="approved" data-status="true"
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Approve</a>
                     {% endif %}
-                    {% if not course.furbish and not oc.is_furbished %}
+                    {% if not course.furbish and not oc.is_furbished and course.user != user %}
                       {% if not course.approved %}
                       <a href="#" class="btn btn-default btn-warning outcome-status"
                         data-oid="{{oc.id}}" data-field="furbish" data-status="true"
                         style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
                       {% endif %}
                     {% else %}
-                    <i class="fa-regular fa-face-meh fa-2x blue"
-                      data-toggle="tooltip" data-placement="top" aria-hidden='true'
-                      title="Needs work"></i>
+                      {% if oc.is_furbished %}
+                      <i class="fa-regular fa-face-meh fa-2x blue"
+                        data-toggle="tooltip" data-placement="top" aria-hidden='true'
+                        title="Needs work"></i>
+                      {% endif %}
                     {% endif %}
                   {% endif %}
                 {% endif %}
