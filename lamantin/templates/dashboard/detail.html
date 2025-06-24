@@ -85,7 +85,7 @@ $(function() {
               data-placement="top" aria-hidden="true"
               title="Delete Course: {{course.title}}"></i></a>
           {% endif %}
-        | <a href="{% url 'update' 'course' course.id %}">
+        | <a href="{% url 'course_update' course.id %}">
             <i class="fa fa-pencil green" aria-hidden="true"
               data-toggle="tooltip" data-placement="top"
               title="Update Course"></i></a>
@@ -99,21 +99,23 @@ $(function() {
     <div class="col-12 text-center">
       <div class="panel panel-default mb-3">
         <div class="panel-body">
-        {% if course.archive %}
+        {% if course.save_submit %}
+          {% if course.archive %}
           <a href="#" class="btn btn-default btn-danger course-status"
           style="width:128px;" data-status="unarchive">Un-archive</a>
-        {% else %}
-          {% if course.approved %}
+          {% else %}
+            {% if course.approved %}
             <a href="#" class="btn btn-default btn-danger course-status"
               style="width:128px;" data-status="unapprove">Un-approve</a>
-          {% else %}
-            {% if course.furbish %}
+            {% else %}
+              {% if course.furbish %}
               <a href="#" class="btn btn-default btn-warning course-status"
                 style="width:128px;" data-status="reopen">Re-open</a>
+              {% endif %}
             {% endif %}
+            <a href="#" class="btn btn-default btn-danger course-status"
+              style="width:128px;" data-status="archive">Archive</a>
           {% endif %}
-          <a href="#" class="btn btn-default btn-danger course-status"
-          style="width:128px;" data-status="archive">Archive</a>
         {% endif %}
         </div>
       </div>
@@ -171,8 +173,9 @@ $(function() {
               <i class="fa fa-question-circle fa-xs green" aria-hidden="true"></i></a>
             </h4>
             <div class="float-right">
-              {% get_outcome course outcome as oc %}
-              {% if not oc.is_approved and not oc.is_furbished %}
+            {% get_outcome course outcome as oc %}
+            {% if course.save_submit %}
+              {% if not oc.is_approved and not oc.is_furbished and course.user != user %}
                 <a href="#" class="btn btn-default btn-success outcome-status"
                   data-oid="{{oc.id}}" data-field="approved" data-status="true"
                   style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Approve</a>
@@ -183,30 +186,33 @@ $(function() {
                 {% if not course.approved and not course.furbish and oc.approved %}
                   <i class="fa fa-check fa-2x green" data-oid="{{oc.id}}" data-toggle="tooltip" data-placement="top" title="Approved"></i>
                 {% else %}
-                  {% if not oc.is_furbished and not course.approved %}
+                  {% if not oc.is_furbished and not course.approved and course.user != user %}
                     <a href="#" class="btn btn-default btn-warning outcome-status"
                       data-oid="{{oc.id}}" data-field="furbish" data-status="true"
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
                   {% else %}
-                    {% if not course.approved %}
+                    {% if not course.approved and not oc.is_furbished and course.user != user %}
                     <a href="#" class="btn btn-default btn-success outcome-status"
                       data-oid="{{oc.id}}" data-field="approved" data-status="true"
                       style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Approve</a>
                     {% endif %}
-                    {% if not course.furbish and not oc.is_furbished %}
+                    {% if not course.furbish and not oc.is_furbished and course.user != user %}
                       {% if not course.approved %}
                       <a href="#" class="btn btn-default btn-warning outcome-status"
                         data-oid="{{oc.id}}" data-field="furbish" data-status="true"
                         style="margin: 0 12px 14px 0;padding: 0.2rem 0.5rem;">Needs Work</a>
                       {% endif %}
                     {% else %}
-                    <i class="fa-regular fa-face-meh fa-2x blue"
-                      data-toggle="tooltip" data-placement="top" aria-hidden='true'
-                      title="Needs work"></i>
+                      {% if oc.is_furbished %}
+                      <i class="fa-regular fa-face-meh fa-2x blue"
+                        data-toggle="tooltip" data-placement="top" aria-hidden='true'
+                        title="Needs work"></i>
+                      {% endif %}
                     {% endif %}
                   {% endif %}
                 {% endif %}
               {% endif %}
+            {% endif %}
             </div>
             <div class="float-left">
             <p>{{outcome.description}}</p>
@@ -237,9 +243,11 @@ $(function() {
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
       <h2 style="border-bottom: 1px black dotted;">
         Public Comments
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="furbish">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="furbish-list">
         {% for note in course.adenda %}
@@ -252,9 +260,11 @@ $(function() {
       {% if perms %}
       <h2 style="border-bottom: 1px black dotted;">
         GEOC Comments
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#textModal" class="text-update" data-ctype="comments">
           <i class="fa fa-comments green" data-toggle="tooltip"
             data-placement="top" title="Submit a note" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="comments-list">
         {% for note in course.comments %}
@@ -267,9 +277,11 @@ $(function() {
       {% endif %}
       <h2 style="border-bottom: 1px black dotted;">
         Documents
+        {% if course.save_submit %}
         <a href="" data-toggle="modal" data-target="#phileModal" class="phile-upload">
           <i class="fa fa-upload green" data-toggle="tooltip"
             data-placement="top" title="Upload a file" aria-hidden="true"></i></a>
+        {% endif %}
       </h2>
       <div id="docs-list">
         {% for doc in course.docs.all %}

@@ -15,6 +15,9 @@
 {% block font_awesome %}
 <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
+{% block jquery %}
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+{% endblock %}
 {% block extra_javascript %}
 <script>
 $(function() {
@@ -25,7 +28,9 @@ $(function() {
 {% endblock %}
 {% block body_tag %}{% endblock %}
 {% block navbar-header %}
-  <i class="fas fa-home fa-2x"></i>
+  <a href="{% url 'dashboard_home' %}" class="mr-sm-3 mr-lg-3">
+    <i class="fa fa-home fa-2x"></i></a>
+  <a class="navbar-brand" href="{% url 'dashboard_home' %}">General Education Course Approval Workflow</a>
 {% endblock %}
 {% block navbar-top-links %}
   <ul class="navbar-nav ml-auto">

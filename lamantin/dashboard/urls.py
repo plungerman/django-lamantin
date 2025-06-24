@@ -35,7 +35,8 @@ urlpatterns = [
     path('course/status/', views.status, name='status'),
     # course status view for 'approved'
     path('outcome/status/', views.outcome_status, name='outcome_status'),
-    path('', views.home, name='dashboard_home'),
     # designations
     path('designation/', include('lamantin.dashboard.designation.urls')),
+    # home
+    path('', views.home, name='dashboard_home'),
 ]

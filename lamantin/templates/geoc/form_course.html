@@ -7,6 +7,23 @@ $(function() {
   {% if form.outcome.errors %}
   $('.invalid-feedback').css('display', 'inherit');
   {% endif %}
+
+  var $cross_listing = $("#cross-listing");
+  {% if form.multipass.value == 'Yes' %}
+  $cross_listing.show();
+  {% else %}
+  $cross_listing.hide();
+  {% endif %}
+  /* cross listing yes/no */
+  $('input[name="multipass"]').click(function() {
+    $dis = $(this);
+    if ($dis.val() == 'Yes') {
+      $cross_listing.show();
+    } else {
+      $cross_listing.hide();
+    }
+    console.log($dis.val());
+  });
 });
 </script>
 {% endblock %}
@@ -48,11 +65,12 @@ $(function() {
       <small class="form-text text-muted">{{form.title.help_text}}</small>
     </div>
     <div class="form-group">
-      <label for="id_number">Course Number(s)</label>
-      <input type="text" name="number" maxlength="255" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
+      <label for="id_number">Course Number</label>
+      <input type="text" name="number" maxlength="8" style="text-transform:uppercase" class="form-control{% if form.number.errors %} is-invalid{% endif %}" value="{{form.number.value|default:''}}" id="id_number">
       {% if form.number.errors %}
-      <div class="invalid-feedback">This field is required.</div>
+      <div class="invalid-feedback">{{form.number.errors}}</div>
       {% endif %}
+      <small class="form-text text-muted">{{form.number.help_text}}</small>
     </div>
     <div class="form-group">
       <label for="id_multipass">
@@ -62,12 +80,45 @@ $(function() {
       </label>
       {% bootstrap_field form.multipass show_label=False %}
     </div>
+    <div id="cross-listing">
+      <div class="form-group">
+        <label for="id_crosslist1">Cross list 1: course number</label>
+        <input type="text" name="crosslist1" maxlength="8" value="{% if form.crosslist1.value %}{{form.crosslist1.value|default:''}}{% else %}{{course.cross_listing.all.0.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist1.errors %} is-invalid{% endif %}" id="id_crosslist1">
+        {% if form.crosslist1.errors %}
+        <div class="invalid-feedback">{{form.crosslist1.errors}}</div>
+        {% endif %}
+        <small class="form-text text-muted">{{form.crosslist1.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist2">Cross list 2: course number</label>
+        <input type="text" name="crosslist2" maxlength="8" value="{% if form.crosslist2.value %}{{form.crosslist2.value|default:''}}{% else %}{{course.cross_listing.all.1.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist2.errors %} is-invalid{% endif %}" id="id_crosslist2">
+        {% if form.crosslist2.errors %}
+        <div class="invalid-feedback">{{form.crosslist2.errors}}</div>
+        {% endif %}
+        <small class="form-text text-muted">{{form.crosslist2.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist3">Cross list 3: course number</label>
+        <input type="text" name="crosslist3" maxlength="8" value="{% if form.crosslist3.value %}{{form.crosslist3.value|default:''}}{% else %}{{course.cross_listing.all.2.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist3.errors %} is-invalid{% endif %}" id="id_crosslist3">
+        {% if form.crosslist3.errors %}
+        <div class="invalid-feedback">{{form.crosslist3.errors}}</div>
+        {% endif %}
+        <small class="form-text text-muted">{{form.crosslist3.help_text}}</small>
+      </div>
+      <div class="form-group">
+        <label for="id_crosslist4">Cross list 4: course number</label>
+        <input type="text" name="crosslist4" maxlength="8" value="{% if form.crosslist4.value %}{{form.crosslist4.value|default:''}}{% else %}{{course.cross_listing.all.3.number}}{% endif %}" style="text-transform:uppercase" class="form-control{% if form.crosslist4.errors %} is-invalid{% endif %}" id="id_crosslist4">
+        {% if form.crosslist4.errors %}
+        <div class="invalid-feedback">{{form.crosslist4.errors}}</div>
+        {% endif %}
+        <small class="form-text text-muted">{{form.crosslist4.help_text}}</small>
+      </div>
+    </div>
     <div class="form-group row">
       <div class="col-12">
         <h4>Student Learning Outcomes</h4>
         {% if form.outcome.errors %}
         <div class="invalid-feedback mb-2">
-          The following SLO groups have more than one selected:
           {{form.outcome.errors}}
         </div>
         {% endif %}

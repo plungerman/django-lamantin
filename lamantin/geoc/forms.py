@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import logging
+import re
 
 from django import forms
 from djtools.fields import BINARY_CHOICES
@@ -7,6 +9,10 @@ from lamantin.geoc.models import Course
 from lamantin.geoc.models import CourseOutcome
 from lamantin.geoc.models import Document
 from lamantin.geoc.models import Outcome
+
+logger = logging.getLogger('debug_logfile')
+# regex for course number: HIS 420X, PHL 4200, etc
+COURSE_NUMBER = re.compile(r"[A-Za-z][A-Za-z][A-Za-z]\s\d\d\d[A-Za-z0-9]", re.IGNORECASE)
 
 
 class Dupes:
@@ -51,27 +57,81 @@ class CourseForm(forms.ModelForm):
         choices=BINARY_CHOICES,
         widget=forms.RadioSelect(),
         help_text="""
-            You may submit multiple courses if those courses
+            You may submit multiple courses (cross list) if those courses
             substantially fulfill the same SLO categories within the GE structure.
             If any of the courses you are submitting also carry another designation,
             they would need to be submitted individually.
         """
     )
+    crosslist1 = forms.CharField(
+        label="Cross list 1: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
+    )
+    crosslist2 = forms.CharField(
+        label="Cross list 2: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
+    )
+    crosslist3 = forms.CharField(
+        label="Cross list 3: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
+    )
+    crosslist4 = forms.CharField(
+        label="Cross list 4: course number",
+        required=False,
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
+    )
 
     class Meta:
         model = Course
         fields = ('title', 'number', 'outcome', 'multipass')
+        widgets = {
+            'number': forms.TextInput(attrs={'style': 'text-transform:uppercase'}),
+        }
 
     def clean(self):
         """Form validation."""
         cd = self.cleaned_data
+        # multipass validation for crosslisted courses
+        logger.debug('crosslist1 = {0}'.format(cd.get('crosslist1')))
+        crosslist = {
+            'crosslist1': cd.get('crosslist1'),
+            'crosslist2': cd.get('crosslist2'),
+            'crosslist3': cd.get('crosslist3'),
+            'crosslist4': cd.get('crosslist4'),
+        }
+        error = 'Course numbers should be in the format: AAA 1234 or AAA 123X'
+        if cd.get('multipass') == 'Yes':
+            if (
+                    not crosslist['crosslist1'] and
+                    not crosslist['crosslist2'] and
+                    not crosslist['crosslist3'] and
+                    not crosslist['crosslist4']
+                ):
+                error = True
+                self.add_error('multipass', 'Please provide at least one crosslisted course')
+            else:
+                for key, value in crosslist.items():
+                    if value and not COURSE_NUMBER.match(value):
+                        self.add_error(key, error)
+        # verify that there is only one outcome per SLO
         dupes = Dupes()
         dupes.get_outcomes()
         if cd.get('outcome'):
             dupes.check(cd['outcome'])
         if dupes.error:
-             self.add_error('outcome', dupes.error)
+            self.add_error('outcome', 'One of the SLO groups have more than one outcome selected')
         return cd
+
+    def clean_number(self):
+        """Form validation for course number field."""
+        cd = self.cleaned_data
+        number = cd.get('number')
+        if not COURSE_NUMBER.match(number):
+            self.add_error('number', 'Course numbers should be in the format: AAA 1234 or AAA 123X')
+        return number
 
 
 class CourseOutcomeForm(forms.ModelForm):

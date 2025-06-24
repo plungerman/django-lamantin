@@ -86,8 +86,10 @@ class Course(models.Model):
         null=True,
         blank=True,
     )
+    cross_listing = models.ManyToManyField('self', blank=True)
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
+    # status
     approved = models.BooleanField(
         help_text="Has the course been approved?",
         default=False,
@@ -113,11 +115,10 @@ class Course(models.Model):
             Course name or a descriptive title if you are submiting multiple courses
         """,
     )
-    number = models.CharField("Number(s)", max_length=255)
-    cross_listings = models.CharField(
-        max_length=128,
-        null=True,
-        blank=True,
+    number = models.CharField(
+        "Number",
+        max_length=255,
+        help_text="FORMAT: AAA 1234 or AAA 123X e.g. HIS 4200, BIO 420T",
     )
     multipass = models.CharField(
         "I am submitting multiple courses under the same SLO's",
@@ -215,6 +216,17 @@ class Course(models.Model):
     def wellness(self):
         """Return wellnesse SLO."""
         return self.outcome.filter(group__name='Wellness')
+
+    def parent(self):
+        """Determine parent."""
+        parent = True
+        for cross_list in self.cross_listing.all():
+            if self.id > cross_list.id:
+                parent = False
+                break
+            else:
+                parent = True
+        return parent
 
 
 class OutcomeCourse(models.Model):
@@ -332,7 +344,7 @@ class Document(models.Model):
     phile = models.FileField(
         "Supporting documentation",
         upload_to=upload_to_path,
-        #validators=settings.FILE_VALIDATORS,
+        validators=settings.FILE_VALIDATORS,
         max_length=767,
         help_text="PDF format",
         null=True,

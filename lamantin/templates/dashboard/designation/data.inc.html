@@ -23,7 +23,11 @@
         <td class="course-title">
           <a href="{% url 'detail' course.id %}" title="{{course.title}}">{{course.title}}</a>
         </td>
-        <td nowrap class="pl-4">{{course.cross_listings|default:'&nbsp;'}}</td>
+        <td nowrap class="pl-4">
+          {% for course in course.cross_listing.all %}
+          <a href="{% url 'detail' course.id %}" title="{{course.number}}">{{course.number}}</a>{% if not forloop.last %},&nbsp;{% endif %}
+          {% endfor %}
+        </td>
         <td nowrap class="pl-4">
           {% for outcome in course.outcome.all %}
             {% get_outcome course outcome as oc %}

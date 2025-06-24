@@ -10,11 +10,12 @@
             title="View Course"></i>
         </th>
         <th style="text-align: center;">
-          Number(s)
+          Number
           <i class="fa fa-pencil green ml-1" data-toggle="tooltip"
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Cross Listings</th>
         <th style="text-align: center;">Outcomes</th>
         <th>
           Created By
@@ -35,7 +36,16 @@
           <a href="{% url 'detail' course.id %}">{{course.title}}</a>
         </td>
         <td class="course-number">
-          <a href="{% url 'update' 'course' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          {% if course.parent and not course.save_submit %}
+            <a href="{% url 'course_update' course.id %}" title="{{course.number}}">{{course.number}}</a>
+          {% else %}
+            {{course.number}}
+          {% endif %}
+        </td>
+        <td class="cross-listing">
+          {% for cross_list in course.cross_listing.all %}
+            <a href="{% url 'detail' cross_list.id %}" title="{{cross_list.number}}">{{cross_list.number}}</a>{% if not forloop.last %},&nbsp;{% endif %}
+          {% endfor %}
         </td>
         <td nowrap class="pl-4">
           {% for outcome in course.outcome.all %}
@@ -57,7 +67,7 @@
         {% endif %}
         </td>
         <td nowrap style="text-align: center;">
-          {% if course.save_submit  %}
+          {% if course.save_submit %}
             <a style="cursor: help;" tabindex="0" data-toggle="popover" data-trigger="focus" data-placement="right" data-content="Submitted for approval"><i class="fa fa-check green" title="Submitted for approval"><span style="display:none;">✓</span></i>
             </a>
           {% else %}
@@ -98,6 +108,7 @@
             data-placement="top" aria-hidden="true"
             title="Update Course"></i>
         </th>
+        <th style="text-align: center;">Cross Listings</th>
         <th style="text-align: center;">Outcomes</th>
         <th>
           Created By
