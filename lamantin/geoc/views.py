@@ -312,15 +312,18 @@ def outcome_form(request, cid):
             note.updated_by = user
             note.save()
             note.tags.add('Adenda')
+        else:
+            note = None
         # update crosslisted courses if need be:
         if not errors and course.multipass:
             # comments
-            for cl in course.cross_listing.all():
-                cl_note = copy.deepcopy(note)
-                cl_note.id = None
-                cl_note.course = cl
-                cl_note.save()
-                cl_note.tags.add('Adenda')
+            if note:
+                for cl in course.cross_listing.all():
+                    cl_note = copy.deepcopy(note)
+                    cl_note.id = None
+                    cl_note.course = cl
+                    cl_note.save()
+                    cl_note.tags.add('Adenda')
             # SLOs
             for outcome in course.outcomes.all():
                 for cl in course.cross_listing.all():
