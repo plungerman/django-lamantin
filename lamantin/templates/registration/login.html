@@ -2,33 +2,30 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            {% if user.is_anonymous %}
-                {% if form.errors or errors %}
-                    <p class="bg-danger" style="color:#fff;padding:5px;">
-                        <a class="close" data-dismiss="alert" href="#">×</a>
-                        Please enter a correct username and password.<br>
-                        Both fields are case-sensitive.
-                    </p>
-                {% endif %}
-                {% include "registration/login_form.inc.html" %}
-            {% else %}
-                <h2>You are already logged in</h2>
-                {% if next %}
-                    <p>
-                        <a href="{{next}}">
-                            Click here to continue on to your destination.
-                        </a>
-                    </p>
-                {% endif %}
-                <p>
-                    <a href="../logout/">
-                        Do you want to log out and log in as a new user?
-                    </a>
-                </p>
-            {% endif %}
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      {% if user.is_anonymous %}
+        {% if form.errors or errors %}
+          <p class="bg-danger" style="color:#fff;padding:5px;">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            Please enter a correct username and password.<br>
+            Both fields are case-sensitive.
+          </p>
+        {% endif %}
+        {% include "registration/login_form.inc.html" %}
+      {% else %}
+        <h2>You are already logged in</h2>
+        {% if next %}
+          <p><a href="{{next}}">Click here to continue on to your destination.</a></p>
+        {% endif %}
+        <p>
+          <form id="logout-form" action="{% url 'auth_logout' %}" method="post">
+            {% csrf_token %}
+            <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">Do you want to log out and log in as a new user?</a>
+          </form>
+        </p>
+      {% endif %}
     </div>
+  </div>
 </div>
 {% endblock %}
